@@ -26,7 +26,7 @@ export function ResumeHub() {
     <SiteShell
       eyebrow="Resume hub"
       title="Lance Wolfe"
-      subtitle="Orlando-based. Nationwide experience."
+      subtitle="Florida-based. Nationwide experience."
       body="Live-event operations professional with 10+ years in hospitality and nationwide experience across major music festivals, sporting events, and premium hospitality programs."
       primary={{ href: "/resumes/full-event-resume.pdf", label: "View resume" }}
       secondary={{ href: "/career/timeline", label: "Timeline" }}

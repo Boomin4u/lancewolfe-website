@@ -4,9 +4,17 @@ import "./globals.css";
 const siteTitle = "Lance Wolfe";
 const siteDescription =
   "Personal site for Lance Wolfe, with resumes, chronicles, and career information.";
+const siteImage = "/og.png";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://lancewolfe.com"),
+  alternates: {
+    canonical: "/",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
   title: siteTitle,
   description: siteDescription,
   icons: {
@@ -20,16 +28,16 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/profile-picture.jpg",
-        alt: "Lance Wolfe portrait",
+        url: siteImage,
+        alt: "Lance Wolfe personal website preview",
       },
     ],
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: siteTitle,
     description: siteDescription,
-    images: ["/profile-picture.jpg"],
+    images: [siteImage],
   },
 };
 

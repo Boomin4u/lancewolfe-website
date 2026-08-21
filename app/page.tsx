@@ -14,7 +14,7 @@ export default function Home() {
     <SiteShell
       eyebrow="Lance Wolfe"
       title="Lance Wolfe"
-      subtitle="Orlando-based. Nationwide experience."
+      subtitle="Florida-based. Nationwide experience."
       body="Live-event operations professional with 10+ years in hospitality and nationwide experience across major music festivals, sporting events, and premium hospitality programs."
       primary={{ href: "/career", label: "View resumes" }}
       secondary={{ href: "/chronicles", label: "Read the chronicles" }}
