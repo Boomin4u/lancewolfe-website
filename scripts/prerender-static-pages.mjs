@@ -46,6 +46,23 @@ function routeToOutputPath(route) {
   return resolve(outputRoot, `.${normalized}index.html`);
 }
 
+function pathToOutputPath(pathname) {
+  if (pathname === "/404.html") {
+    return resolve(outputRoot, "404.html");
+  }
+
+  return routeToOutputPath(pathname);
+}
+
+async function fetchPage(route, { allow404 = false } = {}) {
+  const response = await fetch(`${baseUrl}${route}`);
+  if (!response.ok && !(allow404 && response.status === 404)) {
+    throw new Error(`Failed to fetch ${route}: ${response.status}`);
+  }
+
+  return response.text();
+}
+
 const server = spawn(
   process.platform === "win32" ? "npm.cmd" : "npm",
   ["run", "start", "--", "--host", "127.0.0.1", `--port`, `${port}`],
@@ -69,17 +86,18 @@ try {
   await waitForServer(baseUrl);
 
   for (const route of routes) {
-    const response = await fetch(`${baseUrl}${route}`);
-    if (!response.ok) {
-      throw new Error(`Failed to fetch ${route}: ${response.status}`);
-    }
-
-    const html = await response.text();
+    const html = await fetchPage(route);
     const outputPath = routeToOutputPath(route);
     await mkdir(dirname(outputPath), { recursive: true });
     await writeFile(outputPath, html);
     console.log(`Prerendered ${route} -> ${outputPath}`);
   }
+
+  const notFoundHtml = await fetchPage("/definitely-not-a-real-page", { allow404: true });
+  const notFoundOutputPath = pathToOutputPath("/404.html");
+  await mkdir(dirname(notFoundOutputPath), { recursive: true });
+  await writeFile(notFoundOutputPath, notFoundHtml);
+  console.log(`Prerendered /404.html -> ${notFoundOutputPath}`);
 } finally {
   server.kill("SIGTERM");
 }
