@@ -1,0 +1,14 @@
+node_modules
+.next
+out
+dist
+.DS_Store
+.env
+.env.*
+.playwright-mcp/
+.vinext/
+__pycache__/
+outputs/
+*.pyc
+tsconfig.tsbuildinfo
+facebook_checkins_hosted_events_timeline.docx
