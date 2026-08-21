@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { SiteShell } from "../site-shell";
+import { buildPageMetadata } from "../seo";
 
 const focusPoints = [
   {
@@ -17,11 +18,12 @@ const focusPoints = [
   },
 ];
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
   title: "Lance Wolfe | About",
   description:
     "Short bio for Lance Wolfe, including career focus, working style, and current direction.",
-};
+  path: "/about/",
+});
 
 export default function AboutPage() {
   return (

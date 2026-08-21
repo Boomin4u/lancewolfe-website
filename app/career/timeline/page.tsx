@@ -3,6 +3,7 @@ import { SiteShell } from "../../site-shell";
 import { eventHistorySections } from "../event-history-data";
 import { ProofStrip } from "../proof-strip";
 import { proofStats } from "../proof-data";
+import { buildPageMetadata } from "../../seo";
 
 const monthOrder = [
   "January",
@@ -56,10 +57,11 @@ const timelineRows = eventHistorySections
     return right.index - left.index;
   });
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
   title: "Lance Wolfe | Event Timeline",
-  description: "A clean timeline of event work, starting with the earliest Hulaween credit.",
-};
+  description: "A clean timeline of event work, sorted by year and month with employers, roles, and linked events.",
+  path: "/career/timeline/",
+});
 
 export default function CareerTimelinePage() {
   const groupedByYear = timelineRows.reduce<Array<[number, typeof timelineRows]>>((groups, row) => {

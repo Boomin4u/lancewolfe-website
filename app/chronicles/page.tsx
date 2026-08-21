@@ -2,12 +2,16 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { SiteShell } from "../site-shell";
 import { chronicles } from "./chronicles-data";
+import { buildPageMetadata } from "../seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
   title: "Lance Wolfe | Chronicles",
   description:
     "The Chronicles of Lance Wolfe, a personal writing space for career stories, lessons, and behind-the-scenes notes.",
-};
+  path: "/chronicles/",
+  image: "/chronicles-featured-post.png",
+  imageAlt: "Backstage production desk with notes and headphones",
+});
 
 export default function ChroniclesPage() {
   const featuredPost = chronicles[0];

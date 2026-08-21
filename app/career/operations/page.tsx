@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import { SiteShell } from "../../site-shell";
+import { buildPageMetadata } from "../../seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
   title: "Lance Wolfe | Resume Hub",
   description: "The career subpage now lives in the main career hub.",
-};
+  path: "/career/operations/",
+});
 
 export default function OperationsPage() {
   return (

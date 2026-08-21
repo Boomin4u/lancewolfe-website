@@ -2,11 +2,15 @@ import type { Metadata } from "next";
 import { ChronicleArticle } from "../chronicle-article";
 import { chronicles, getChronicleIndex } from "../chronicles-data";
 import entry from "../entries/why-operations-is-judgment";
+import { buildPageMetadata } from "../../seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
   title: `Lance Wolfe | ${entry.title}`,
   description: entry.excerpt,
-};
+  path: `/chronicles/${entry.slug}/`,
+  image: "/chronicles-featured-post.png",
+  imageAlt: "Backstage production desk with notes and headphones",
+});
 
 export default function WhyOperationsIsJudgmentPage() {
   const currentIndex = getChronicleIndex(entry.slug);

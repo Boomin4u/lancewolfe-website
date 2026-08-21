@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { SiteShell } from "./site-shell";
+import { buildPageMetadata } from "./seo";
 
-export const metadata: Metadata = {
-  title: "Lance Wolfe | Home",
-  description:
-    "Personal home page for Lance Wolfe, with quick access to resumes and the Chronicles.",
-};
+export const metadata: Metadata = buildPageMetadata({
+  title: "Lance Wolfe",
+  description: "Personal home page for Lance Wolfe, with quick access to resumes and the Chronicles.",
+  path: "/",
+});
 
 export default function Home() {
   return (
