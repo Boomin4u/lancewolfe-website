@@ -19,7 +19,10 @@ Update flow:
 1. Make changes locally.
 2. Run the site and check the pages you touched.
 3. Commit and push to `main`.
-4. Porkbun publishes the updated site automatically.
+4. GitHub Actions builds the static export and publishes it to the `deploy` branch.
+5. Porkbun should be connected to the `deploy` branch so it serves the generated static files.
+
+If Porkbun is still connected to `main`, switch it to `deploy` in GitHub Connect.
 
 ## Content Updates
 
