@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
 import { SiteShell } from "../site-shell";
 import { chronicles } from "./chronicles-data";
 
@@ -36,7 +35,7 @@ export default function ChroniclesPage() {
       secondary={{ href: "/career/", label: "View Resumes" }}
     >
       <section className="grid gap-4">
-        <Link
+        <a
           href={`/chronicles/${featuredPost.slug}/`}
           aria-label={`Open featured post: ${featuredPost.title}`}
           className="group block overflow-hidden rounded-[1.45rem] border border-white/10 bg-white/[0.045] transition hover:border-white/20 hover:bg-white/[0.06]"
@@ -79,12 +78,12 @@ export default function ChroniclesPage() {
               <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(7,17,32,0.08),rgba(7,17,32,0.35))]" />
             </div>
           </div>
-        </Link>
+        </a>
       </section>
 
       <section className="mt-4 grid gap-4 md:grid-cols-3 md:items-stretch">
         {chronicles.map((entry) => (
-          <Link
+          <a
             key={entry.slug}
             href={`/chronicles/${entry.slug}/`}
             className="h-full rounded-[1.35rem] border border-white/10 bg-slate-950/22 p-4 transition hover:border-white/20 hover:bg-slate-950/30"
@@ -99,7 +98,7 @@ export default function ChroniclesPage() {
               <span>•</span>
               <span>{entry.readTime}</span>
             </div>
-          </Link>
+          </a>
         ))}
       </section>
 

@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
 import { SiteShell } from "./site-shell";
 
 export const metadata: Metadata = {
@@ -74,7 +73,7 @@ function InfoCard({
   const isSoft = tone === "soft";
 
   return (
-    <Link
+    <a
       href={href}
       className={`group rounded-[1.35rem] border p-4 transition duration-200 hover:-translate-y-0.5 ${
         isSoft
@@ -105,6 +104,6 @@ function InfoCard({
       >
         {action} →
       </div>
-    </Link>
+    </a>
   );
 }

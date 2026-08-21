@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { SiteShell } from "../../site-shell";
 
 export const metadata: Metadata = {
@@ -20,9 +19,9 @@ export default function EventsPage() {
         This section is being folded into the simpler career hub so there is one
         clear place to view current resumes.
         <div className="mt-3">
-          <Link href="/career/" className="text-sky-100 underline underline-offset-4">
+          <a href="/career/" className="text-sky-100 underline underline-offset-4">
             Go back to the career hub
-          </Link>
+          </a>
         </div>
       </section>
     </SiteShell>
