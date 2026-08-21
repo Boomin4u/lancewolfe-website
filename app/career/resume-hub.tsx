@@ -31,7 +31,7 @@ export function ResumeHub() {
       subtitle="Florida-based. Nationwide experience."
       body="Live-event operations professional with 10+ years in hospitality and nationwide experience across major music festivals, sporting events, and premium hospitality programs."
       primary={{ href: "/resumes/full-event-resume.pdf", label: "View resume" }}
-      secondary={{ href: "/career/timeline", label: "Timeline" }}
+      secondary={{ href: "/career/timeline/", label: "Timeline" }}
       portrait={
         <div className="relative h-28 w-28 overflow-hidden rounded-full border border-white/12 bg-slate-900 shadow-[0_0_0_6px_rgba(255,255,255,0.03)] sm:h-32 sm:w-32 md:h-36 md:w-36">
           <Image
@@ -60,7 +60,7 @@ export function ResumeHub() {
             </p>
           </div>
           <Link
-            href="/career/timeline"
+            href="/career/timeline/"
             className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.05] px-3.5 py-1.5 text-sm font-medium text-slate-100 transition hover:border-white/20 hover:bg-white/[0.09]"
           >
             Open timeline

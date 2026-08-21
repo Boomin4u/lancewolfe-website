@@ -16,8 +16,8 @@ export default function Home() {
       title="Lance Wolfe"
       subtitle="Florida-based. Nationwide experience."
       body="Live-event operations professional with 10+ years in hospitality and nationwide experience across major music festivals, sporting events, and premium hospitality programs."
-      primary={{ href: "/career", label: "View resumes" }}
-      secondary={{ href: "/chronicles", label: "Read the chronicles" }}
+      primary={{ href: "/career/", label: "View resumes" }}
+      secondary={{ href: "/chronicles/", label: "Read the chronicles" }}
       portrait={
         <div className="relative h-28 w-28 overflow-hidden rounded-full border border-white/12 bg-slate-900 shadow-[0_0_0_6px_rgba(255,255,255,0.03)] sm:h-32 sm:w-32 md:h-36 md:w-36">
           <Image
@@ -37,19 +37,19 @@ export default function Home() {
         <InfoCard
           title="Career"
           text="A clean resume hub with full-event and specialized resume views."
-          href="/career"
+          href="/career/"
           action="View resumes"
         />
         <InfoCard
           title="Chronicles"
           text="The thinking behind the mind at work."
-          href="/chronicles"
+          href="/chronicles/"
           action="Read the chronicles"
         />
         <InfoCard
           title="About"
           text="A quick bio, what I do, and what I’m building next."
-          href="/about"
+          href="/about/"
           action="Learn more"
           tone="soft"
         />

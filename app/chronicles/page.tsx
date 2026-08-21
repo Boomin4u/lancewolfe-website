@@ -32,12 +32,12 @@ export default function ChroniclesPage() {
           />
         </div>
       }
-      primary={{ href: `/chronicles/${featuredPost.slug}`, label: "Read the latest" }}
-      secondary={{ href: "/career", label: "View Resumes" }}
+      primary={{ href: `/chronicles/${featuredPost.slug}/`, label: "Read the latest" }}
+      secondary={{ href: "/career/", label: "View Resumes" }}
     >
       <section className="grid gap-4">
         <Link
-          href={`/chronicles/${featuredPost.slug}`}
+          href={`/chronicles/${featuredPost.slug}/`}
           aria-label={`Open featured post: ${featuredPost.title}`}
           className="group block overflow-hidden rounded-[1.45rem] border border-white/10 bg-white/[0.045] transition hover:border-white/20 hover:bg-white/[0.06]"
         >
@@ -86,7 +86,7 @@ export default function ChroniclesPage() {
         {chronicles.map((entry) => (
           <Link
             key={entry.slug}
-            href={`/chronicles/${entry.slug}`}
+            href={`/chronicles/${entry.slug}/`}
             className="h-full rounded-[1.35rem] border border-white/10 bg-slate-950/22 p-4 transition hover:border-white/20 hover:bg-slate-950/30"
           >
             <div className="text-[11px] font-semibold uppercase tracking-[0.28em] text-slate-400">

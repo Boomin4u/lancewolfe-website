@@ -3,9 +3,9 @@ import type { ReactNode } from "react";
 
 const navLinks = [
   { href: "/", label: "Home" },
-  { href: "/career", label: "Career" },
-  { href: "/chronicles", label: "Chronicles" },
-  { href: "/about", label: "About" },
+  { href: "/career/", label: "Career" },
+  { href: "/chronicles/", label: "Chronicles" },
+  { href: "/about/", label: "About" },
 ];
 
 const socialLinks = [

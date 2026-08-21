@@ -42,8 +42,8 @@ export default function AboutPage() {
           />
         </div>
       }
-      primary={{ href: "/career", label: "View Resumes" }}
-      secondary={{ href: "/chronicles", label: "Read The Chronicles" }}
+      primary={{ href: "/career/", label: "View Resumes" }}
+      secondary={{ href: "/chronicles/", label: "Read The Chronicles" }}
     >
       <section className="grid gap-3 md:grid-cols-3">
         {focusPoints.map((point) => (
