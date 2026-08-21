@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { SiteShell } from "../../site-shell";
 import { eventHistorySections } from "../event-history-data";
+import { ProofStrip } from "../proof-strip";
+import { proofStats } from "../proof-data";
 
 const monthOrder = [
   "January",
@@ -54,16 +56,6 @@ const timelineRows = eventHistorySections
     return right.index - left.index;
   });
 
-const totalEvents = timelineRows.length;
-const eventStartYear = Math.min(...timelineRows.map((row) => row.year));
-const eventEndYear = Math.max(...timelineRows.map((row) => row.year));
-const yearsInEvents = eventEndYear - eventStartYear + 1;
-const statesWorked = new Set(
-  timelineRows
-    .map((row) => row.location.split(",").pop()?.trim())
-    .filter((state): state is string => Boolean(state)),
-).size;
-
 export const metadata: Metadata = {
   title: "Lance Wolfe | Event Timeline",
   description: "A clean timeline of event work, starting with the earliest Hulaween credit.",
@@ -84,7 +76,7 @@ export default function CareerTimelinePage() {
     <SiteShell
       eyebrow="Event timeline"
       title="Event history"
-      body="A quick look at my event work across festivals, sports, and live events."
+      body="A clean look at the full event history, grouped by year and sorted newest first."
     >
       <section className="rounded-[1.5rem] border border-white/10 bg-white/[0.04] p-4 shadow-[0_18px_50px_rgba(4,11,26,0.16)] backdrop-blur-xl sm:p-5">
         <div className="flex flex-col gap-2">
@@ -93,14 +85,12 @@ export default function CareerTimelinePage() {
           </p>
           <h2 className="text-xl font-semibold text-white">Overview</h2>
           <p className="max-w-2xl text-sm leading-6 text-slate-300/80">
-            A compact view of the timeline, grouped by year and sorted newest first.
+            View the full event history in a cleaner timeline layout.
           </p>
         </div>
 
-        <div className="mt-4 grid gap-2.5 sm:grid-cols-3">
-          <MetricCard label="Years in events" value={`${yearsInEvents}+`} caption="Since 2016" />
-          <MetricCard label="Events on record" value={totalEvents} caption="Festivals, sports, and live events" />
-          <MetricCard label="States reached" value={statesWorked} caption="Across the country" />
+        <div className="mt-4">
+          <ProofStrip stats={proofStats} />
         </div>
 
         <div className="mt-5 space-y-6">
@@ -172,25 +162,5 @@ export default function CareerTimelinePage() {
         </div>
       </section>
     </SiteShell>
-  );
-}
-
-function MetricCard({
-  label,
-  value,
-  caption,
-}: {
-  label: string;
-  value: number | string;
-  caption: string;
-}) {
-  return (
-    <div className="rounded-[1.1rem] border border-white/10 bg-slate-950/20 px-3.5 py-3.5">
-      <div className="text-[9px] font-semibold uppercase tracking-[0.22em] text-slate-400">
-        {label}
-      </div>
-      <div className="mt-1.5 text-xl font-semibold text-white">{value}</div>
-      <div className="mt-0.5 text-[11px] leading-4 text-slate-400">{caption}</div>
-    </div>
   );
 }

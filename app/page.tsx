@@ -31,6 +31,7 @@ export default function Home() {
           />
         </div>
       }
+      childrenSpacingClassName="mt-6"
     >
       <section className="grid gap-4 md:grid-cols-3 -mt-1 sm:-mt-2">
         <InfoCard

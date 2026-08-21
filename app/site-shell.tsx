@@ -30,6 +30,7 @@ export function SiteShell({
   secondary,
   portrait,
   children,
+  childrenSpacingClassName = "mt-3",
 }: {
   eyebrow: string;
   title: string;
@@ -39,6 +40,7 @@ export function SiteShell({
   secondary?: { href: string; label: string };
   portrait?: ReactNode;
   children?: ReactNode;
+  childrenSpacingClassName?: string;
 }) {
   return (
     <main className="relative min-h-screen overflow-hidden bg-[var(--background)] text-[var(--foreground)]">
@@ -105,7 +107,7 @@ export function SiteShell({
           </div>
         </section>
 
-        {children ? <div className="mt-6">{children}</div> : null}
+        {children ? <div className={childrenSpacingClassName}>{children}</div> : null}
 
         <footer className="mt-10 pt-4">
           <div className="flex flex-col gap-4 border-t border-white/8 py-4 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between">
