@@ -25,7 +25,7 @@ const primaryResume = {
 export function ResumeHub() {
   return (
     <SiteShell
-      eyebrow="Resume hub"
+      eyebrow="Career"
       title="Lance Wolfe"
       subtitle="Florida-based. Nationwide experience."
       body="Live-event operations professional with 10+ years in hospitality and nationwide experience across major music festivals, sporting events, and premium hospitality programs."

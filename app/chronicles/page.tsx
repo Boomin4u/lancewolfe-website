@@ -90,18 +90,24 @@ export default function ChroniclesPage() {
           <a
             key={entry.slug}
             href={`/chronicles/${entry.slug}/`}
-            className="h-full rounded-[1.35rem] border border-white/10 bg-slate-950/22 p-4 transition hover:border-white/20 hover:bg-slate-950/30"
+            aria-label={`Open article: ${entry.title}`}
+            className="group block h-full w-full cursor-pointer rounded-[1.35rem] border border-white/10 bg-slate-950/22 p-4 transition hover:-translate-y-0.5 hover:border-white/20 hover:bg-slate-950/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-200/60"
           >
             <div className="text-[11px] font-semibold uppercase tracking-[0.28em] text-slate-400">
               {entry.tag}
             </div>
-            <h3 className="mt-3 text-lg font-semibold text-white">{entry.title}</h3>
+            <h3 className="mt-3 text-lg font-semibold text-white transition group-hover:text-sky-50">
+              {entry.title}
+            </h3>
             <p className="mt-2 text-sm leading-6 text-slate-300/85">{entry.excerpt}</p>
             <div className="mt-4 flex flex-wrap gap-2 text-sm text-slate-400">
               <span>{entry.date}</span>
               <span>•</span>
               <span>{entry.readTime}</span>
             </div>
+            <span className="mt-4 inline-flex rounded-full border border-white/12 bg-white/[0.08] px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.24em] text-slate-100 transition group-hover:border-white/20 group-hover:bg-white/[0.12]">
+              Open article →
+            </span>
           </a>
         ))}
       </section>
