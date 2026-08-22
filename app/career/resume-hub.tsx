@@ -47,7 +47,10 @@ export function ResumeHub() {
       >
       <ProofStrip stats={proofStats} />
 
-      <section className="mt-2 rounded-[1.35rem] border border-white/10 bg-white/[0.04] p-3 shadow-[0_18px_50px_rgba(4,11,26,0.14)] backdrop-blur-xl sm:p-4">
+      <a
+        href="/career/timeline/"
+        className="group mt-2 block rounded-[1.35rem] border border-white/10 bg-white/[0.04] p-3 shadow-[0_18px_50px_rgba(4,11,26,0.14)] backdrop-blur-xl transition hover:border-white/15 hover:bg-white/[0.06] sm:p-4"
+      >
         <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <p className="text-[10px] font-semibold uppercase tracking-[0.26em] text-sky-100/75">
@@ -58,14 +61,11 @@ export function ResumeHub() {
               View the full event history in a cleaner timeline layout.
             </p>
           </div>
-          <a
-            href="/career/timeline/"
-            className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.05] px-3.5 py-1.5 text-sm font-medium text-slate-100 transition hover:border-white/20 hover:bg-white/[0.09]"
-          >
+          <span className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.05] px-3.5 py-1.5 text-sm font-medium text-slate-100 transition group-hover:border-white/20 group-hover:bg-white/[0.09]">
             Open timeline
-          </a>
+          </span>
         </div>
-      </section>
+      </a>
 
       <section className="mt-2 rounded-[1.65rem] border border-white/10 bg-white/[0.04] p-4 shadow-[0_20px_60px_rgba(4,11,26,0.18)] backdrop-blur-xl sm:p-5">
         <div className="flex items-center gap-3">
