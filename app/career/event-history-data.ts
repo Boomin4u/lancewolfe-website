@@ -113,7 +113,7 @@ const rawEventHistorySections: CareerTimelineSection[] = [
             location: "Daytona Beach, FL",
             dateLabel: "May 9-12, 2024",
             company: "SoHo",
-            role: "Zone Manager",
+            role: "Bartender",
             url: "https://welcometorockville.com/festival-info/",
           },
           { name: "Forbidden Kingdom Music Festival", location: "Orlando, FL", dateLabel: "June 7-8, 2024", note: "First solo event as lead staffer" },
