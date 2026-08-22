@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { SiteShell } from "./site-shell";
 import { buildPageMetadata } from "./seo";
+import { InternalNav } from "./internal-nav";
 
 export const metadata: Metadata = buildPageMetadata({
   title: "Lance Wolfe",
@@ -74,7 +75,7 @@ function InfoCard({
   const isSoft = tone === "soft";
 
   return (
-    <a
+    <InternalNav
       href={href}
       aria-label={`${title} - ${action}`}
       className={`group block h-full w-full cursor-pointer rounded-[1.35rem] border p-4 transition duration-200 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-200/60 ${
@@ -106,6 +107,6 @@ function InfoCard({
       >
         {action} →
       </span>
-    </a>
+    </InternalNav>
   );
 }

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { SiteShell } from "../../site-shell";
+import { InternalNav } from "../../internal-nav";
 import { buildPageMetadata } from "../../seo";
 
 export const metadata: Metadata = buildPageMetadata({
@@ -21,9 +22,9 @@ export default function EventsPage() {
         This section is being folded into the simpler career hub so there is one
         clear place to view current resumes.
         <div className="mt-3">
-          <a href="/career/" className="text-sky-100 underline underline-offset-4">
+          <InternalNav href="/career/" className="text-sky-100 underline underline-offset-4">
             Go back to the career hub
-          </a>
+          </InternalNav>
         </div>
       </section>
     </SiteShell>

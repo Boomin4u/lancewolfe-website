@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { SiteShell } from "../../site-shell";
+import { InternalNav } from "../../internal-nav";
 import { buildPageMetadata } from "../../seo";
 
 export const metadata: Metadata = buildPageMetadata({
@@ -20,9 +21,9 @@ export default function StaffingPage() {
       <section className="rounded-[1.35rem] border border-white/10 bg-slate-950/22 p-4 text-sm leading-7 text-slate-300/85">
         This page is now a simple pointer back to the main career hub.
         <div className="mt-3">
-          <a href="/career/" className="text-sky-100 underline underline-offset-4">
+          <InternalNav href="/career/" className="text-sky-100 underline underline-offset-4">
             Go back to the career hub
-          </a>
+          </InternalNav>
         </div>
       </section>
     </SiteShell>

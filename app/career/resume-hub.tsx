@@ -2,6 +2,7 @@ import Image from "next/image";
 import { SiteShell } from "../site-shell";
 import { ProofStrip } from "./proof-strip";
 import { proofStats } from "./proof-data";
+import { InternalNav } from "../internal-nav";
 
 const resumeCards = [
   {
@@ -47,7 +48,7 @@ export function ResumeHub() {
       >
       <ProofStrip stats={proofStats} />
 
-      <a
+      <InternalNav
         href="/career/timeline/"
         className="group mt-2 block rounded-[1.35rem] border border-white/10 bg-white/[0.04] p-3 shadow-[0_18px_50px_rgba(4,11,26,0.14)] backdrop-blur-xl transition hover:border-white/15 hover:bg-white/[0.06] sm:p-4"
       >
@@ -65,7 +66,7 @@ export function ResumeHub() {
             Open timeline
           </span>
         </div>
-      </a>
+      </InternalNav>
 
       <section className="mt-2 rounded-[1.65rem] border border-white/10 bg-white/[0.04] p-4 shadow-[0_20px_60px_rgba(4,11,26,0.18)] backdrop-blur-xl sm:p-5">
         <div className="flex items-center gap-3">

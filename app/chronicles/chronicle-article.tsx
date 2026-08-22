@@ -1,5 +1,6 @@
 import { SiteShell } from "../site-shell";
 import type { ChronicleEntry } from "./chronicle-types";
+import { InternalNav } from "../internal-nav";
 
 export function ChronicleArticle({
   entry,
@@ -66,7 +67,7 @@ export function ChronicleArticle({
       {(previousHref || nextHref) ? (
         <section className="mt-4 grid gap-3 sm:grid-cols-2">
           {previousHref ? (
-            <a
+            <InternalNav
               href={previousHref}
               className="rounded-[1.35rem] border border-white/10 bg-slate-950/22 p-4 transition hover:-translate-y-0.5 hover:border-white/20 hover:bg-slate-950/30"
             >
@@ -76,7 +77,7 @@ export function ChronicleArticle({
               <h2 className="mt-2 text-lg font-semibold text-white">
                 {previousTitle}
               </h2>
-            </a>
+            </InternalNav>
           ) : (
             <div className="rounded-[1.35rem] border border-white/10 bg-slate-950/22 p-4 text-sm text-slate-400">
               No previous entry
@@ -84,7 +85,7 @@ export function ChronicleArticle({
           )}
 
           {nextHref ? (
-            <a
+            <InternalNav
               href={nextHref}
               className="rounded-[1.35rem] border border-white/10 bg-slate-950/22 p-4 transition hover:-translate-y-0.5 hover:border-white/20 hover:bg-slate-950/30"
             >
@@ -92,7 +93,7 @@ export function ChronicleArticle({
                 Next
               </div>
               <h2 className="mt-2 text-lg font-semibold text-white">{nextTitle}</h2>
-            </a>
+            </InternalNav>
           ) : (
             <div className="rounded-[1.35rem] border border-white/10 bg-slate-950/22 p-4 text-sm text-slate-400">
               No next entry

@@ -3,6 +3,7 @@ import Image from "next/image";
 import { SiteShell } from "../site-shell";
 import { chronicles } from "./chronicles-data";
 import { buildPageMetadata } from "../seo";
+import { InternalNav } from "../internal-nav";
 
 export const metadata: Metadata = buildPageMetadata({
   title: "Lance Wolfe | Chronicles",
@@ -39,7 +40,7 @@ export default function ChroniclesPage() {
       secondary={{ href: "/career/", label: "View Resumes" }}
     >
       <section className="grid gap-4">
-        <a
+        <InternalNav
           href={`/chronicles/${featuredPost.slug}/`}
           aria-label={`Open featured post: ${featuredPost.title}`}
           className="group block overflow-hidden rounded-[1.45rem] border border-white/10 bg-white/[0.045] transition hover:border-white/20 hover:bg-white/[0.06]"
@@ -82,12 +83,12 @@ export default function ChroniclesPage() {
               <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(7,17,32,0.08),rgba(7,17,32,0.35))]" />
             </div>
           </div>
-        </a>
+        </InternalNav>
       </section>
 
       <section className="mt-4 grid gap-4 md:grid-cols-3 md:items-stretch">
         {chronicles.map((entry) => (
-          <a
+          <InternalNav
             key={entry.slug}
             href={`/chronicles/${entry.slug}/`}
             aria-label={`Open article: ${entry.title}`}
@@ -108,7 +109,7 @@ export default function ChroniclesPage() {
             <span className="mt-4 inline-flex rounded-full border border-white/12 bg-white/[0.08] px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.24em] text-slate-100 transition group-hover:border-white/20 group-hover:bg-white/[0.12]">
               Open article →
             </span>
-          </a>
+          </InternalNav>
         ))}
       </section>
 

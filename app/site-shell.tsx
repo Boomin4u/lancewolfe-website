@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { InternalNav } from "./internal-nav";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -51,13 +52,13 @@ export function SiteShell({
           </div>
           <nav className="flex flex-wrap gap-2 text-sm text-slate-300">
             {navLinks.map((item) => (
-              <a
+              <InternalNav
                 key={item.href}
                 href={item.href}
                 className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 transition hover:border-white/20 hover:bg-white/[0.08] hover:text-white"
               >
                 {item.label}
-              </a>
+              </InternalNav>
             ))}
           </nav>
         </header>
@@ -85,20 +86,20 @@ export function SiteShell({
               {primary || secondary ? (
                 <div className="mt-5 flex flex-wrap gap-2.5">
                   {primary ? (
-                    <a
+                    <InternalNav
                       href={primary.href}
                       className="rounded-full border border-sky-200/25 bg-sky-200/14 px-4 py-2 text-sm font-medium text-white shadow-[0_10px_24px_rgba(91,203,235,0.12)] transition hover:border-sky-200/40 hover:bg-sky-200/18"
                     >
                       {primary.label}
-                    </a>
+                    </InternalNav>
                   ) : null}
                   {secondary ? (
-                    <a
+                    <InternalNav
                       href={secondary.href}
                       className="rounded-full border border-white/10 bg-white/[0.05] px-4 py-2 text-sm font-medium text-slate-100 transition hover:border-white/20 hover:bg-white/[0.09]"
                     >
                       {secondary.label}
-                    </a>
+                    </InternalNav>
                   ) : null}
                 </div>
               ) : null}
@@ -110,12 +111,12 @@ export function SiteShell({
 
         <footer className="mt-10 pt-4">
           <div className="flex flex-col gap-4 border-t border-white/8 py-4 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between">
-            <a
+            <InternalNav
               href="/"
               className="text-slate-500 transition hover:text-white"
             >
               © {new Date().getFullYear()} Lance Wolfe
-            </a>
+            </InternalNav>
             <div className="flex items-center gap-2.5">
               {socialLinks.map((item) => (
                 <a
