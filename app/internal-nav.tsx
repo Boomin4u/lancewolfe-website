@@ -17,15 +17,12 @@ export function InternalNav({
   ...props
 }: InternalNavProps) {
   return (
-    <button
-      type="button"
-      onClick={() => {
-        window.location.assign(href);
-      }}
+    <a
+      href={href}
       className={className}
       {...props}
     >
       {children}
-    </button>
+    </a>
   );
 }

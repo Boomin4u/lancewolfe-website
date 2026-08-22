@@ -50,7 +50,7 @@ export function ResumeHub() {
 
       <InternalNav
         href="/career/timeline/"
-        className="group mt-2 block rounded-[1.35rem] border border-white/10 bg-white/[0.04] p-3 shadow-[0_18px_50px_rgba(4,11,26,0.14)] backdrop-blur-xl transition hover:border-white/15 hover:bg-white/[0.06] sm:p-4"
+        className="group mt-2 block w-full rounded-[1.35rem] border border-white/10 bg-white/[0.04] p-3 shadow-[0_18px_50px_rgba(4,11,26,0.14)] backdrop-blur-xl transition hover:border-white/15 hover:bg-white/[0.06] sm:p-4"
       >
         <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
           <div>
