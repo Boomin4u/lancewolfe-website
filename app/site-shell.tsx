@@ -44,7 +44,10 @@ export function SiteShell({
 }) {
   return (
     <main className="relative min-h-screen overflow-hidden bg-[var(--background)] text-[var(--foreground)]">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(91,203,235,0.12),_transparent_28%),radial-gradient(circle_at_top_right,_rgba(11,31,59,0.22),_transparent_36%),linear-gradient(180deg,#071120_0%,#091521_100%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(91,203,235,0.12),_transparent_28%),radial-gradient(circle_at_top_right,_rgba(11,31,59,0.22),_transparent_36%),linear-gradient(180deg,#071120_0%,#091521_100%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.035)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.035)_1px,transparent_1px)] bg-[size:72px_72px] opacity-[0.12] [mask-image:radial-gradient(circle_at_center,black_42%,transparent_92%)]" />
+      <div className="site-shell-orb site-shell-orb-a" />
+      <div className="site-shell-orb site-shell-orb-b" />
       <div className="relative mx-auto flex min-h-screen w-full max-w-4xl flex-col px-4 py-6 sm:px-6 lg:px-8 lg:py-10">
         <header className="flex flex-wrap items-center justify-between gap-3">
           <div className="text-[11px] font-semibold uppercase tracking-[0.32em] text-sky-100/78">
@@ -63,7 +66,8 @@ export function SiteShell({
           </nav>
         </header>
 
-        <section className="mt-6 rounded-[1.9rem] border border-white/10 bg-white/[0.04] p-5 shadow-[0_20px_60px_rgba(4,11,26,0.24)] backdrop-blur-xl sm:p-8">
+        <section className="relative mt-6 overflow-hidden rounded-[1.9rem] border border-white/10 bg-white/[0.05] p-5 shadow-[0_20px_60px_rgba(4,11,26,0.24)] backdrop-blur-xl sm:p-8">
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-sky-200/55 to-transparent" />
           <div className="flex flex-col gap-6 md:flex-row md:items-start md:gap-8">
             {portrait ? <div className="md:shrink-0">{portrait}</div> : null}
             <div className="min-w-0 flex-1">

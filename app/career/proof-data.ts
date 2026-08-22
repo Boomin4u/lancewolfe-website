@@ -19,15 +19,15 @@ const stateCodes = new Set(
 
 export const proofStats = [
   {
-    label: "Events worked",
-    value: `${timelineRows.length}`,
+    label: "Years in events",
+    value: `${eventEndYear - eventStartYear + 1}+`,
   },
   {
     label: "States reached",
     value: `${stateCodes.size}`,
   },
   {
-    label: "Years in events",
-    value: `${eventEndYear - eventStartYear + 1}+`,
+    label: "Events worked",
+    value: `${timelineRows.length}`,
   },
 ] as const;

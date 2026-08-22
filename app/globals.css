@@ -41,6 +41,50 @@ body {
   font-family: var(--font-inter), system-ui, sans-serif;
 }
 
+@keyframes site-shell-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate3d(0, 18px, 0) scale(1.06);
+  }
+}
+
+.site-shell-orb {
+  pointer-events: none;
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(72px);
+  opacity: 0.32;
+  mix-blend-mode: screen;
+  animation: site-shell-drift 18s ease-in-out infinite;
+}
+
+.site-shell-orb-a {
+  left: -6rem;
+  top: -5rem;
+  width: 18rem;
+  height: 18rem;
+  background: rgba(91, 203, 235, 0.18);
+}
+
+.site-shell-orb-b {
+  right: -7rem;
+  top: 10rem;
+  width: 24rem;
+  height: 24rem;
+  background: rgba(11, 31, 59, 0.28);
+  animation-delay: -7s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-shell-orb {
+    animation: none;
+  }
+}
+
 button,
 input,
 select,

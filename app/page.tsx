@@ -3,6 +3,8 @@ import Image from "next/image";
 import { SiteShell } from "./site-shell";
 import { buildPageMetadata } from "./seo";
 import { InternalNav } from "./internal-nav";
+import { ProofStrip } from "./career/proof-strip";
+import { proofStats } from "./career/proof-data";
 
 export const metadata: Metadata = buildPageMetadata({
   title: "Lance Wolfe",
@@ -16,7 +18,7 @@ export default function Home() {
       eyebrow="Lance Wolfe"
       title="Lance Wolfe"
       subtitle="Florida-based. Nationwide experience."
-      body="Live-event operations professional with 10+ years in hospitality and nationwide experience across major music festivals, sporting events, and premium hospitality programs."
+      body="Live-event operations leader with 10+ years across hospitality, festival staffing, and national event programs."
       primary={{ href: "/career/", label: "View resumes" }}
       secondary={{ href: "/chronicles/", label: "Read the chronicles" }}
       portrait={
@@ -32,12 +34,25 @@ export default function Home() {
           />
         </div>
       }
-      childrenSpacingClassName="mt-6"
     >
-      <section className="grid gap-4 md:grid-cols-3 -mt-1 sm:-mt-2">
+      <section className="rounded-[1.5rem] border border-white/10 bg-white/[0.04] p-3.5 shadow-[0_18px_48px_rgba(4,11,26,0.14)] backdrop-blur-xl sm:p-4">
+        <div className="flex items-center justify-between gap-3">
+          <div className="text-[10px] font-semibold uppercase tracking-[0.28em] text-sky-100/78">
+            At a glance
+          </div>
+          <div className="text-[10px] font-semibold uppercase tracking-[0.28em] text-slate-500">
+            Overview
+          </div>
+        </div>
+        <div className="mt-3">
+          <ProofStrip stats={proofStats} />
+        </div>
+      </section>
+
+      <section className="mt-4 grid gap-4 md:grid-cols-3 sm:mt-5">
         <InfoCard
           title="Career"
-          text="A clean resume hub with full-event and specialized resume views."
+          text="A polished hub for full-event and specialized resume views."
           href="/career/"
           action="View resumes"
         />
