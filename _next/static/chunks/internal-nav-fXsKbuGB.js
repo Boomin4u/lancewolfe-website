@@ -1,0 +1,1 @@
+import{i as e}from"./framework-BgSIrAUN.js";var t=e();function n({href:e,className:n,children:r,...i}){return(0,t.jsx)(`a`,{href:e,className:n,...i,children:r})}export{n as InternalNav};
