@@ -12,6 +12,7 @@ const routes = [
   "/career/staffing/",
   "/career/timeline/",
   "/chronicles/",
+  "/chronicles/check-the-batteries/",
   "/chronicles/this-one-was-mine/",
   "/chronicles/the-power-of-restraint/",
 ];

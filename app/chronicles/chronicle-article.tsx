@@ -80,6 +80,17 @@ export function ChronicleArticle({
                 </p>
               ))}
 
+              {section.link ? (
+                <a
+                  href={section.link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex rounded-full border border-white/12 bg-white/[0.08] px-4 py-2 text-sm font-medium text-sky-100 transition hover:border-white/20 hover:bg-white/[0.12]"
+                >
+                  {section.link.label}
+                </a>
+              ) : null}
+
               {section.bullets?.length ? (
                 <ul className="space-y-2 pl-4 text-sm leading-7 text-slate-300/88">
                   {section.bullets.map((bullet, bulletIndex) => (

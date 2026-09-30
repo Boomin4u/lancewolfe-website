@@ -2,6 +2,7 @@ export type ChronicleSection = {
   heading?: string;
   paragraphs: string[];
   bullets?: string[];
+  link?: { href: string; label: string };
 };
 
 export type ChronicleEntry = {

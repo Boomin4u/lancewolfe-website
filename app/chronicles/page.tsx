@@ -86,7 +86,7 @@ export default function ChroniclesPage() {
         </InternalNav>
       </section>
 
-      <section className="mt-4 grid gap-4 md:grid-cols-2 md:items-stretch">
+      <section className="mt-4 grid gap-4 md:grid-cols-3 md:items-stretch">
         {chronicles.map((entry) => (
           <InternalNav
             key={entry.slug}

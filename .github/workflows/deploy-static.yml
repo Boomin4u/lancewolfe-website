@@ -44,6 +44,7 @@ jobs:
           test -f dist/client/chronicles/index.html
           test -f dist/client/chronicles/the-power-of-restraint/index.html
           test -f dist/client/chronicles/this-one-was-mine/index.html
+          test -f dist/client/chronicles/check-the-batteries/index.html
           test -f dist/client/chronicles-power-of-restraint.jpg
 
       - name: Mark export as static
