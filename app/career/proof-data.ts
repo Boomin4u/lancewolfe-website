@@ -28,6 +28,7 @@ export const proofStats = [
   {
     label: "States reached",
     value: `${stateCodes.size}`,
+    mapStates: [...stateCodes].sort(),
   },
   {
     label: "Events worked",
