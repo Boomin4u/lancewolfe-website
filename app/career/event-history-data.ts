@@ -201,7 +201,7 @@ const rawEventHistorySections: CareerTimelineSection[] = [
           { name: "The Players Championship", location: "Ponte Vedra Beach, FL", dateLabel: "March 10-15, 2026", monthLabel: "March", role: "Staff Member" },
           { name: "Valspar Championship", location: "Palm Harbor, FL", dateLabel: "March 19-22, 2026", monthLabel: "March", role: "Staff Member" },
           { name: "Tortuga Music Festival", location: "Fort Lauderdale, FL", dateLabel: "April 10-12, 2026", monthLabel: "April", role: "Staff Member" },
-          { name: "Resonate", location: "Live Oak, FL", dateLabel: "April 16-18, 2026", employer: "Other", role: "Food Vendor", note: "Suwannee Music Park" },
+          { name: "Resonate", location: "Live Oak, FL", dateLabel: "April 16-18, 2026", employer: "Risin Vibez", role: "Food Vendor", note: "Suwannee Music Park" },
           { name: "Formula 1 Miami Grand Prix", location: "Miami Gardens, FL", dateLabel: "May 1-3, 2026", monthLabel: "May", role: "Staff Member", company: "Sweet & Chili" },
           { name: "Welcome to Rockville", location: "Daytona Beach, FL", dateLabel: "May 7-10, 2026", monthLabel: "May", role: "Staff Member" },
           { name: "U.S. Open (Golf)", location: "Southampton, NY", dateLabel: "June 18-21, 2026", monthLabel: "June", company: "Ridgewells", role: "Staff Member", url: "https://www.usopen.com/" },

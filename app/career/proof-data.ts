@@ -6,6 +6,7 @@ const timelineRows = eventHistorySections.flatMap((section) =>
       year: year.year,
       name: entry.name,
       location: entry.location,
+      role: entry.role ?? "Bartender",
       status: entry.status,
     })),
   ),
@@ -28,24 +29,11 @@ const stateCodes = new Set(
     .filter((state): state is string => /^[A-Z]{2}$|^DC$/.test(state)),
 );
 
-const featuredEventDefinitions = [
-  { name: "Formula 1", matches: (name: string) => /Formula (?:1|One)/i.test(name) },
-  { name: "Electric Forest", matches: (name: string) => /^Electric Forest/i.test(name) },
-  { name: "Hulaween", matches: (name: string) => /^Hulaween/i.test(name) },
-  { name: "Ultra", matches: (name: string) => /^Ultra/i.test(name) },
-  {
-    name: "PGA Events",
-    matches: (name: string) => /^(?:The Players Championship|Valspar Championship|John Deere Classic|3M Open|Hoag Classic|American Family Insurance Championship|Ryder Cup)$/i.test(name),
-  },
-  { name: "EDC", matches: (name: string) => /^EDC\s/i.test(name) },
-] as const;
-
-const featuredEvents = featuredEventDefinitions
-  .map((event) => ({
-    name: event.name,
-    count: completedTimelineRows.filter((row) => event.matches(row.name)).length,
-  }))
-  .filter((event) => event.count > 0)
+const roleCounts = [...completedTimelineRows.reduce((counts, row) => {
+  counts.set(row.role, (counts.get(row.role) ?? 0) + 1);
+  return counts;
+}, new Map<string, number>())]
+  .map(([name, count]) => ({ name, count }))
   .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name));
 
 export const proofStats = [
@@ -60,8 +48,8 @@ export const proofStats = [
     mapStates: [...stateCodes].sort(),
   },
   {
-    label: "Events worked",
+    label: "Career event credits",
     value: `${completedTimelineRows.length}`,
-    featuredEvents,
+    roleCounts,
   },
 ] as const;

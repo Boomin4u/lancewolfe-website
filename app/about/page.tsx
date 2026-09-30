@@ -12,16 +12,16 @@ const profileLinks = [
 
 const focusPoints = [
   {
-    title: "Career focus",
-    text: "Live events, staffing, hospitality, and operations across festivals and venues.",
+    title: "Core capabilities",
+    text: "Event operations, workforce leadership, hospitality, talent buying, venue marketing, and independent production.",
   },
   {
     title: "Working style",
-    text: "Calm, practical, and process-minded. I like systems that keep teams moving well under pressure.",
+    text: "Calm under pressure, practical in the moment, and focused on systems that help teams execute consistently.",
   },
   {
     title: "Current direction",
-    text: "A clearer personal site, current resumes, and more writing over time.",
+    text: "Building dependable teams and repeatable operating systems for festivals, venues, hospitality programs, and large-scale live events.",
   },
 ];
 

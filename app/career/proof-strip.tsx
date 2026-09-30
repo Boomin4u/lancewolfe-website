@@ -10,7 +10,7 @@ type ProofStat = {
   label: string;
   value: string;
   mapStates?: readonly string[];
-  featuredEvents?: readonly {
+  roleCounts?: readonly {
     name: string;
     count: number;
   }[];
@@ -95,26 +95,30 @@ function StatesMap({ activeStates }: { activeStates: readonly string[] }) {
   );
 }
 
-function FeaturedEvents({ events }: { events: readonly { name: string; count: number }[] }) {
+function RoleBreakdown({ roles }: { roles: readonly { name: string; count: number }[] }) {
   return (
     <div className="w-[min(88vw,30rem)] rounded-[1.25rem] border border-sky-200/20 bg-[#07111f]/95 p-4 shadow-[0_24px_70px_rgba(0,0,0,0.48)] backdrop-blur-xl">
       <div className="flex items-end justify-between gap-4">
         <div>
-          <p className="text-[9px] font-semibold uppercase tracking-[0.28em] text-sky-100/65">Signature experience</p>
-          <p className="mt-1 text-sm font-semibold text-white">Major events, multiple editions</p>
+          <p className="text-[9px] font-semibold uppercase tracking-[0.28em] text-sky-100/65">Career range</p>
+          <p className="mt-1 text-sm font-semibold text-white">Credits by role</p>
         </div>
-        <p className="whitespace-nowrap text-[10px] text-slate-400">Selected highlights</p>
+        <p className="whitespace-nowrap text-[10px] text-slate-400">Completed work</p>
       </div>
 
+      <p className="mt-3 text-xs leading-5 text-slate-400">
+        Completed credits spanning production, talent buying, marketing, staffing, hospitality, and operations.
+      </p>
+
       <div className="mt-4 grid grid-cols-2 gap-2">
-        {events.map((event) => (
+        {roles.map((role) => (
           <div
-            key={event.name}
+            key={role.name}
             className="flex min-h-12 items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/[0.045] px-3 py-2"
           >
-            <span className="text-xs font-medium leading-tight text-slate-100">{event.name}</span>
+            <span className="text-xs font-medium leading-tight text-slate-100">{role.name}</span>
             <span className="flex h-7 min-w-7 shrink-0 items-center justify-center rounded-full bg-sky-300 text-[10px] font-bold text-slate-950">
-              {event.count}x
+              {role.count}
             </span>
           </div>
         ))}
@@ -185,12 +189,12 @@ export function ProofStrip({ stats }: { stats: readonly ProofStat[] }) {
   return (
     <section className="relative z-30 rounded-[1.45rem] border border-white/10 bg-white/[0.04] shadow-[0_20px_60px_rgba(4,11,26,0.14)] backdrop-blur-xl">
       <div className="flex flex-col divide-y divide-white/10 md:flex-row md:divide-x md:divide-y-0">
-        {stats.map((stat) => stat.mapStates || stat.featuredEvents || stat.yearActivity ? (
+        {stats.map((stat) => stat.mapStates || stat.roleCounts || stat.yearActivity ? (
           <article
             key={stat.label}
             className="group relative flex-1 text-center md:text-left"
           >
-            {stat.featuredEvents ? (
+            {stat.roleCounts ? (
               <a
                 href="/career/timeline/"
                 aria-label={`${stat.value} ${stat.label}. Explore the full event history.`}
@@ -240,8 +244,8 @@ export function ProofStrip({ stats }: { stats: readonly ProofStat[] }) {
               </button>
               {stat.mapStates ? (
                 <StatesMap activeStates={stat.mapStates} />
-              ) : stat.featuredEvents ? (
-                <FeaturedEvents events={stat.featuredEvents} />
+              ) : stat.roleCounts ? (
+                <RoleBreakdown roles={stat.roleCounts} />
               ) : stat.yearActivity ? (
                 <YearActivity years={stat.yearActivity} />
               ) : null}
