@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 const siteTitle = "Lance Wolfe";
 const siteDescription =
-  "Personal site for Lance Wolfe, with resumes, chronicles, and career information.";
+  "Official website of Lance Wolfe, a Florida-based live-event operations, staffing, hospitality, and festival professional with nationwide experience.";
 
 type PageMetadataOptions = {
   title: string;

@@ -7,8 +7,9 @@ import { ProofStrip } from "./career/proof-strip";
 import { proofStats } from "./career/proof-data";
 
 export const metadata: Metadata = buildPageMetadata({
-  title: "Lance Wolfe",
-  description: "Personal home page for Lance Wolfe, with quick access to resumes and the Chronicles.",
+  title: "Lance Wolfe | Live Event Operations & Staffing",
+  description:
+    "Official website of Lance Wolfe, a Florida-based live-event operations, staffing, hospitality, and festival professional with nationwide experience.",
   path: "/",
 });
 
@@ -52,21 +53,21 @@ export default function Home() {
       <section className="mt-4 grid gap-4 md:grid-cols-3 sm:mt-5">
         <InfoCard
           title="Career"
-          text="A polished hub for full-event and specialized resume views."
+          text="Explore Lance Wolfe’s live-event career, resumes, and nationwide event history."
           href="/career/"
-          action="View resumes"
+          action="View Lance’s career"
         />
         <InfoCard
           title="Chronicles"
           text="The thinking behind the mind at work."
           href="/chronicles/"
-          action="Read the chronicles"
+          action="Read Lance’s chronicles"
         />
         <InfoCard
           title="About"
-          text="A quick bio, what I do, and what I’m building next."
+          text="Learn about Lance Wolfe’s work in live events, staffing, hospitality, and operations."
           href="/about/"
-          action="Learn more"
+          action="About Lance Wolfe"
           tone="soft"
         />
       </section>

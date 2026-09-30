@@ -3,7 +3,7 @@ import "./globals.css";
 
 const siteTitle = "Lance Wolfe";
 const siteDescription =
-  "Personal site for Lance Wolfe, with resumes, chronicles, and career information.";
+  "Official website of Lance Wolfe, a Florida-based live-event operations, staffing, hospitality, and festival professional with nationwide experience.";
 const siteImage = "/og.png";
 
 export const metadata: Metadata = {
@@ -49,6 +49,24 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="antialiased">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              "@id": "https://lancewolfe.com/#website",
+              url: "https://lancewolfe.com/",
+              name: "Lance Wolfe",
+              alternateName: "Lance Wolfe Career Portfolio",
+              description: siteDescription,
+              inLanguage: "en-US",
+              publisher: {
+                "@id": "https://lancewolfe.com/#person",
+              },
+            }),
+          }}
+        />
         {children}
       </body>
     </html>

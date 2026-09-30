@@ -15,16 +15,44 @@ export function ChronicleArticle({
   nextHref?: string;
   nextTitle?: string;
 }) {
+  const articleUrl = `https://lancewolfe.com/chronicles/${entry.slug}/`;
+
   return (
-    <SiteShell
-      eyebrow="Chronicles"
-      title={entry.title}
-      subtitle={entry.tag}
-      body={entry.featuredSummary}
-      primary={{ href: "/chronicles/", label: "Back to chronicles" }}
-      secondary={{ href: "/career/", label: "View resumes" }}
-      childrenSpacingClassName="mt-4"
-    >
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Article",
+            "@id": `${articleUrl}#article`,
+            mainEntityOfPage: articleUrl,
+            headline: entry.title,
+            description: entry.excerpt,
+            image: "https://lancewolfe.com/chronicles-featured-post.png",
+            datePublished: entry.sortDate,
+            dateModified: entry.sortDate,
+            author: {
+              "@id": "https://lancewolfe.com/#person",
+              "@type": "Person",
+              name: "Lance Wolfe",
+              url: "https://lancewolfe.com/about/",
+            },
+            publisher: {
+              "@id": "https://lancewolfe.com/#person",
+            },
+          }),
+        }}
+      />
+      <SiteShell
+        eyebrow="The Chronicles of Lance Wolfe"
+        title={entry.title}
+        subtitle={entry.tag}
+        body={entry.featuredSummary}
+        primary={{ href: "/chronicles/", label: "More from Lance Wolfe" }}
+        secondary={{ href: "/career/", label: "Explore Lance’s career" }}
+        childrenSpacingClassName="mt-4"
+      >
       <article className="rounded-[1.45rem] border border-white/10 bg-white/[0.04] p-4 sm:p-5">
         <div className="flex flex-wrap items-center gap-2 text-xs font-semibold uppercase tracking-[0.24em] text-slate-400">
           <span>{entry.date}</span>
@@ -101,6 +129,7 @@ export function ChronicleArticle({
           )}
         </section>
       ) : null}
-    </SiteShell>
+      </SiteShell>
+    </>
   );
 }

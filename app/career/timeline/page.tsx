@@ -59,8 +59,9 @@ const timelineRows = eventHistorySections
   });
 
 export const metadata: Metadata = buildPageMetadata({
-  title: "Lance Wolfe | Event Timeline",
-  description: "A clean timeline of event work, sorted by year and month with employers, roles, and linked events.",
+  title: "Lance Wolfe | Nationwide Live Event History",
+  description:
+    "Explore Lance Wolfe’s nationwide live-event history across festivals, sporting events, hospitality programs, staffing, and event production.",
   path: "/career/timeline/",
 });
 
