@@ -17,11 +17,11 @@ const entry: ChronicleEntry = {
       "paragraphs": [
         "I was walking toward my assigned bar at a festival in Iowa when I saw who was running it.",
         "“No fucking way.”",
-        "My bar manager was romantically involved with the woman I loved.",
+        "My bar manager was dating the woman I loved.",
         "We were about to spend three days working together.",
-        "The strange part was that he wasn’t a stranger. He’d been my bar manager at a beach festival about three years earlier. We’d crossed paths again at another event, where I congratulated him on a promotion. Until then, he was simply another person I occasionally encountered in the small world of live events.",
-        "By Iowa, the context had changed considerably.",
-        "There’s a difference between knowing someone professionally and finding out you’ll be standing beside him for more than twelve hours a day after your personal lives have unexpectedly collided.",
+        "The strange part was that he wasn’t a stranger. He’d been my bar manager at a beach festival about three years earlier. We’d crossed paths again at another event, where I congratulated him on a promotion. Until then, he was simply REDACTED, just another person I'd occasionally encounter in the small world of live events.",
+        "By Iowa, things were drastically different.",
+        "Knowing someone professionally is one thing. Working beside him for more than twelve hours a day while he’s dating the woman you love is another.",
         "I didn’t know exactly what he’d been told, but he knew some version of the history between me and his girlfriend.",
         "I felt the pull to explain. To make sure he understood my place in the story. A comment here, a little context there. It didn’t have to look like a confrontation to become one.",
         "But he was there to manage a bar, and I was there to work it.",
@@ -43,7 +43,7 @@ const entry: ChronicleEntry = {
         "And a shared bar in the middle of a festival wasn’t where I needed to sort out my personal life.",
         "When I think about Iowa, I remember walking toward that bar, seeing him, and realizing what the next three days were going to involve.",
         "“No fucking way.”",
-        "Then I worked the next three days.",
+        "Then I went to work.",
         "Sometimes a lesson comes down to an old phrase you finally understand well enough to follow:",
         "Don’t shit where you eat."
       ]
