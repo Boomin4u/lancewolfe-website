@@ -29,8 +29,21 @@ const stateCodes = new Set(
     .filter((state): state is string => /^[A-Z]{2}$|^DC$/.test(state)),
 );
 
+function roleCategory(role: string): string {
+  if (role === "Talent Buyer / Marketing Manager" || role === "Marketing Manager") {
+    return "Talent Buying / Marketing";
+  }
+
+  if (role === "Staffing" || role === "Staffing Manager") {
+    return "Staffing / Staffing Management";
+  }
+
+  return role;
+}
+
 const roleCounts = [...completedTimelineRows.reduce((counts, row) => {
-  counts.set(row.role, (counts.get(row.role) ?? 0) + 1);
+  const category = roleCategory(row.role);
+  counts.set(category, (counts.get(category) ?? 0) + 1);
   return counts;
 }, new Map<string, number>())]
   .map(([name, count]) => ({ name, count }))
