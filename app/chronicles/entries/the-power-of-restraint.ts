@@ -5,6 +5,7 @@ const entry: ChronicleEntry = {
   "title": "The Power of Restraint",
   "date": "September 29, 2026",
   "sortDate": "2026-09-29",
+  "storyYear": 2026,
   "tag": "Lessons From the Road",
   "readTime": "3 min read",
   "excerpt": "Three long days behind a bar with someone who was dating the woman I loved taught me something about choosing what to say and when.",

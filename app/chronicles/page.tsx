@@ -36,7 +36,7 @@ export default function ChroniclesPage() {
           />
         </div>
       }
-      primary={{ href: `/chronicles/${featuredPost.slug}/`, label: "Read the latest" }}
+      primary={{ href: `/chronicles/${featuredPost.slug}/`, label: "Start reading" }}
       secondary={{ href: "/career/", label: "View Resumes" }}
     >
       <section className="grid gap-4">
@@ -48,7 +48,7 @@ export default function ChroniclesPage() {
           <div className="grid gap-0 lg:grid-cols-[1.15fr_0.85fr] lg:items-stretch">
             <div className="p-5">
               <div className="text-[11px] font-semibold uppercase tracking-[0.28em] text-sky-100/75">
-                Featured post
+                Start here
               </div>
               <h2 className="mt-3 text-2xl font-semibold text-white">
                 {featuredPost.title}
@@ -61,7 +61,7 @@ export default function ChroniclesPage() {
                 <span>•</span>
                 <span>{featuredPost.readTime}</span>
                 <span>•</span>
-                <span>{featuredPost.date}</span>
+                <span>{featuredPost.storyYear}</span>
               </div>
               <div className="mt-5">
                 <span className="inline-flex rounded-full border border-white/12 bg-white/[0.08] px-4 py-2 text-sm font-medium text-white transition group-hover:border-white/20 group-hover:bg-white/[0.12]">
@@ -86,7 +86,7 @@ export default function ChroniclesPage() {
         </InternalNav>
       </section>
 
-      <section className="mt-4 grid gap-4 md:grid-cols-3 md:items-stretch">
+      <section className="mt-4 grid gap-4 md:grid-cols-2 md:items-stretch">
         {chronicles.map((entry) => (
           <InternalNav
             key={entry.slug}
@@ -113,7 +113,7 @@ export default function ChroniclesPage() {
             </h3>
             <p className="mt-2 text-sm leading-6 text-slate-300/85">{entry.excerpt}</p>
             <div className="mt-4 flex flex-wrap gap-2 text-sm text-slate-400">
-              <span>{entry.date}</span>
+              <span>{entry.storyYear}</span>
               <span>•</span>
               <span>{entry.readTime}</span>
             </div>

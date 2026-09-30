@@ -7,9 +7,9 @@ const entryModules = import.meta.glob("./entries/*.ts", {
 const chronicleEntries = Object.values(entryModules).map((module) => module.default);
 
 // Add new entries by copying one file in `app/chronicles/entries/`.
-// The archive sorts newest-first automatically, so file order does not matter.
+// Read the stories in the order they happened, not their publication order.
 export const chronicles = [...chronicleEntries].sort((a, b) =>
-  b.sortDate.localeCompare(a.sortDate),
+  a.storyYear - b.storyYear || a.sortDate.localeCompare(b.sortDate),
 );
 
 export function getChronicleBySlug(slug: string) {

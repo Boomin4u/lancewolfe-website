@@ -9,6 +9,7 @@ export type ChronicleEntry = {
   title: string;
   date: string;
   sortDate: string;
+  storyYear: number;
   tag: string;
   readTime: string;
   excerpt: string;

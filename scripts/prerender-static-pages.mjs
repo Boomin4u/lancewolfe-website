@@ -12,10 +12,8 @@ const routes = [
   "/career/staffing/",
   "/career/timeline/",
   "/chronicles/",
+  "/chronicles/this-one-was-mine/",
   "/chronicles/the-power-of-restraint/",
-  "/chronicles/busy-vs-useful/",
-  "/chronicles/early-event-production/",
-  "/chronicles/why-operations-is-judgment/",
 ];
 
 const port = 4173;
