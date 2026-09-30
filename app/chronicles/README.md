@@ -12,3 +12,4 @@ Notes:
 - New entries are auto-discovered from `app/chronicles/entries/*.ts`.
 - The archive sorts newest-first automatically.
 - Keep `sortDate` in `YYYY-MM-DD` format so ordering stays correct.
+- Lance does not use em dashes in his writing. Do not use them in entry text, excerpts, or featured summaries.
