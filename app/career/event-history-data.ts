@@ -427,7 +427,7 @@ const rawEventHistorySections: CareerTimelineSection[] = [
       },
       {
         year: 2017,
-        label: "52 events",
+        label: "53 events",
         summary: "The earliest Pizza & Champagne and party-branded producer run, plus early festival credits.",
         entries: [
           { name: "Pizza & Champagne w/ BTU", location: "Tier Nightclub, Orlando, FL", dateLabel: "December 27, 2017", monthLabel: "December", employer: "Self", role: "Producer" },
@@ -441,6 +441,7 @@ const rawEventHistorySections: CareerTimelineSection[] = [
           { name: "Pizza & Champagne: The EDC Recovery", location: "Tier Nightclub, Orlando, FL", dateLabel: "November 15, 2017", monthLabel: "November", employer: "Self", role: "Producer" },
           { name: "Pizza & Champagne w/ Nitti Gritti", location: "Tier Nightclub, Orlando, FL", dateLabel: "November 8, 2017", monthLabel: "November", employer: "Self", role: "Producer" },
           { name: "Pizza & Champagne w/ Audigy, Golden Child and DJ XTA-C", location: "Tier Nightclub, Orlando, FL", dateLabel: "November 1, 2017", monthLabel: "November", employer: "Self", role: "Producer" },
+          { name: "Hulaween", location: "Live Oak, FL", dateLabel: "October 26-29, 2017", monthLabel: "October", employer: "Other", role: "Bartender" },
           { name: "Pizza & Champagne w/ Whipped Cream", location: "Tier Nightclub, Orlando, FL", dateLabel: "October 25, 2017", monthLabel: "October", employer: "Self", role: "Producer" },
           { name: "Pizza & Champagne Road to Wynwood Fear Factory", location: "Tier Nightclub, Orlando, FL", dateLabel: "October 18, 2017", monthLabel: "October", employer: "Self", role: "Producer" },
           { name: "Pizza & Champagne the Brittanie Brown Takeover", location: "Tier Nightclub, Orlando, FL", dateLabel: "October 11, 2017", monthLabel: "October", employer: "Self", role: "Producer" },
