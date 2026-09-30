@@ -30,8 +30,19 @@ const GILT_EMPLOYER = "GILT Nightclub";
 const GILT_TALENT_ROLE = "Talent Buyer / Marketing Manager";
 const GILT_MARKETING_ROLE = "Marketing Manager";
 
+function cleanGiltEventName(name: string): string {
+  return name
+    .replace(/^\d{1,2}\.\d{1,2}\.\d{2}\s+/, "")
+    .replace(/\b\d{1,2}[./]\d{1,2}[./]\d{2,4}\b/g, "")
+    .replace(/\s+(?:@|at)\s+GILT(?:\s+Concert Venue|\s+Night Club)?(?:\s*\(Orlando, FL\))?/gi, "")
+    .replace(/\s+(?:on\s+)?(?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)\s*$/i, "")
+    .replace(/\s+-\s*$/, "")
+    .replace(/\s{2,}/g, " ")
+    .trim();
+}
+
 function giltEvent(name: string, dateLabel: string, role: string): CareerTimelineEntry {
-  return { name, location: GILT_LOCATION, dateLabel, employer: GILT_EMPLOYER, role };
+  return { name: cleanGiltEventName(name), location: GILT_LOCATION, dateLabel, employer: GILT_EMPLOYER, role };
 }
 
 const giltEvents2022: CareerTimelineEntry[] = [

@@ -115,7 +115,14 @@ export default function CareerTimelinePage() {
 
               <div className="border-t border-white/10">
                 <div className="overflow-x-auto">
-                  <table className="min-w-full border-separate border-spacing-0">
+                  <table className="min-w-[72rem] table-fixed border-separate border-spacing-0">
+                    <colgroup>
+                      <col className="w-[12rem]" />
+                      <col className="w-[24rem]" />
+                      <col className="w-[10rem]" />
+                      <col className="w-[11rem]" />
+                      <col className="w-[15rem]" />
+                    </colgroup>
                     <thead className="bg-white/[0.04]">
                       <tr className="text-left text-[10px] font-semibold uppercase tracking-[0.22em] text-slate-400">
                         <th className="px-3 py-3">Date</th>
