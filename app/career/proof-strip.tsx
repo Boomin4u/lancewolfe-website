@@ -152,7 +152,7 @@ function YearActivity({ years }: { years: readonly { year: number; count: number
       <div className="mt-4 flex h-36 items-end gap-1.5 border-b border-white/15 px-1">
         {years.map((year) => (
           <div key={year.year} className="group/bar flex h-full min-w-0 flex-1 flex-col items-center justify-end gap-1.5">
-            <span className="text-[8px] font-semibold text-slate-400 opacity-0 transition group-hover/bar:opacity-100">
+            <span className="text-[9px] font-semibold tabular-nums text-sky-100/75">
               {year.count}
             </span>
             <div
