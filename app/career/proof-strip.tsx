@@ -7,6 +7,14 @@ type ProofStat = {
   label: string;
   value: string;
   mapStates?: readonly string[];
+  featuredEvents?: readonly {
+    name: string;
+    count: number;
+  }[];
+  yearActivity?: readonly {
+    year: number;
+    count: number;
+  }[];
 };
 
 const stateCodeByFips: Record<string, string> = {
@@ -84,31 +92,124 @@ function StatesMap({ activeStates }: { activeStates: readonly string[] }) {
   );
 }
 
+function FeaturedEvents({ events }: { events: readonly { name: string; count: number }[] }) {
+  return (
+    <div className="w-[min(88vw,30rem)] rounded-[1.25rem] border border-sky-200/20 bg-[#07111f]/95 p-4 shadow-[0_24px_70px_rgba(0,0,0,0.48)] backdrop-blur-xl">
+      <div className="flex items-end justify-between gap-4">
+        <div>
+          <p className="text-[9px] font-semibold uppercase tracking-[0.28em] text-sky-100/65">Signature experience</p>
+          <p className="mt-1 text-sm font-semibold text-white">Major events, multiple editions</p>
+        </div>
+        <p className="whitespace-nowrap text-[10px] text-slate-400">Selected highlights</p>
+      </div>
+
+      <div className="mt-4 grid grid-cols-2 gap-2">
+        {events.map((event) => (
+          <div
+            key={event.name}
+            className="flex min-h-12 items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/[0.045] px-3 py-2"
+          >
+            <span className="text-xs font-medium leading-tight text-slate-100">{event.name}</span>
+            <span className="flex h-7 min-w-7 shrink-0 items-center justify-center rounded-full bg-sky-300 text-[10px] font-bold text-slate-950">
+              {event.count}x
+            </span>
+          </div>
+        ))}
+      </div>
+
+      <div className="mt-3 flex items-center justify-between border-t border-white/10 pt-3 text-[10px] font-semibold uppercase tracking-[0.2em] text-sky-100/70">
+        Explore the full event history
+        <span aria-hidden="true">→</span>
+      </div>
+    </div>
+  );
+}
+
+function YearActivity({ years }: { years: readonly { year: number; count: number }[] }) {
+  const peak = years.reduce((highest, year) => year.count > highest.count ? year : highest, years[0]);
+  const maximum = Math.max(...years.map((year) => year.count), 1);
+
+  return (
+    <div className="w-[min(88vw,30rem)] rounded-[1.25rem] border border-sky-200/20 bg-[#07111f]/95 p-4 shadow-[0_24px_70px_rgba(0,0,0,0.48)] backdrop-blur-xl">
+      <div className="flex items-end justify-between gap-4">
+        <div>
+          <p className="text-[9px] font-semibold uppercase tracking-[0.28em] text-sky-100/65">Career momentum</p>
+          <p className="mt-1 text-sm font-semibold text-white">Completed events by year</p>
+        </div>
+        <p className="whitespace-nowrap text-[10px] text-slate-400">{years[0].year}–{years.at(-1)?.year}</p>
+      </div>
+
+      <div className="mt-4 flex h-36 items-end gap-1.5 border-b border-white/15 px-1">
+        {years.map((year) => (
+          <div key={year.year} className="group/bar flex h-full min-w-0 flex-1 flex-col items-center justify-end gap-1.5">
+            <span className="text-[8px] font-semibold text-slate-400 opacity-0 transition group-hover/bar:opacity-100">
+              {year.count}
+            </span>
+            <div
+              className="w-full rounded-t-md bg-sky-300/85 transition-colors group-hover/bar:bg-sky-200"
+              style={{ height: `${Math.max(4, Math.round((year.count / maximum) * 100))}%` }}
+              title={`${year.year}: ${year.count} completed events`}
+            />
+            <span className="pb-1 text-[8px] font-medium text-slate-500">{String(year.year).slice(-2)}</span>
+          </div>
+        ))}
+      </div>
+
+      <div className="mt-3 flex items-center justify-between text-[10px] text-slate-400">
+        <span>Annual event volume</span>
+        <span className="font-medium text-sky-100/70">Peak: {peak.year} · {peak.count} events</span>
+      </div>
+    </div>
+  );
+}
+
 export function ProofStrip({ stats }: { stats: readonly ProofStat[] }) {
   return (
     <section className="relative z-30 rounded-[1.45rem] border border-white/10 bg-white/[0.04] shadow-[0_20px_60px_rgba(4,11,26,0.14)] backdrop-blur-xl">
       <div className="flex flex-col divide-y divide-white/10 md:flex-row md:divide-x md:divide-y-0">
-        {stats.map((stat) => stat.mapStates ? (
+        {stats.map((stat) => stat.mapStates || stat.featuredEvents || stat.yearActivity ? (
           <article
             key={stat.label}
             className="group relative flex-1 text-center md:text-left"
           >
-            <button
-              type="button"
-              aria-label={`${stat.value} ${stat.label}. Show work footprint map.`}
-              className="w-full cursor-pointer px-4 py-3 text-center outline-none sm:px-5 sm:py-4 md:text-left"
-            >
-              <div className="flex items-center justify-center gap-2 md:justify-start">
-                <span className="text-xl font-semibold tracking-tight text-white sm:text-2xl">{stat.value}</span>
-                <span className="text-[10px] text-sky-200/70 transition group-hover:translate-x-0.5 group-hover:text-sky-100 group-focus-within:translate-x-0.5 group-focus-within:text-sky-100">↗</span>
-              </div>
-              <div className="mt-1 text-[9px] font-semibold uppercase tracking-[0.28em] text-sky-100/75">
-                {stat.label}
-              </div>
-            </button>
+            {stat.featuredEvents ? (
+              <a
+                href="/career/timeline/"
+                aria-label={`${stat.value} ${stat.label}. Explore the full event history.`}
+                className="block w-full cursor-pointer px-4 py-3 text-center outline-none sm:px-5 sm:py-4 md:text-left"
+              >
+                <div className="flex items-center justify-center gap-2 md:justify-start">
+                  <span className="text-xl font-semibold tracking-tight text-white sm:text-2xl">{stat.value}</span>
+                  <span className="text-[10px] text-sky-200/70 transition group-hover:translate-x-0.5 group-hover:text-sky-100 group-focus-within:translate-x-0.5 group-focus-within:text-sky-100">↗</span>
+                </div>
+                <div className="mt-1 text-[9px] font-semibold uppercase tracking-[0.28em] text-sky-100/75">
+                  {stat.label}
+                </div>
+              </a>
+            ) : (
+              <button
+                type="button"
+                aria-label={`${stat.value} ${stat.label}. Show ${stat.yearActivity ? "annual event activity" : "work footprint map"}.`}
+                className="w-full cursor-pointer px-4 py-3 text-center outline-none sm:px-5 sm:py-4 md:text-left"
+              >
+                <div className="flex items-center justify-center gap-2 md:justify-start">
+                  <span className="text-xl font-semibold tracking-tight text-white sm:text-2xl">{stat.value}</span>
+                  <span className="text-[10px] text-sky-200/70 transition group-hover:translate-x-0.5 group-hover:text-sky-100 group-focus-within:translate-x-0.5 group-focus-within:text-sky-100">↗</span>
+                </div>
+                <div className="mt-1 text-[9px] font-semibold uppercase tracking-[0.28em] text-sky-100/75">
+                  {stat.label}
+                </div>
+              </button>
+            )}
 
             <div className="pointer-events-none absolute left-1/2 top-full z-50 mt-3 -translate-x-1/2 translate-y-1 opacity-0 transition duration-200 group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:pointer-events-auto group-focus-within:translate-y-0 group-focus-within:opacity-100 md:pointer-events-none md:group-hover:pointer-events-auto">
-              <StatesMap activeStates={stat.mapStates} />
+              {stat.mapStates ? (
+                <StatesMap activeStates={stat.mapStates} />
+              ) : stat.featuredEvents ? (
+                <FeaturedEvents events={stat.featuredEvents} />
+              ) : stat.yearActivity ? (
+                <YearActivity years={stat.yearActivity} />
+              ) : null}
             </div>
           </article>
         ) : (
