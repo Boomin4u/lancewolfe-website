@@ -16,6 +16,13 @@ const routes = [
   "/chronicles/the-power-of-restraint/",
 ];
 
+// Replace retired pages explicitly because the host can retain deleted files.
+const retiredChronicleRoutes = [
+  "/chronicles/busy-vs-useful/",
+  "/chronicles/early-event-production/",
+  "/chronicles/why-operations-is-judgment/",
+];
+
 const port = 4173;
 const baseUrl = `http://127.0.0.1:${port}`;
 const outputRoot = resolve("dist/client");
@@ -96,6 +103,13 @@ try {
     await mkdir(dirname(outputPath), { recursive: true });
     await writeFile(outputPath, html);
     console.log(`Prerendered ${route} -> ${outputPath}`);
+  }
+
+  for (const route of retiredChronicleRoutes) {
+    const outputPath = routeToOutputPath(route);
+    await mkdir(dirname(outputPath), { recursive: true });
+    await writeFile(outputPath, `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Chronicles | Lance Wolfe</title><meta name="robots" content="noindex"><link rel="canonical" href="https://lancewolfe.com/chronicles/"><meta http-equiv="refresh" content="0;url=/chronicles/"></head><body><p>This story has been removed. <a href="/chronicles/">Read the Chronicles of Lance Wolfe.</a></p></body></html>`);
+    console.log(`Redirected retired story ${route} -> /chronicles/`);
   }
 
   const notFoundHtml = await fetchPage("/definitely-not-a-real-page", { allow404: true });
