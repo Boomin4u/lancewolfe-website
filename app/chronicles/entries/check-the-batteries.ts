@@ -10,8 +10,8 @@ const entry: ChronicleEntry = {
   "readTime": "3 min read",
   "excerpt": "In 2016, I put fifty people, DJ decks, loudspeakers and a lot of alcohol on a charter bus from Orlando to Tampa. Everything was ready except the batteries.",
   "featuredSummary": "In 2016, I put fifty people, DJ decks, loudspeakers and a lot of alcohol on a charter bus from Orlando to Tampa. Everything was ready except the batteries.",
-  "image": "/chronicles-featured-post.png",
-  "imageAlt": "Backstage production desk with notes and headphones",
+  "image": "/chronicles-check-the-batteries.jpg",
+  "imageAlt": "Illustration of a charter party bus outside a Florida beach venue in warm evening light",
   "sections": [
     {
       "paragraphs": [
