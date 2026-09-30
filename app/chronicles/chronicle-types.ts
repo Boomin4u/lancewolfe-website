@@ -13,5 +13,8 @@ export type ChronicleEntry = {
   readTime: string;
   excerpt: string;
   featuredSummary: string;
+  image?: string;
+  imageAlt?: string;
+  privacyNote?: string;
   sections: ChronicleSection[];
 };

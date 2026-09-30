@@ -10,8 +10,8 @@ export const metadata: Metadata = buildPageMetadata({
   description:
     "The Chronicles of Lance Wolfe, a personal writing space for career stories, lessons, and behind-the-scenes notes.",
   path: "/chronicles/",
-  image: "/chronicles-featured-post.png",
-  imageAlt: "Backstage production desk with notes and headphones",
+  image: chronicles[0].image ?? "/chronicles-featured-post.png",
+  imageAlt: chronicles[0].imageAlt ?? "Backstage production desk with notes and headphones",
 });
 
 export default function ChroniclesPage() {
@@ -72,8 +72,8 @@ export default function ChroniclesPage() {
 
             <div className="relative min-h-[220px] overflow-hidden border-t border-white/10 bg-slate-900 lg:min-h-full lg:border-l lg:border-t-0">
               <Image
-                src="/chronicles-featured-post.png"
-                alt="Backstage production desk with notes and headphones"
+                src={featuredPost.image ?? "/chronicles-featured-post.png"}
+                alt={featuredPost.imageAlt ?? "Backstage production desk with notes and headphones"}
                 fill
                 priority
                 sizes="(max-width: 1024px) 100vw, 40vw"
@@ -94,6 +94,17 @@ export default function ChroniclesPage() {
             aria-label={`Open article: ${entry.title}`}
             className="group block h-full w-full cursor-pointer rounded-[1.35rem] border border-white/10 bg-slate-950/22 p-4 transition hover:-translate-y-0.5 hover:border-white/20 hover:bg-slate-950/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-200/60"
           >
+            {entry.image ? (
+              <div className="relative mb-4 aspect-[16/9] overflow-hidden rounded-lg bg-slate-900">
+                <Image
+                  src={entry.image}
+                  alt={entry.imageAlt ?? entry.title}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                  className="object-cover"
+                />
+              </div>
+            ) : null}
             <div className="text-[11px] font-semibold uppercase tracking-[0.28em] text-slate-400">
               {entry.tag}
             </div>

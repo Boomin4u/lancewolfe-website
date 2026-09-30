@@ -42,6 +42,8 @@ jobs:
           test -f dist/client/404.html
           test -f dist/client/career/index.html
           test -f dist/client/chronicles/index.html
+          test -f dist/client/chronicles/the-power-of-restraint/index.html
+          test -f dist/client/chronicles-power-of-restraint.jpg
 
       - name: Mark export as static
         run: touch dist/client/.nojekyll

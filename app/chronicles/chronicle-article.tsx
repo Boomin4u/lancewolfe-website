@@ -29,7 +29,7 @@ export function ChronicleArticle({
             mainEntityOfPage: articleUrl,
             headline: entry.title,
             description: entry.excerpt,
-            image: "https://lancewolfe.com/chronicles-featured-post.png",
+            image: `https://lancewolfe.com${entry.image ?? "/chronicles-featured-post.png"}`,
             datePublished: entry.sortDate,
             dateModified: entry.sortDate,
             author: {
@@ -90,6 +90,11 @@ export function ChronicleArticle({
             </section>
           ))}
         </div>
+        {entry.privacyNote ? (
+          <p className="mt-6 text-sm italic leading-7 text-slate-400">
+            {entry.privacyNote}
+          </p>
+        ) : null}
       </article>
 
       {(previousHref || nextHref) ? (
