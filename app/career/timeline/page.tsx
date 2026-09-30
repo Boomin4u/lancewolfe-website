@@ -131,10 +131,10 @@ export default function CareerTimelinePage() {
                           key={`${entry.year}-${entry.title}-${entry.dateLabel}-${index}`}
                           className="border-t border-white/6 text-sm text-slate-200/90 hover:bg-white/[0.03]"
                         >
-                          <td className="whitespace-nowrap px-3 py-3 align-top text-[12px] text-slate-400">
+                          <td className="whitespace-nowrap px-3 py-2.5 align-top text-[12px] text-slate-400">
                             {entry.dateLabel}
                           </td>
-                          <td className="px-3 py-3 align-top">
+                          <td className="px-3 py-2.5 align-top">
                             {entry.href ? (
                               <a
                                 href={entry.href}
@@ -150,9 +150,9 @@ export default function CareerTimelinePage() {
                               </span>
                             )}
                           </td>
-                          <td className="px-3 py-3 align-top text-slate-300">{entry.location}</td>
-                          <td className="px-3 py-3 align-top text-slate-300">{entry.employer}</td>
-                          <td className="px-3 py-3 align-top text-slate-300">{entry.role}</td>
+                          <td className="whitespace-nowrap px-3 py-2.5 align-top text-slate-300">{entry.location}</td>
+                          <td className="whitespace-nowrap px-3 py-2.5 align-top text-slate-300">{entry.employer}</td>
+                          <td className="whitespace-nowrap px-3 py-2.5 align-top text-slate-300">{entry.role}</td>
                         </tr>
                       ))}
                     </tbody>

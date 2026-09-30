@@ -25,7 +25,7 @@ export type CareerTimelineSection = {
   years: CareerTimelineYear[];
 };
 
-const GILT_LOCATION = "GILT Concert Venue, Orlando, FL";
+const GILT_LOCATION = "Orlando, FL";
 const GILT_EMPLOYER = "GILT Nightclub";
 const GILT_TALENT_ROLE = "Talent Buyer / Marketing Manager";
 const GILT_MARKETING_ROLE = "Marketing Manager";
