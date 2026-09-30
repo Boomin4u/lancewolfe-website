@@ -55,7 +55,7 @@ export function ChronicleArticle({
       >
       <article className="rounded-[1.45rem] border border-white/10 bg-white/[0.04] p-4 sm:p-5">
         <div className="flex flex-wrap items-center gap-2 text-xs font-semibold uppercase tracking-[0.24em] text-slate-400">
-          <span>{entry.storyYear} story</span>
+          <span>{entry.storyPeriod ?? entry.storyYear} story</span>
           <span>•</span>
           <span>Published {entry.date}</span>
           <span>•</span>

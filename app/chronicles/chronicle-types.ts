@@ -11,6 +11,7 @@ export type ChronicleEntry = {
   date: string;
   sortDate: string;
   storyYear: number;
+  storyPeriod?: string;
   tag: string;
   readTime: string;
   excerpt: string;

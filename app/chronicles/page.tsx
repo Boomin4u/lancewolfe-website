@@ -61,7 +61,7 @@ export default function ChroniclesPage() {
                 <span>•</span>
                 <span>{featuredPost.readTime}</span>
                 <span>•</span>
-                <span>{featuredPost.storyYear}</span>
+                <span>{featuredPost.storyPeriod ?? featuredPost.storyYear}</span>
               </div>
               <div className="mt-5">
                 <span className="inline-flex rounded-full border border-white/12 bg-white/[0.08] px-4 py-2 text-sm font-medium text-white transition group-hover:border-white/20 group-hover:bg-white/[0.12]">
@@ -113,7 +113,7 @@ export default function ChroniclesPage() {
             </h3>
             <p className="mt-2 text-sm leading-6 text-slate-300/85">{entry.excerpt}</p>
             <div className="mt-4 flex flex-wrap gap-2 text-sm text-slate-400">
-              <span>{entry.storyYear}</span>
+              <span>{entry.storyPeriod ?? entry.storyYear}</span>
               <span>•</span>
               <span>{entry.readTime}</span>
             </div>
