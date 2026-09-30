@@ -1,6 +1,7 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { spawn } from "node:child_process";
+import { once } from "node:events";
 
 const routes = [
   "/",
@@ -67,8 +68,10 @@ async function fetchPage(route, { allow404 = false } = {}) {
 }
 
 const server = spawn(
-  process.platform === "win32" ? "npm.cmd" : "npm",
-  ["run", "start", "--", "--host", "127.0.0.1", `--port`, `${port}`],
+  process.platform === "win32"
+    ? resolve("node_modules/.bin/vinext.cmd")
+    : resolve("node_modules/.bin/vinext"),
+  ["start", "--host", "127.0.0.1", "--port", `${port}`],
   {
     stdio: ["ignore", "pipe", "pipe"],
     env: {
@@ -103,4 +106,5 @@ try {
   console.log(`Prerendered /404.html -> ${notFoundOutputPath}`);
 } finally {
   server.kill("SIGTERM");
+  await once(server, "exit");
 }
