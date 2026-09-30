@@ -48,6 +48,7 @@ const timelineRows = eventHistorySections
         location: entry.location,
         employer: entry.employer ?? "Event Aces",
         role: entry.role ?? "Bartender",
+        status: entry.status,
         href: entry.href,
       })),
     ),
@@ -140,10 +141,12 @@ export default function CareerTimelinePage() {
                                 rel="noreferrer"
                                 className="font-medium text-white underline decoration-white/0 underline-offset-4 transition hover:text-sky-50 hover:decoration-white/30"
                               >
-                                {entry.title}
+                                {entry.title}{entry.status === "Scheduled" ? " (Scheduled)" : ""}
                               </a>
                             ) : (
-                              <span className="font-medium text-white">{entry.title}</span>
+                              <span className="font-medium text-white">
+                                {entry.title}{entry.status === "Scheduled" ? " (Scheduled)" : ""}
+                              </span>
                             )}
                           </td>
                           <td className="px-3 py-3 align-top text-slate-300">{entry.location}</td>

@@ -5,14 +5,17 @@ const timelineRows = eventHistorySections.flatMap((section) =>
     year.entries.map((entry) => ({
       year: year.year,
       location: entry.location,
+      status: entry.status,
     })),
   ),
 );
 
-const eventStartYear = Math.min(...timelineRows.map((row) => row.year));
-const eventEndYear = Math.max(...timelineRows.map((row) => row.year));
+const completedTimelineRows = timelineRows.filter((row) => row.status !== "Scheduled");
+
+const eventStartYear = Math.min(...completedTimelineRows.map((row) => row.year));
+const eventEndYear = Math.max(...completedTimelineRows.map((row) => row.year));
 const stateCodes = new Set(
-  timelineRows
+  completedTimelineRows
     .map((row) => row.location.split(",").pop()?.trim())
     .filter((state): state is string => /^[A-Z]{2}$|^DC$/.test(state)),
 );
@@ -28,6 +31,6 @@ export const proofStats = [
   },
   {
     label: "Events worked",
-    value: `${timelineRows.length}`,
+    value: `${completedTimelineRows.length}`,
   },
 ] as const;

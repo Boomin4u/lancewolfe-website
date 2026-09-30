@@ -8,6 +8,7 @@ export type CareerTimelineEntry = {
   company?: string;
   employer?: string;
   role?: string;
+  status?: "Scheduled";
   note?: string;
 };
 
@@ -32,7 +33,7 @@ const rawEventHistorySections: CareerTimelineSection[] = [
     years: [
       {
         year: 2026,
-        label: "20 events",
+        label: "25 events",
         summary: "Staffing manager credits followed by staff member assignments.",
         entries: [
           { name: "NHL Winter Classic Tampa", location: "Tampa, FL", dateLabel: "January 2, 2026", monthLabel: "January", role: "Staffing Manager" },
@@ -55,6 +56,11 @@ const rawEventHistorySections: CareerTimelineSection[] = [
           { name: "3M Open", location: "Blaine, MN", dateLabel: "July 23-26, 2026", monthLabel: "July", role: "Staff Member" },
           { name: "Everwild", location: "Thornville, OH", dateLabel: "July 30-August 1, 2026", monthLabel: "July", role: "Staff Member" },
           { name: "Elements", location: "Long Pond, PA", dateLabel: "August 7-9, 2026", monthLabel: "August", role: "Staff Member" },
+          { name: "Velocity at Field of Dreams", location: "Dyersville, IA", dateLabel: "September 4-6, 2026", monthLabel: "September", employer: "SoHo", role: "Bartender", url: "https://velocityatfieldofdreams.com/" },
+          { name: "Louder Than Life", location: "Louisville, KY", dateLabel: "September 17-20, 2026", monthLabel: "September", employer: "SoHo", role: "Bartender", url: "https://louderthanlifefestival.com/" },
+          { name: "Bourbon & Beyond", location: "Louisville, KY", dateLabel: "September 24-27, 2026", monthLabel: "September", employer: "SoHo", role: "Bartender", url: "https://bourbonandbeyond.com/" },
+          { name: "Aftershock", location: "Sacramento, CA", dateLabel: "October 1-4, 2026", monthLabel: "October", employer: "SoHo", role: "Bartender", status: "Scheduled", url: "https://aftershockfestival.com/" },
+          { name: "Seven Stars", location: "Arrington, VA", dateLabel: "October 9-11, 2026", monthLabel: "October", employer: "SoHo", role: "Bartender", status: "Scheduled", url: "https://www.sevenstarsfest.com/festival-info" },
         ],
       },
       {
@@ -473,6 +479,8 @@ function inferHref(entry: CareerTimelineEntry): string | undefined {
   if (name.includes("seven stars")) return "https://www.sevenstarsfest.com/festival-info";
   if (name.includes("eternal nye")) return "https://www.eternalnye.com/";
   if (name.includes("inkcarceration")) return "https://inkcarceration.com/festival-info/";
+  if (name.includes("aftershock")) return "https://aftershockfestival.com/";
+  if (name.includes("velocity at field of dreams")) return "https://velocityatfieldofdreams.com/";
   if (name.includes("formula one") || name.includes("formula 1") || name.startsWith("f1")) {
     if (location.includes("las vegas")) return "https://ticketing.formula1.com/las-vegas/";
     return "https://www.formula1.com/";
