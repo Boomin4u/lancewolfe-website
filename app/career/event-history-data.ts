@@ -343,7 +343,7 @@ const rawEventHistorySections: CareerTimelineSection[] = [
           { name: "Shoals Festival", location: "Florence, AL", dateLabel: "October 1-2, 2022" },
           { name: "State Fair of Texas", location: "Dallas, TX", dateLabel: "September 30-October 23, 2022", employer: "Other", url: "https://bigtex.com/" },
           { name: "Formula 1 United States Grand Prix", location: "Austin, TX", dateLabel: "October 21-23, 2022" },
-          { name: "Hulaween", location: "Live Oak, FL", dateLabel: "October 27-30, 2022", employer: "Other" },
+          { name: "Hulaween", location: "Live Oak, FL", dateLabel: "October 27-30, 2022", employer: "Spontaneous Consumptions", role: "Food Vendor" },
           { name: "EDC Orlando", location: "Orlando, FL", dateLabel: "November 11-13, 2022" },
           { name: "Audacy Beach Festival", location: "Fort Lauderdale, FL", dateLabel: "December 3-4, 2022", employer: "SoHo" },
         ],
