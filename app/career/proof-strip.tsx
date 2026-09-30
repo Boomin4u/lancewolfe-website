@@ -1,4 +1,7 @@
+"use client";
+
 import { geoAlbersUsa, geoPath } from "d3-geo";
+import { useState } from "react";
 import { feature } from "topojson-client";
 import type { GeometryCollection, Topology } from "topojson-specification";
 import statesTopology from "us-atlas/states-10m.json";
@@ -117,10 +120,13 @@ function FeaturedEvents({ events }: { events: readonly { name: string; count: nu
         ))}
       </div>
 
-      <div className="mt-3 flex items-center justify-between border-t border-white/10 pt-3 text-[10px] font-semibold uppercase tracking-[0.2em] text-sky-100/70">
+      <a
+        href="/career/timeline/"
+        className="mt-3 flex items-center justify-between border-t border-white/10 pt-3 text-[10px] font-semibold uppercase tracking-[0.2em] text-sky-100/70 transition hover:text-sky-100 focus-visible:text-sky-100 focus-visible:outline-none"
+      >
         Explore the full event history
         <span aria-hidden="true">→</span>
-      </div>
+      </a>
     </div>
   );
 }
@@ -164,6 +170,18 @@ function YearActivity({ years }: { years: readonly { year: number; count: number
 }
 
 export function ProofStrip({ stats }: { stats: readonly ProofStat[] }) {
+  const [openStat, setOpenStat] = useState<string | null>(null);
+
+  function isTouchInteraction() {
+    return window.matchMedia("(hover: none), (pointer: coarse)").matches;
+  }
+
+  function toggleOnTouch(label: string) {
+    if (isTouchInteraction()) {
+      setOpenStat((current) => current === label ? null : label);
+    }
+  }
+
   return (
     <section className="relative z-30 rounded-[1.45rem] border border-white/10 bg-white/[0.04] shadow-[0_20px_60px_rgba(4,11,26,0.14)] backdrop-blur-xl">
       <div className="flex flex-col divide-y divide-white/10 md:flex-row md:divide-x md:divide-y-0">
@@ -176,6 +194,13 @@ export function ProofStrip({ stats }: { stats: readonly ProofStat[] }) {
               <a
                 href="/career/timeline/"
                 aria-label={`${stat.value} ${stat.label}. Explore the full event history.`}
+                aria-expanded={openStat === stat.label}
+                onClick={(event) => {
+                  if (isTouchInteraction() && openStat !== stat.label) {
+                    event.preventDefault();
+                    setOpenStat(stat.label);
+                  }
+                }}
                 className="block w-full cursor-pointer px-4 py-3 text-center outline-none sm:px-5 sm:py-4 md:text-left"
               >
                 <div className="flex items-center justify-center gap-2 md:justify-start">
@@ -190,6 +215,8 @@ export function ProofStrip({ stats }: { stats: readonly ProofStat[] }) {
               <button
                 type="button"
                 aria-label={`${stat.value} ${stat.label}. Show ${stat.yearActivity ? "annual event activity" : "work footprint map"}.`}
+                aria-expanded={openStat === stat.label}
+                onClick={() => toggleOnTouch(stat.label)}
                 className="w-full cursor-pointer px-4 py-3 text-center outline-none sm:px-5 sm:py-4 md:text-left"
               >
                 <div className="flex items-center justify-center gap-2 md:justify-start">
@@ -202,7 +229,15 @@ export function ProofStrip({ stats }: { stats: readonly ProofStat[] }) {
               </button>
             )}
 
-            <div className="pointer-events-none absolute left-1/2 top-full z-50 mt-3 -translate-x-1/2 translate-y-1 opacity-0 transition duration-200 group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:pointer-events-auto group-focus-within:translate-y-0 group-focus-within:opacity-100 md:pointer-events-none md:group-hover:pointer-events-auto">
+            <div className={`absolute left-1/2 top-full z-50 mt-3 -translate-x-1/2 transition duration-200 md:group-hover:pointer-events-auto md:group-hover:translate-y-0 md:group-hover:opacity-100 md:group-focus-within:pointer-events-auto md:group-focus-within:translate-y-0 md:group-focus-within:opacity-100 ${openStat === stat.label ? "pointer-events-auto translate-y-0 opacity-100" : "pointer-events-none translate-y-1 opacity-0"}`}>
+              <button
+                type="button"
+                aria-label={`Close ${stat.label} details`}
+                onClick={() => setOpenStat(null)}
+                className="absolute right-2 top-2 z-10 flex h-8 w-8 items-center justify-center rounded-full border border-white/10 bg-slate-950/70 text-sm text-slate-300 backdrop-blur transition hover:border-white/20 hover:text-white md:hidden"
+              >
+                ×
+              </button>
               {stat.mapStates ? (
                 <StatesMap activeStates={stat.mapStates} />
               ) : stat.featuredEvents ? (
