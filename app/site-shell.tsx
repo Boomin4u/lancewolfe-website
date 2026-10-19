@@ -53,7 +53,7 @@ export function SiteShell({
 }) {
   return (
     <main className="relative min-h-screen overflow-hidden bg-[var(--background)] text-[var(--foreground)]">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(91,203,235,0.12),_transparent_28%),radial-gradient(circle_at_top_right,_rgba(11,31,59,0.22),_transparent_36%),linear-gradient(180deg,#071120_0%,#091521_100%)]" />
+      <div className="site-shell-background pointer-events-none absolute inset-0" />
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.035)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.035)_1px,transparent_1px)] bg-[size:72px_72px] opacity-[0.12] [mask-image:radial-gradient(circle_at_center,black_42%,transparent_92%)]" />
       <div className="site-shell-orb site-shell-orb-a" />
       <div className="site-shell-orb site-shell-orb-b" />
