@@ -3,6 +3,7 @@ import Image from "next/image";
 import { SiteShell } from "../site-shell";
 import { buildPageMetadata } from "../seo";
 import { InternalNav } from "../internal-nav";
+import { contactHref } from "../contact";
 
 const profileLinks = [
   { label: "LinkedIn", href: "https://www.linkedin.com/in/lance-wolfe-53765154" },
@@ -28,7 +29,7 @@ const focusPoints = [
 export const metadata: Metadata = buildPageMetadata({
   title: "About Lance Wolfe | Live Event Operations Professional",
   description:
-    "Meet Lance Wolfe, a Florida-based live-event operations, staffing, hospitality, and festival professional with more than a decade of nationwide experience.",
+    "Meet Lance Wolfe, a Florida-based live-event operations, staffing, hospitality, and festival professional with 11+ years of nationwide experience.",
   path: "/about/",
 });
 
@@ -80,7 +81,7 @@ export default function AboutPage() {
         eyebrow="About Lance Wolfe"
         title="Lance Wolfe"
         subtitle="Florida-based. Nationwide experience."
-        body="I’m a live-event operations professional with more than a decade of experience across staffing, hospitality, festivals, sporting events, and event production. I help teams stay organized, keep guest experiences moving, and build systems that hold up under pressure."
+        body="I’m a live-event operations professional with 11+ years of experience across staffing, hospitality, festivals, sporting events, and event production. I help teams stay organized, keep guest experiences moving, and build systems that hold up under pressure."
         portrait={
           <div className="relative h-28 w-28 overflow-hidden rounded-full border border-white/12 bg-slate-900 shadow-[0_0_0_6px_rgba(255,255,255,0.03)] sm:h-32 sm:w-32 md:h-36 md:w-36">
             <Image
@@ -95,7 +96,7 @@ export default function AboutPage() {
           </div>
         }
         primary={{ href: "/career/", label: "Explore My Career" }}
-        secondary={{ href: "/chronicles/", label: "Read My Chronicles" }}
+        secondary={{ href: contactHref, label: "Contact Lance" }}
       >
         <section className="rounded-[1.45rem] border border-white/10 bg-white/[0.04] p-4 sm:p-5">
           <div className="text-[11px] font-semibold uppercase tracking-[0.28em] text-sky-100/75">

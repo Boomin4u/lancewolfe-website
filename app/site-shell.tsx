@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { InternalNav } from "./internal-nav";
+import { contactHref } from "./contact";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -18,6 +19,11 @@ const socialLinks = [
     href: "https://instagram.com/boomin4u",
     label: "Instagram",
     icon: "ig",
+  },
+  {
+    href: contactHref,
+    label: "Email Lance",
+    icon: "email",
   },
 ] as const;
 
@@ -126,19 +132,24 @@ export function SiteShell({
                 <a
                   key={item.href}
                   href={item.href}
-                  target="_blank"
-                  rel="noreferrer"
+                  target={item.icon === "email" ? undefined : "_blank"}
+                  rel={item.icon === "email" ? undefined : "noreferrer"}
                   aria-label={item.label}
                   className="group inline-flex items-center justify-center rounded-full border border-white/8 bg-white/[0.02] p-1.5 text-slate-300/85 transition hover:border-white/12 hover:bg-white/[0.05] hover:text-white"
                 >
                   <span className="social-badge" aria-hidden="true">
                     {item.icon === "f" ? (
                       <span className="social-facebook">f</span>
-                    ) : (
+                    ) : item.icon === "ig" ? (
                       <span className="social-instagram">
                         <span className="social-instagram-ring" />
                         <span className="social-instagram-dot" />
                       </span>
+                    ) : (
+                      <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.8">
+                        <path d="M4 6.75h16v10.5H4z" />
+                        <path d="m4.5 7.25 7.5 6 7.5-6" />
+                      </svg>
                     )}
                   </span>
                 </a>

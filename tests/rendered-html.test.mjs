@@ -15,6 +15,8 @@ test("homepage renders current proof, reviews, and opportunity messaging", async
   assert.match(html, /349/);
   assert.match(html, /Selected Google reviews/);
   assert.match(html, /Planning an event or building a team\?/);
+  assert.match(html, /mailto:lancemtwolfe@gmail\.com/);
+  assert.match(html, /Contact Lance/);
 });
 
 test("career page renders positioning, resumes, and current proof total", async () => {
@@ -34,6 +36,10 @@ test("timeline renders completed events without scheduled labels", async () => {
   assert.doesNotMatch(html, /\(Scheduled\)/);
   assert.match(html, /Employer/);
   assert.match(html, /Role/);
+  assert.match(html, /timeline-filter-year/);
+  assert.match(html, /timeline-filter-role/);
+  assert.match(html, /timeline-filter-employer/);
+  assert.match(html, /timeline-filter-state/);
   assert.ok(html.length < 900_000, `timeline HTML is unexpectedly large: ${html.length} characters`);
 });
 

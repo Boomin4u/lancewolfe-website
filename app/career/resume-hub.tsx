@@ -75,7 +75,7 @@ export function ResumeHub() {
             </p>
             <h2 className="mt-1.5 text-lg font-semibold text-white">Timeline</h2>
             <p className="mt-1.5 max-w-2xl text-sm leading-6 text-slate-300/80">
-              View the full event history in a cleaner timeline layout.
+              Explore events by year, role, employer, and state.
             </p>
           </div>
           <span className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.05] px-3.5 py-1.5 text-sm font-medium text-slate-100 transition group-hover:border-white/20 group-hover:bg-white/[0.09]">
