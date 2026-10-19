@@ -74,16 +74,7 @@ export function TimelineExplorer({ rows }: { rows: TimelineRow[] }) {
     }),
     [rows],
   );
-  const timelineYears = useMemo(
-    () => [...new Set(rows.map((row) => row.year))].sort((left, right) => right - left),
-    [rows],
-  );
-  const [collapsedYears, setCollapsedYears] = useState(
-    () => new Set(timelineYears.slice(1)),
-  );
-  const [filteredCollapsedYears, setFilteredCollapsedYears] = useState(
-    () => new Set<number>(),
-  );
+  const [collapsedYears, setCollapsedYears] = useState(() => new Set<number>());
 
   const filteredRows = useMemo(
     () =>
@@ -278,8 +269,7 @@ export function TimelineExplorer({ rows }: { rows: TimelineRow[] }) {
   }
 
   function toggleYear(year: number) {
-    const setCollapsed = hasFilters ? setFilteredCollapsedYears : setCollapsedYears;
-    setCollapsed((current) => {
+    setCollapsedYears((current) => {
       const next = new Set(current);
       if (next.has(year)) next.delete(year);
       else next.add(year);
@@ -419,9 +409,7 @@ export function TimelineExplorer({ rows }: { rows: TimelineRow[] }) {
                   </tr>
                 </thead>
                 {groupedByYear.map(([year, yearRows]) => {
-                  const isCollapsed = hasFilters
-                    ? filteredCollapsedYears.has(year)
-                    : collapsedYears.has(year);
+                  const isCollapsed = collapsedYears.has(year);
 
                   return (
                     <tbody key={year} className="bg-slate-950/20">
