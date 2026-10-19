@@ -34,6 +34,7 @@ test("timeline renders completed events without scheduled labels", async () => {
   assert.doesNotMatch(html, /\(Scheduled\)/);
   assert.match(html, /Employer/);
   assert.match(html, /Role/);
+  assert.ok(html.length < 900_000, `timeline HTML is unexpectedly large: ${html.length} characters`);
 });
 
 test("Chronicles index exposes publication dates", async () => {

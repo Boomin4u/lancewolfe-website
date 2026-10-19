@@ -106,6 +106,93 @@ a {
   color: rgba(226, 232, 240, 0.45);
 }
 
+@media (max-width: 767px) {
+  .timeline-table {
+    display: block;
+    min-width: 0;
+    width: 100%;
+  }
+
+  .timeline-table thead {
+    display: none;
+  }
+
+  .timeline-table tbody {
+    display: block;
+  }
+
+  .timeline-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 0.55rem;
+    padding: 1rem;
+  }
+
+  .timeline-row + .timeline-row {
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .timeline-row td {
+    display: block;
+    padding: 0;
+    white-space: normal;
+  }
+
+  .timeline-date,
+  .timeline-event,
+  .timeline-location {
+    grid-column: 1 / -1;
+  }
+
+  .timeline-date {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .timeline-event {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+
+  .timeline-location {
+    color: rgba(148, 163, 184, 0.9);
+    font-size: 0.8125rem;
+  }
+
+  .timeline-employer,
+  .timeline-role {
+    min-width: 0;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 0.75rem;
+    background: rgba(255, 255, 255, 0.025);
+    padding: 0.5rem 0.65rem !important;
+    color: rgba(226, 232, 240, 0.92);
+    font-size: 0.75rem;
+    line-height: 1.25rem;
+  }
+
+  .timeline-employer::before,
+  .timeline-role::before {
+    display: block;
+    margin-bottom: 0.15rem;
+    color: rgba(148, 163, 184, 0.72);
+    font-size: 0.5625rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .timeline-employer::before {
+    content: "Employer";
+  }
+
+  .timeline-role::before {
+    content: "Role";
+  }
+}
+
 .social-badge {
   display: inline-flex;
   align-items: center;
