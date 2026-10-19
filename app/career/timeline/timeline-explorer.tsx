@@ -17,6 +17,7 @@ export type TimelineRow = {
 };
 
 type Filters = {
+  query: string;
   year: string;
   role: string;
   employer: string;
@@ -24,6 +25,7 @@ type Filters = {
 };
 
 const emptyFilters: Filters = {
+  query: "",
   year: "",
   role: "",
   employer: "",
@@ -57,6 +59,12 @@ export function TimelineExplorer({ rows }: { rows: TimelineRow[] }) {
   const filteredRows = useMemo(
     () =>
       rows.filter((row) => {
+        if (deferredFilters.query) {
+          const searchText = [row.title, row.location, row.employer, row.role, roleCategory(row.role)]
+            .join(" ")
+            .toLocaleLowerCase();
+          if (!searchText.includes(deferredFilters.query.trim().toLocaleLowerCase())) return false;
+        }
         if (deferredFilters.year && row.year !== Number(deferredFilters.year)) return false;
         if (deferredFilters.role && roleCategory(row.role) !== deferredFilters.role) return false;
         if (deferredFilters.employer && row.employer !== deferredFilters.employer) return false;
@@ -94,6 +102,7 @@ export function TimelineExplorer({ rows }: { rows: TimelineRow[] }) {
       const params = new URLSearchParams(window.location.search);
       setFilters({
         year: params.get("year") ?? "",
+        query: params.get("query") ?? "",
         role: roleCategory(params.get("role") ?? ""),
         employer: params.get("employer") ?? "",
         state: params.get("state") ?? "",
@@ -122,12 +131,49 @@ export function TimelineExplorer({ rows }: { rows: TimelineRow[] }) {
 
   function updateFilter(filter: keyof Filters, value: string) {
     setFilters((current) => ({ ...current, [filter]: value }));
+    if (filter === "query") return;
+
     window.plausible?.("Timeline Filter", { props: { filter, value: value || "All" } });
     window.dispatchEvent(
       new CustomEvent("lancewolfe:analytics", {
         detail: { eventName: "Timeline Filter", filter, value: value || "All" },
       }),
     );
+  }
+
+  const activeFilters = [
+    { key: "query", label: "Search", value: filters.query },
+    { key: "year", label: "Year", value: filters.year },
+    { key: "role", label: "Role", value: filters.role },
+    { key: "employer", label: "Employer", value: filters.employer },
+    { key: "state", label: "State", value: filters.state },
+  ].filter((filter) => filter.value) as Array<{ key: keyof Filters; label: string; value: string }>;
+
+  const [copyStatus, setCopyStatus] = useState<"idle" | "copied">("idle");
+
+  async function copyFilteredLink() {
+    const url = new URL(window.location.href);
+    Object.entries(filters).forEach(([key, value]) => {
+      if (value) url.searchParams.set(key, value);
+      else url.searchParams.delete(key);
+    });
+
+    try {
+      await navigator.clipboard.writeText(url.toString());
+    } catch {
+      const field = document.createElement("textarea");
+      field.value = url.toString();
+      field.style.position = "fixed";
+      field.style.opacity = "0";
+      document.body.appendChild(field);
+      field.select();
+      document.execCommand("copy");
+      field.remove();
+    }
+
+    setCopyStatus("copied");
+    window.setTimeout(() => setCopyStatus("idle"), 1800);
+    window.plausible?.("Timeline Share", { props: { filters: String(activeFilters.length) } });
   }
 
   return (
@@ -154,7 +200,19 @@ export function TimelineExplorer({ rows }: { rows: TimelineRow[] }) {
           </div>
         </div>
 
-        <div className="mt-3 grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
+        <label htmlFor="timeline-filter-query" className="mt-3 grid gap-1.5 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-400">
+          Search
+          <input
+            id="timeline-filter-query"
+            type="search"
+            value={filters.query}
+            onChange={(event) => updateFilter("query", event.target.value)}
+            placeholder="Event, city, venue, employer, or role"
+            className="w-full rounded-xl border border-white/10 bg-[#0a1727] px-3 py-2.5 text-sm font-normal normal-case tracking-normal text-slate-100 outline-none transition placeholder:text-slate-600 focus:border-sky-200/40 focus:ring-2 focus:ring-sky-200/15"
+          />
+        </label>
+
+        <div className="mt-2 grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
           <FilterSelect
             label="Year"
             value={filters.year}
@@ -182,13 +240,34 @@ export function TimelineExplorer({ rows }: { rows: TimelineRow[] }) {
         </div>
 
         {hasFilters ? (
-          <button
-            type="button"
-            onClick={() => setFilters(emptyFilters)}
-            className="mt-3 text-xs font-medium text-sky-100 underline decoration-sky-100/25 underline-offset-4 transition hover:text-white"
-          >
-            Clear all filters
-          </button>
+          <div className="mt-3 flex flex-wrap items-center gap-2">
+            {activeFilters.map((filter) => (
+              <button
+                key={filter.key}
+                type="button"
+                onClick={() => updateFilter(filter.key, "")}
+                aria-label={`Remove ${filter.label} filter: ${filter.value}`}
+                className="inline-flex items-center gap-1.5 rounded-full border border-sky-200/15 bg-sky-200/[0.07] px-2.5 py-1.5 text-[11px] text-sky-50 transition hover:border-sky-200/30 hover:bg-sky-200/[0.11]"
+              >
+                <span className="text-sky-100/65">{filter.label}:</span> {filter.value}
+                <span aria-hidden="true">×</span>
+              </button>
+            ))}
+            <button
+              type="button"
+              onClick={() => setFilters(emptyFilters)}
+              className="px-1 text-xs font-medium text-slate-400 underline decoration-white/15 underline-offset-4 transition hover:text-white"
+            >
+              Clear all
+            </button>
+            <button
+              type="button"
+              onClick={copyFilteredLink}
+              className="ml-auto rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs font-medium text-slate-200 transition hover:border-white/20 hover:bg-white/[0.08] hover:text-white"
+            >
+              {copyStatus === "copied" ? "Link copied" : "Copy filtered link"}
+            </button>
+          </div>
         ) : null}
       </div>
 

@@ -65,6 +65,8 @@ export function SiteShell({
               <InternalNav
                 key={item.href}
                 href={item.href}
+                markActive
+                activeClassName="border-sky-200/30 bg-sky-200/12 text-white"
                 className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 transition hover:border-white/20 hover:bg-white/[0.08] hover:text-white"
               >
                 {item.label}

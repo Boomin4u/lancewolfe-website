@@ -15,6 +15,7 @@ test("homepage renders current proof, reviews, and opportunity messaging", async
   assert.match(html, /349/);
   assert.match(html, /Selected Google reviews/);
   assert.match(html, /Planning an event or building a team\?/);
+  assert.match(html, /Email Lance/);
   assert.match(html, /mailto:lancemtwolfe@gmail\.com/);
   assert.match(html, /Contact Lance/);
   assert.match(html, /Explore Career/);
@@ -44,6 +45,7 @@ test("timeline renders completed events without scheduled labels", async () => {
   assert.match(html, /Employer/);
   assert.match(html, /Role/);
   assert.match(html, /timeline-filter-year/);
+  assert.match(html, /timeline-filter-query/);
   assert.match(html, /timeline-filter-role/);
   assert.match(html, /timeline-filter-employer/);
   assert.match(html, /timeline-filter-state/);
