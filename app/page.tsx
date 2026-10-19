@@ -5,6 +5,7 @@ import { buildPageMetadata } from "./seo";
 import { InternalNav } from "./internal-nav";
 import { ProofOverview } from "./career/proof-overview";
 import { ReviewSection } from "./review-section";
+import { OpportunityCta } from "./opportunity-cta";
 
 export const metadata: Metadata = buildPageMetadata({
   title: "Lance Wolfe | Live Event Operations & Staffing",
@@ -19,7 +20,7 @@ export default function Home() {
       eyebrow="Lance Wolfe"
       title="Lance Wolfe"
       subtitle="Florida-based. Nationwide experience."
-      body="Live-event operations leader with 10+ years across hospitality, festival staffing, and national event programs."
+      body="Live-event operations leader with 11+ years across hospitality, festival staffing, and national event programs."
       primary={{ href: "/career/", label: "View resumes" }}
       secondary={{ href: "/chronicles/", label: "Read the chronicles" }}
       portrait={
@@ -39,6 +40,8 @@ export default function Home() {
       <ProofOverview />
 
       <ReviewSection />
+
+      <OpportunityCta compact />
 
       <section className="mt-4 grid gap-4 md:grid-cols-3 sm:mt-5">
         <InfoCard

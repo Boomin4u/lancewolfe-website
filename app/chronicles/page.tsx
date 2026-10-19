@@ -57,6 +57,8 @@ export default function ChroniclesPage() {
                 {featuredPost.featuredSummary}
               </p>
               <div className="mt-4 flex flex-wrap gap-2 text-sm text-slate-400">
+                <span>Published {featuredPost.date}</span>
+                <span>•</span>
                 <span>{featuredPost.tag}</span>
                 <span>•</span>
                 <span>{featuredPost.readTime}</span>
@@ -113,6 +115,8 @@ export default function ChroniclesPage() {
             </h3>
             <p className="mt-2 text-sm leading-6 text-slate-300/85">{entry.excerpt}</p>
             <div className="mt-4 flex flex-wrap gap-2 text-sm text-slate-400">
+              <span>Published {entry.date}</span>
+              <span>•</span>
               <span>{entry.storyPeriod ?? entry.storyYear}</span>
               <span>•</span>
               <span>{entry.readTime}</span>

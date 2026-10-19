@@ -114,7 +114,45 @@ export default function CareerTimelinePage() {
               </summary>
 
               <div className="border-t border-white/10">
-                <div className="overflow-x-auto">
+                <div className="divide-y divide-white/8 md:hidden">
+                  {rows.map((entry, index) => (
+                    <article
+                      key={`${entry.year}-${entry.title}-${entry.dateLabel}-mobile-${index}`}
+                      className="p-4"
+                    >
+                      <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-slate-400">
+                        {entry.dateLabel}
+                      </p>
+                      <h3 className="mt-2 text-base font-semibold leading-6 text-white">
+                        {entry.href ? (
+                          <a
+                            href={entry.href}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="underline decoration-white/0 underline-offset-4 transition hover:text-sky-50 hover:decoration-white/30"
+                          >
+                            {entry.title}{entry.status === "Scheduled" ? " (Scheduled)" : ""}
+                          </a>
+                        ) : (
+                          <span>{entry.title}{entry.status === "Scheduled" ? " (Scheduled)" : ""}</span>
+                        )}
+                      </h3>
+                      <p className="mt-1 text-sm text-slate-400">{entry.location}</p>
+                      <dl className="mt-3 grid grid-cols-2 gap-2">
+                        <div className="rounded-xl border border-white/8 bg-white/[0.025] px-3 py-2">
+                          <dt className="text-[9px] font-semibold uppercase tracking-[0.2em] text-slate-500">Employer</dt>
+                          <dd className="mt-1 text-xs leading-5 text-slate-200">{entry.employer}</dd>
+                        </div>
+                        <div className="rounded-xl border border-white/8 bg-white/[0.025] px-3 py-2">
+                          <dt className="text-[9px] font-semibold uppercase tracking-[0.2em] text-slate-500">Role</dt>
+                          <dd className="mt-1 text-xs leading-5 text-slate-200">{entry.role}</dd>
+                        </div>
+                      </dl>
+                    </article>
+                  ))}
+                </div>
+
+                <div className="hidden overflow-x-auto md:block">
                   <table className="min-w-[72rem] table-fixed border-separate border-spacing-0">
                     <colgroup>
                       <col className="w-[12rem]" />

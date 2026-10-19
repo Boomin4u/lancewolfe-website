@@ -2,6 +2,7 @@ import Image from "next/image";
 import { SiteShell } from "../site-shell";
 import { ProofOverview } from "./proof-overview";
 import { InternalNav } from "../internal-nav";
+import { OpportunityCta } from "../opportunity-cta";
 
 const resumeCards = [
   {
@@ -28,7 +29,7 @@ export function ResumeHub() {
       eyebrow="Career"
       title="Lance Wolfe"
       subtitle="Florida-based. Nationwide experience."
-      body="Live-event operations professional with 10+ years in hospitality and nationwide experience across major music festivals, sporting events, and premium hospitality programs."
+      body="Live-event operations professional with 11+ years in hospitality and nationwide experience across major music festivals, sporting events, and premium hospitality programs."
       primary={{ href: "/resumes/full-event-resume.pdf", label: "View resume" }}
       secondary={{ href: "/career/timeline/", label: "Timeline" }}
       portrait={
@@ -46,6 +47,22 @@ export function ResumeHub() {
       }
       >
       <ProofOverview />
+
+      <section className="mt-2 rounded-[1.35rem] border border-white/10 bg-white/[0.035] p-3.5 sm:p-4">
+        <p className="text-[10px] font-semibold uppercase tracking-[0.26em] text-sky-100/75">
+          Best-fit work
+        </p>
+        <div className="mt-3 flex flex-wrap gap-2">
+          {["Event operations", "Workforce leadership", "Hospitality programs", "Talent buying & marketing"].map((focus) => (
+            <span
+              key={focus}
+              className="rounded-full border border-white/10 bg-slate-950/30 px-3 py-1.5 text-xs font-medium text-slate-200"
+            >
+              {focus}
+            </span>
+          ))}
+        </div>
+      </section>
 
       <InternalNav
         href="/career/timeline/"
@@ -150,6 +167,10 @@ export function ResumeHub() {
           ))}
         </div>
       </section>
+
+      <div className="mt-3">
+        <OpportunityCta />
+      </div>
     </SiteShell>
   );
 }
