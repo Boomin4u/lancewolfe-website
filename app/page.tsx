@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { SiteShell } from "./site-shell";
 import { buildPageMetadata } from "./seo";
-import { InternalNav } from "./internal-nav";
 import { ProofOverview } from "./career/proof-overview";
 import { ReviewSection } from "./review-section";
 import { OpportunityCta } from "./opportunity-cta";
@@ -43,80 +42,6 @@ export default function Home() {
       <ReviewSection />
 
       <OpportunityCta compact />
-
-      <section className="mt-4 grid gap-4 md:grid-cols-3 sm:mt-5">
-        <InfoCard
-          title="Career"
-          text="Explore Lance Wolfe’s live-event career, resumes, and nationwide event history."
-          href="/career/"
-          action="View Lance’s career"
-        />
-        <InfoCard
-          title="Chronicles"
-          text="The thinking behind the mind at work."
-          href="/chronicles/"
-          action="Read Lance’s chronicles"
-        />
-        <InfoCard
-          title="About"
-          text="Learn about Lance Wolfe’s work in live events, staffing, hospitality, and operations."
-          href="/about/"
-          action="About Lance Wolfe"
-          tone="soft"
-        />
-      </section>
     </SiteShell>
-  );
-}
-
-function InfoCard({
-  title,
-  text,
-  href,
-  action,
-  tone = "default",
-}: {
-  title: string;
-  text: string;
-  href: string;
-  action: string;
-  tone?: "default" | "soft";
-}) {
-  const isSoft = tone === "soft";
-
-  return (
-    <InternalNav
-      href={href}
-      aria-label={`${title} - ${action}`}
-      className={`group block h-full w-full cursor-pointer rounded-[1.35rem] border p-4 transition duration-200 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-200/60 ${
-        isSoft
-          ? "border-white/8 bg-white/[0.025] hover:border-white/16 hover:bg-white/[0.045]"
-          : "border-white/10 bg-white/[0.04] hover:border-sky-200/35 hover:bg-white/[0.06]"
-      }`}
-    >
-      <h2
-        className={`text-lg font-semibold transition ${
-          isSoft ? "text-slate-100 group-hover:text-white" : "text-white group-hover:text-sky-50"
-        }`}
-      >
-        {title}
-      </h2>
-      <p
-        className={`mt-2 text-sm leading-6 ${
-          isSoft ? "text-slate-400/90" : "text-slate-300/85"
-        }`}
-      >
-        {text}
-      </p>
-      <span
-        className={`mt-4 inline-flex items-center rounded-full border px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.24em] transition ${
-          isSoft
-            ? "border-white/8 bg-slate-950/25 text-slate-300 transition group-hover:border-white/14 group-hover:bg-slate-950/45 group-hover:text-white"
-            : "border-white/10 bg-slate-950/35 text-slate-200 group-hover:border-sky-200/25 group-hover:bg-slate-950/55 group-hover:text-white"
-        }`}
-      >
-        {action} →
-      </span>
-    </InternalNav>
   );
 }

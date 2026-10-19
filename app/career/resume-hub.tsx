@@ -23,6 +23,29 @@ const primaryResume = {
   href: "/resumes/full-event-resume.pdf",
 };
 
+const bestFitLinks = [
+  {
+    label: "Event operations",
+    detail: "Explore the complete event record",
+    href: "/career/timeline/",
+  },
+  {
+    label: "Workforce leadership",
+    detail: "See staffing management credits",
+    href: "/career/timeline/?role=Staffing%20Manager",
+  },
+  {
+    label: "Hospitality programs",
+    detail: "See bartender and service experience",
+    href: "/career/timeline/?role=Bartender",
+  },
+  {
+    label: "Talent buying & marketing",
+    detail: "See venue and talent experience",
+    href: "/career/timeline/?role=Talent%20Buyer%20%2F%20Marketing%20Manager",
+  },
+] as const;
+
 export function ResumeHub() {
   return (
     <SiteShell
@@ -52,14 +75,19 @@ export function ResumeHub() {
         <p className="text-[10px] font-semibold uppercase tracking-[0.26em] text-sky-100/75">
           Best-fit work
         </p>
-        <div className="mt-3 flex flex-wrap gap-2">
-          {["Event operations", "Workforce leadership", "Hospitality programs", "Talent buying & marketing"].map((focus) => (
-            <span
-              key={focus}
-              className="rounded-full border border-white/10 bg-slate-950/30 px-3 py-1.5 text-xs font-medium text-slate-200"
+        <div className="mt-3 grid gap-2 sm:grid-cols-2">
+          {bestFitLinks.map((focus) => (
+            <InternalNav
+              key={focus.label}
+              href={focus.href}
+              className="group rounded-[1rem] border border-white/10 bg-slate-950/30 px-3 py-2.5 transition hover:border-sky-200/30 hover:bg-slate-950/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-200/60"
             >
-              {focus}
-            </span>
+              <span className="flex items-center justify-between gap-3 text-sm font-medium text-slate-100">
+                {focus.label}
+                <span className="text-sky-100/60 transition group-hover:translate-x-0.5 group-hover:text-sky-100" aria-hidden="true">→</span>
+              </span>
+              <span className="mt-1 block text-xs leading-5 text-slate-400">{focus.detail}</span>
+            </InternalNav>
           ))}
         </div>
       </section>

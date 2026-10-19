@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { InternalNav } from "./internal-nav";
 import { contactHref } from "./contact";
+import { TrackedLink } from "./tracked-link";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -96,20 +97,24 @@ export function SiteShell({
               {primary || secondary ? (
                 <div className="mt-5 flex flex-wrap gap-2.5">
                   {primary ? (
-                    <InternalNav
+                    <TrackedLink
                       href={primary.href}
+                      eventName="Primary CTA Click"
+                      eventLocation={`hero-${eyebrow.toLowerCase().replaceAll(" ", "-")}`}
                       className="rounded-full border border-sky-200/25 bg-sky-200/14 px-4 py-2 text-sm font-medium text-white shadow-[0_10px_24px_rgba(91,203,235,0.12)] transition hover:border-sky-200/40 hover:bg-sky-200/18"
                     >
                       {primary.label}
-                    </InternalNav>
+                    </TrackedLink>
                   ) : null}
                   {secondary ? (
-                    <InternalNav
+                    <TrackedLink
                       href={secondary.href}
+                      eventName={secondary.href.startsWith("mailto:") ? "Contact Click" : "Secondary CTA Click"}
+                      eventLocation={`hero-${eyebrow.toLowerCase().replaceAll(" ", "-")}`}
                       className="rounded-full border border-white/10 bg-white/[0.05] px-4 py-2 text-sm font-medium text-slate-100 transition hover:border-white/20 hover:bg-white/[0.09]"
                     >
                       {secondary.label}
-                    </InternalNav>
+                    </TrackedLink>
                   ) : null}
                 </div>
               ) : null}
@@ -129,11 +134,13 @@ export function SiteShell({
             </InternalNav>
             <div className="flex items-center gap-2.5">
               {socialLinks.map((item) => (
-                <a
+                <TrackedLink
                   key={item.href}
                   href={item.href}
                   target={item.icon === "email" ? undefined : "_blank"}
                   rel={item.icon === "email" ? undefined : "noreferrer"}
+                  eventName={item.icon === "email" ? "Contact Click" : "Social Click"}
+                  eventLocation="footer"
                   aria-label={item.label}
                   className="group inline-flex items-center justify-center rounded-full border border-white/8 bg-white/[0.02] p-1.5 text-slate-300/85 transition hover:border-white/12 hover:bg-white/[0.05] hover:text-white"
                 >
@@ -152,7 +159,7 @@ export function SiteShell({
                       </svg>
                     )}
                   </span>
-                </a>
+                </TrackedLink>
               ))}
             </div>
           </div>

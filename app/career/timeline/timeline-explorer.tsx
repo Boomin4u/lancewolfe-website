@@ -1,6 +1,6 @@
 "use client";
 
-import { useDeferredValue, useMemo, useState } from "react";
+import { useDeferredValue, useEffect, useMemo, useState } from "react";
 
 export type TimelineRow = {
   year: number;
@@ -40,6 +40,7 @@ function uniqueSorted(values: string[]) {
 
 export function TimelineExplorer({ rows }: { rows: TimelineRow[] }) {
   const [filters, setFilters] = useState<Filters>(emptyFilters);
+  const [urlReady, setUrlReady] = useState(false);
   const deferredFilters = useDeferredValue(filters);
 
   const options = useMemo(
@@ -76,8 +77,45 @@ export function TimelineExplorer({ rows }: { rows: TimelineRow[] }) {
 
   const hasFilters = Object.values(filters).some(Boolean);
 
+  useEffect(() => {
+    function readUrlFilters() {
+      const params = new URLSearchParams(window.location.search);
+      setFilters({
+        year: params.get("year") ?? "",
+        role: params.get("role") ?? "",
+        employer: params.get("employer") ?? "",
+        state: params.get("state") ?? "",
+      });
+      setUrlReady(true);
+    }
+
+    readUrlFilters();
+    window.addEventListener("popstate", readUrlFilters);
+    return () => window.removeEventListener("popstate", readUrlFilters);
+  }, []);
+
+  useEffect(() => {
+    if (!urlReady) return;
+
+    const url = new URL(window.location.href);
+    Object.entries(filters).forEach(([key, value]) => {
+      if (value) {
+        url.searchParams.set(key, value);
+      } else {
+        url.searchParams.delete(key);
+      }
+    });
+    window.history.replaceState({}, "", url);
+  }, [filters, urlReady]);
+
   function updateFilter(filter: keyof Filters, value: string) {
     setFilters((current) => ({ ...current, [filter]: value }));
+    window.plausible?.("Timeline Filter", { props: { filter, value: value || "All" } });
+    window.dispatchEvent(
+      new CustomEvent("lancewolfe:analytics", {
+        detail: { eventName: "Timeline Filter", filter, value: value || "All" },
+      }),
+    );
   }
 
   return (

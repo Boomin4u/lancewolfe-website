@@ -17,6 +17,8 @@ test("homepage renders current proof, reviews, and opportunity messaging", async
   assert.match(html, /Planning an event or building a team\?/);
   assert.match(html, /mailto:lancemtwolfe@gmail\.com/);
   assert.match(html, /Contact Lance/);
+  assert.match(html, /Open to nationwide opportunities/);
+  assert.doesNotMatch(html, /View Lance’s career/);
 });
 
 test("career page renders positioning, resumes, and current proof total", async () => {
@@ -26,6 +28,8 @@ test("career page renders positioning, resumes, and current proof total", async 
   assert.match(html, /Talent buying &amp; marketing/);
   assert.match(html, /349/);
   assert.match(html, /Connect on LinkedIn/);
+  assert.match(html, /See staffing management credits/);
+  assert.match(html, /role=Staffing%20Manager/);
 });
 
 test("timeline renders completed events without scheduled labels", async () => {
