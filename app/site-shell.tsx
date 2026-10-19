@@ -44,7 +44,7 @@ export function SiteShell({
   title: string;
   subtitle?: string;
   body: string;
-  primary?: { href: string; label: string };
+  primary?: { href: string; label: string; ariaLabel?: string };
   secondary?: { href: string; label: string };
   portrait?: ReactNode;
   children?: ReactNode;
@@ -69,7 +69,7 @@ export function SiteShell({
                 href={item.href}
                 markActive
                 activeClassName="border-sky-200/30 bg-sky-200/12 text-white"
-                className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 transition hover:border-white/20 hover:bg-white/[0.08] hover:text-white"
+                className="inline-flex min-h-11 items-center rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 transition hover:border-white/20 hover:bg-white/[0.08] hover:text-white"
               >
                 {item.label}
               </InternalNav>
@@ -103,9 +103,10 @@ export function SiteShell({
                   {primary ? (
                     <TrackedLink
                       href={primary.href}
+                      aria-label={primary.ariaLabel}
                       eventName="Primary CTA Click"
                       eventLocation={`hero-${eyebrow.toLowerCase().replaceAll(" ", "-")}`}
-                      className="rounded-full border border-sky-200/25 bg-sky-200/14 px-4 py-2 text-sm font-medium text-white shadow-[0_10px_24px_rgba(91,203,235,0.12)] transition hover:border-sky-200/40 hover:bg-sky-200/18"
+                      className="inline-flex min-h-11 items-center rounded-full border border-sky-200/25 bg-sky-200/14 px-4 py-2 text-sm font-medium text-white shadow-[0_10px_24px_rgba(91,203,235,0.12)] transition hover:border-sky-200/40 hover:bg-sky-200/18"
                     >
                       {primary.label}
                     </TrackedLink>
@@ -115,7 +116,7 @@ export function SiteShell({
                       href={secondary.href}
                       eventName={secondary.href.startsWith("mailto:") ? "Contact Click" : "Secondary CTA Click"}
                       eventLocation={`hero-${eyebrow.toLowerCase().replaceAll(" ", "-")}`}
-                      className="rounded-full border border-white/10 bg-white/[0.05] px-4 py-2 text-sm font-medium text-slate-100 transition hover:border-white/20 hover:bg-white/[0.09]"
+                      className="inline-flex min-h-11 items-center rounded-full border border-white/10 bg-white/[0.05] px-4 py-2 text-sm font-medium text-slate-100 transition hover:border-white/20 hover:bg-white/[0.09]"
                     >
                       {secondary.label}
                     </TrackedLink>
@@ -146,7 +147,7 @@ export function SiteShell({
                   eventName={item.icon === "email" ? "Contact Click" : "Social Click"}
                   eventLocation="footer"
                   aria-label={item.label}
-                  className="group inline-flex items-center justify-center rounded-full border border-white/8 bg-white/[0.02] p-1.5 text-slate-300/85 transition hover:border-white/12 hover:bg-white/[0.05] hover:text-white"
+                  className="group inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-white/8 bg-white/[0.02] p-1.5 text-slate-300/85 transition hover:border-white/12 hover:bg-white/[0.05] hover:text-white"
                 >
                   <span className="social-badge" aria-hidden="true">
                     {item.icon === "f" ? (

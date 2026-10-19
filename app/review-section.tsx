@@ -1,3 +1,4 @@
+import { ArrowIcon } from "./arrow-icon";
 const reviews = [
   {
     name: "Amber H.",
@@ -35,12 +36,8 @@ export function ReviewSection() {
         id="reviews-heading"
         className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-3xl"
       >
-        What people say about working with me
+        What people say
       </h2>
-      <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-300">
-        From clear communication behind the scenes to attentive service in the
-        moment.
-      </p>
 
       <div className="mt-5 grid gap-4 md:grid-cols-3">
         {reviews.map((review) => (
@@ -66,7 +63,7 @@ export function ReviewSection() {
                 aria-label={`Read ${review.name}’s original Google review (opens in a new tab)`}
                 className="mt-2 inline-flex min-h-11 items-center gap-2 rounded-sm text-xs text-sky-100 underline decoration-sky-200/35 underline-offset-4 transition hover:text-white hover:decoration-sky-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-200/60"
               >
-                Original review on Google <span aria-hidden="true">↗</span>
+                Original review on Google <ArrowIcon external />
               </a>
             </figcaption>
           </figure>

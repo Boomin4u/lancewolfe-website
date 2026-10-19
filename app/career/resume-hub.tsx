@@ -1,3 +1,4 @@
+import { ArrowIcon } from "../arrow-icon";
 import Image from "next/image";
 import { SiteShell } from "../site-shell";
 import { ProofOverview } from "./proof-overview";
@@ -24,6 +25,11 @@ const primaryResume = {
 };
 
 const bestFitLinks = [
+  {
+    label: "Event production",
+    detail: "See independently produced events",
+    href: "/career/timeline/?role=Producer",
+  },
   {
     label: "Event operations",
     detail: "Explore the complete event record",
@@ -53,7 +59,7 @@ export function ResumeHub() {
       title="Lance Wolfe"
       subtitle="Florida-based. Nationwide experience."
       body="Live-event operations professional with 11+ years in hospitality and nationwide experience across major music festivals, sporting events, and premium hospitality programs."
-      primary={{ href: "/resumes/full-event-resume.pdf", label: "View resume" }}
+      primary={{ href: "/resumes/full-event-resume.pdf", label: "View resume", ariaLabel: "View full event resume (PDF)" }}
       secondary={{ href: "/career/timeline/", label: "Timeline" }}
       portrait={
         <div className="relative h-28 w-28 overflow-hidden rounded-full border border-white/12 bg-slate-900 shadow-[0_0_0_6px_rgba(255,255,255,0.03)] sm:h-32 sm:w-32 md:h-36 md:w-36">
@@ -84,12 +90,19 @@ export function ResumeHub() {
             >
               <span className="flex items-center justify-between gap-3 text-sm font-medium text-slate-100">
                 {focus.label}
-                <span className="text-sky-100/60 transition group-hover:translate-x-0.5 group-hover:text-sky-100" aria-hidden="true">→</span>
+                <ArrowIcon />
               </span>
               <span className="mt-1 block text-xs leading-5 text-slate-400">{focus.detail}</span>
             </InternalNav>
           ))}
         </div>
+      </section>
+
+      <section aria-labelledby="operational-proof-heading" className="my-6 border-y border-white/10 py-5">
+        <h2 id="operational-proof-heading" className="text-lg font-semibold text-white">Staffing in practice</h2>
+        <p className="mt-2 text-sm leading-7 text-slate-300/85">Independently leads 100+ staff and supports deployments of 200–800 workers.</p>
+        <p className="mt-2 text-sm leading-7 text-slate-300/85">At Forbidden Kingdom, a staffing request doubled from 40 to 80 the day before the event. Applicant tracking, clear staff communications, and organized check-ins helped deliver all 80.</p>
+        <InternalNav href="/chronicles/this-one-was-mine/" className="mt-2 inline-flex min-h-11 items-center text-sm text-sky-100">Read the staffing story<ArrowIcon /></InternalNav>
       </section>
 
       <section className="mt-2 rounded-[1.65rem] border border-white/10 bg-white/[0.04] p-4 shadow-[0_20px_60px_rgba(4,11,26,0.18)] backdrop-blur-xl sm:p-5">
@@ -119,16 +132,18 @@ export function ResumeHub() {
           <div className="mt-3 flex items-center justify-between gap-3">
             <a
               href={primaryResume.href}
+              aria-label="View full event resume (PDF, opens in a new tab)"
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center rounded-full border border-white/12 bg-white/[0.06] px-3.5 py-1.5 text-sm font-medium text-white transition hover:border-white/20 hover:bg-white/[0.1]"
+              className="inline-flex min-h-11 items-center rounded-full border border-white/12 bg-white/[0.06] px-3.5 py-1.5 text-sm font-medium text-white transition hover:border-white/20 hover:bg-white/[0.1]"
             >
-              View PDF
+              View
             </a>
             <a
               href={primaryResume.href}
+              aria-label="Download full event resume (PDF)"
               download
-              className="text-sm font-medium text-slate-400 underline decoration-white/15 underline-offset-4 transition hover:text-white hover:decoration-white/30"
+              className="inline-flex min-h-11 items-center text-sm font-medium text-slate-400 underline decoration-white/15 underline-offset-4 transition hover:text-white hover:decoration-white/30"
             >
               Download
             </a>
@@ -157,16 +172,18 @@ export function ResumeHub() {
               <div className="mt-3 flex items-center justify-between gap-3">
                 <a
                   href={card.href}
+                  aria-label={`View ${card.title} (PDF, opens in a new tab)`}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center rounded-full border border-white/12 bg-white/[0.06] px-3.5 py-1.5 text-sm font-medium text-white transition hover:border-white/20 hover:bg-white/[0.1]"
+                  className="inline-flex min-h-11 items-center rounded-full border border-white/12 bg-white/[0.06] px-3.5 py-1.5 text-sm font-medium text-white transition hover:border-white/20 hover:bg-white/[0.1]"
                 >
-                  View PDF
+                  View
                 </a>
                 <a
                   href={card.href}
+                  aria-label={`Download ${card.title} (PDF)`}
                   download
-                  className="text-sm font-medium text-slate-400 underline decoration-white/15 underline-offset-4 transition hover:text-white hover:decoration-white/30"
+                  className="inline-flex min-h-11 items-center text-sm font-medium text-slate-400 underline decoration-white/15 underline-offset-4 transition hover:text-white hover:decoration-white/30"
                 >
                   Download
                 </a>

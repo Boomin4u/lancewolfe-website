@@ -1,7 +1,8 @@
 "use client";
 
 import { geoAlbersUsa, geoPath } from "d3-geo";
-import { useState } from "react";
+import { ArrowIcon } from "../arrow-icon";
+import { useId, useState } from "react";
 import { feature } from "topojson-client";
 import type { GeometryCollection, Topology } from "topojson-specification";
 import statesTopology from "us-atlas/states-10m.json";
@@ -46,7 +47,7 @@ function StatesMap({ activeStates }: { activeStates: readonly string[] }) {
   const active = new Set(activeStates);
 
   return (
-    <div className="w-[min(88vw,30rem)] rounded-[1.25rem] border border-sky-200/20 bg-[#07111f]/95 p-4 shadow-[0_24px_70px_rgba(0,0,0,0.48)] backdrop-blur-xl">
+    <div className="mx-auto w-full max-w-lg rounded-[1.25rem] border border-sky-200/20 bg-[#07111f]/95 p-4 shadow-[0_24px_70px_rgba(0,0,0,0.48)] backdrop-blur-xl">
       <div className="flex items-end justify-between gap-4">
         <div>
           <p className="text-[9px] font-semibold uppercase tracking-[0.28em] text-sky-100/65">Work footprint</p>
@@ -99,7 +100,7 @@ function StatesMap({ activeStates }: { activeStates: readonly string[] }) {
 
 function RoleBreakdown({ roles }: { roles: readonly { name: string; count: number }[] }) {
   return (
-    <div className="w-[min(88vw,30rem)] rounded-[1.25rem] border border-sky-200/20 bg-[#07111f]/95 p-4 shadow-[0_24px_70px_rgba(0,0,0,0.48)] backdrop-blur-xl">
+    <div className="mx-auto w-full max-w-lg rounded-[1.25rem] border border-sky-200/20 bg-[#07111f]/95 p-4 shadow-[0_24px_70px_rgba(0,0,0,0.48)] backdrop-blur-xl">
       <div className="flex items-end justify-between gap-4">
         <div>
           <p className="text-[9px] font-semibold uppercase tracking-[0.28em] text-sky-100/65">Career range</p>
@@ -128,10 +129,10 @@ function RoleBreakdown({ roles }: { roles: readonly { name: string; count: numbe
 
       <a
         href="/career/timeline/"
-        className="mt-3 flex items-center justify-between border-t border-white/10 pt-3 text-[10px] font-semibold uppercase tracking-[0.2em] text-sky-100/70 transition hover:text-sky-100 focus-visible:text-sky-100 focus-visible:outline-none"
+        className="mt-3 flex min-h-11 items-center justify-between border-t border-white/10 pt-3 text-[10px] font-semibold uppercase tracking-[0.2em] text-sky-100/70 transition hover:text-sky-100 focus-visible:text-sky-100 focus-visible:outline-none"
       >
         Explore the full event history
-        <span aria-hidden="true">→</span>
+        <ArrowIcon />
       </a>
     </div>
   );
@@ -142,7 +143,7 @@ function YearActivity({ years }: { years: readonly { year: number; count: number
   const maximum = Math.max(...years.map((year) => year.count), 1);
 
   return (
-    <div className="w-[min(88vw,30rem)] rounded-[1.25rem] border border-sky-200/20 bg-[#07111f]/95 p-4 shadow-[0_24px_70px_rgba(0,0,0,0.48)] backdrop-blur-xl">
+    <div className="mx-auto w-full max-w-lg rounded-[1.25rem] border border-sky-200/20 bg-[#07111f]/95 p-4 shadow-[0_24px_70px_rgba(0,0,0,0.48)] backdrop-blur-xl">
       <div className="flex items-end justify-between gap-4">
         <div>
           <p className="text-[9px] font-semibold uppercase tracking-[0.28em] text-sky-100/65">Career momentum</p>
@@ -177,106 +178,35 @@ function YearActivity({ years }: { years: readonly { year: number; count: number
 
 export function ProofStrip({ stats }: { stats: readonly ProofStat[] }) {
   const [openStat, setOpenStat] = useState<string | null>(null);
-
-  function isTouchInteraction() {
-    return window.matchMedia("(hover: none), (pointer: coarse)").matches;
-  }
+  const panelId = useId();
+  const selected = stats.find((stat) => stat.label === openStat);
 
   return (
-    <section className="relative z-30 rounded-[1.45rem] border border-white/10 bg-white/[0.04] shadow-[0_20px_60px_rgba(4,11,26,0.14)] backdrop-blur-xl">
+    <section className="rounded-[1.45rem] border border-white/10 bg-white/[0.04]">
       <div className="flex flex-col divide-y divide-white/10 md:flex-row md:divide-x md:divide-y-0">
-        {stats.map((stat) => stat.mapStates || stat.roleCounts || stat.yearActivity ? (
-          // Hover and focus share one disclosure state across pointer and keyboard input.
-          // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
-          <article
-            key={stat.label}
-            className="group relative flex-1 text-center md:text-left"
-            onMouseEnter={() => setOpenStat(stat.label)}
-            onMouseLeave={() => setOpenStat((current) => current === stat.label ? null : current)}
-            onFocus={() => setOpenStat(stat.label)}
-            onKeyDown={(event) => {
-              if (event.key === "Escape") {
-                setOpenStat(null);
-              }
-            }}
-            onBlur={(event) => {
-              if (!event.currentTarget.contains(event.relatedTarget)) {
-                setOpenStat((current) => current === stat.label ? null : current);
-              }
-            }}
-          >
-            {stat.roleCounts ? (
-              <a
-                href="/career/timeline/"
-                aria-label={`${stat.value} ${stat.label}. Explore the full event history.`}
-                aria-expanded={openStat === stat.label}
-                onClick={(event) => {
-                  if (isTouchInteraction() && openStat !== stat.label) {
-                    event.preventDefault();
-                    setOpenStat(stat.label);
-                  }
-                }}
-                className="block w-full cursor-pointer px-4 py-3 text-center outline-none sm:px-5 sm:py-4 md:text-left"
-              >
-                <div className="flex items-center justify-center gap-2 md:justify-start">
-                  <span className="text-xl font-semibold tracking-tight text-white sm:text-2xl">{stat.value}</span>
-                  <span className="text-[10px] text-sky-200/70 transition group-hover:translate-x-0.5 group-hover:text-sky-100 group-focus-within:translate-x-0.5 group-focus-within:text-sky-100">↗</span>
-                </div>
-                <div className="mt-1 text-[9px] font-semibold uppercase tracking-[0.28em] text-sky-100/75">
-                  {stat.label}
-                </div>
-              </a>
-            ) : (
-              <button
-                type="button"
-                aria-label={`${stat.value} ${stat.label}. Show ${stat.yearActivity ? "annual event activity" : "work footprint map"}.`}
-                aria-expanded={openStat === stat.label}
-                onClick={() => setOpenStat(stat.label)}
-                className="w-full cursor-pointer px-4 py-3 text-center outline-none sm:px-5 sm:py-4 md:text-left"
-              >
-                <div className="flex items-center justify-center gap-2 md:justify-start">
-                  <span className="text-xl font-semibold tracking-tight text-white sm:text-2xl">{stat.value}</span>
-                  <span className="text-[10px] text-sky-200/70 transition group-hover:translate-x-0.5 group-hover:text-sky-100 group-focus-within:translate-x-0.5 group-focus-within:text-sky-100">↗</span>
-                </div>
-                <div className="mt-1 text-[9px] font-semibold uppercase tracking-[0.28em] text-sky-100/75">
-                  {stat.label}
-                </div>
-              </button>
-            )}
-
-            {openStat === stat.label ? (
-              <div className="pointer-events-auto absolute left-1/2 top-full z-50 mt-3 -translate-x-1/2 translate-y-0 opacity-100">
-                <button
-                  type="button"
-                  aria-label={`Close ${stat.label} details`}
-                  onClick={() => setOpenStat(null)}
-                  className="absolute right-2 top-2 z-10 flex h-8 w-8 items-center justify-center rounded-full border border-white/10 bg-slate-950/70 text-sm text-slate-300 backdrop-blur transition hover:border-white/20 hover:text-white md:hidden"
-                >
-                  ×
-                </button>
-                {stat.mapStates ? (
-                  <StatesMap activeStates={stat.mapStates} />
-                ) : stat.roleCounts ? (
-                  <RoleBreakdown roles={stat.roleCounts} />
-                ) : stat.yearActivity ? (
-                  <YearActivity years={stat.yearActivity} />
-                ) : null}
-              </div>
-            ) : null}
-          </article>
-        ) : (
-          <article
-            key={stat.label}
-            className="flex-1 px-4 py-3 text-center sm:px-5 sm:py-4 md:text-left"
-          >
-            <div className="text-xl font-semibold tracking-tight text-white sm:text-2xl">
-              {stat.value}
-            </div>
-            <div className="mt-1 text-[9px] font-semibold uppercase tracking-[0.28em] text-sky-100/75">
-              {stat.label}
-            </div>
-          </article>
-        ))}
+        {stats.map((stat) => {
+          const expandable = Boolean(stat.mapStates || stat.roleCounts || stat.yearActivity);
+          const content = <>
+            <span className="flex items-center justify-center gap-2 md:justify-start">
+              <span className="text-xl font-semibold tracking-tight text-white sm:text-2xl">{stat.value}</span>
+              {expandable ? <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={`h-4 w-4 text-sky-200 ${openStat === stat.label ? "rotate-180" : ""}`}><path d="m6 9 6 6 6-6" /></svg> : null}
+            </span>
+            <span className="mt-1 block text-[9px] font-semibold uppercase tracking-[0.28em] text-sky-100/75">{stat.label}</span>
+          </>;
+          return expandable ? (
+            <button key={stat.label} type="button" aria-expanded={openStat === stat.label} aria-controls={panelId}
+              onClick={() => setOpenStat(openStat === stat.label ? null : stat.label)}
+              onKeyDown={(event) => { if (event.key === "Escape") setOpenStat(null); }}
+              className="min-h-11 flex-1 cursor-pointer rounded-xl px-4 py-3 text-center hover:bg-white/[0.04] sm:px-5 sm:py-4 md:text-left">
+              {content}
+            </button>
+          ) : <div key={stat.label} className="flex-1 px-4 py-3 text-center sm:px-5 sm:py-4 md:text-left">{content}</div>;
+        })}
+      </div>
+      <div id={panelId} hidden={!selected} className="border-t border-white/10 p-3">
+        {selected?.mapStates ? <StatesMap activeStates={selected.mapStates} />
+          : selected?.roleCounts ? <RoleBreakdown roles={selected.roleCounts} />
+          : selected?.yearActivity ? <YearActivity years={selected.yearActivity} /> : null}
       </div>
     </section>
   );

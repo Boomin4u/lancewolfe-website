@@ -20,9 +20,10 @@ export default function Home() {
       eyebrow="Lance Wolfe"
       title="Lance Wolfe"
       subtitle="Florida-based. Nationwide experience."
-      body="Live-event operations leader with 11+ years across hospitality, festival staffing, and national event programs."
-      primary={{ href: "/career/", label: "Explore Career" }}
-      secondary={{ href: contactHref, label: "Contact Lance" }}
+      body="Event producer specializing in talent buying & marketing with hands-on experience in operations, staffing, and premium hospitality."
+      childrenSpacingClassName="mt-6"
+      primary={{ href: contactHref, label: "Contact Lance" }}
+      secondary={{ href: "/career/", label: "Explore Career" }}
       portrait={
         <div className="relative h-28 w-28 overflow-hidden rounded-full border border-white/12 bg-slate-900 shadow-[0_0_0_6px_rgba(255,255,255,0.03)] sm:h-32 sm:w-32 md:h-36 md:w-36">
           <Image
