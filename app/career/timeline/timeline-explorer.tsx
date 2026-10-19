@@ -208,7 +208,7 @@ export function TimelineExplorer({ rows }: { rows: TimelineRow[] }) {
 
   return (
     <div>
-      <div className="mt-5 rounded-[1.2rem] border border-white/10 bg-slate-950/24 p-3 sm:p-4">
+      <div className="mt-5 rounded-[1.2rem] border border-white/10 bg-slate-950/22 p-3 sm:p-4">
         <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-sky-100/75">
@@ -238,7 +238,7 @@ export function TimelineExplorer({ rows }: { rows: TimelineRow[] }) {
             value={filters.query}
             onChange={(event) => updateFilter("query", event.target.value)}
             placeholder="Event, city, venue, employer, or role"
-            className="w-full rounded-xl border border-white/10 bg-[#0a1727] px-3 py-2.5 text-sm font-normal normal-case tracking-normal text-slate-100 outline-none transition placeholder:text-slate-600 focus:border-sky-200/40 focus:ring-2 focus:ring-sky-200/15"
+            className="w-full rounded-xl border border-white/10 bg-[var(--surface)] px-3 py-2.5 text-sm font-normal normal-case tracking-normal text-slate-100 outline-none transition placeholder:text-slate-400 focus:border-sky-200/40 focus:ring-2 focus:ring-sky-200/15"
           />
         </label>
 
@@ -325,7 +325,7 @@ export function TimelineExplorer({ rows }: { rows: TimelineRow[] }) {
                 Collapse all
               </button>
             </div>
-            <div className="timeline-table-shell overflow-hidden rounded-[1.2rem] border border-white/10 bg-slate-950/18">
+            <div className="timeline-table-shell overflow-hidden rounded-[1.2rem] border border-white/10 bg-slate-950/22">
             <div className="timeline-scroll overflow-x-auto">
               <table className="timeline-table table-fixed border-separate border-spacing-0">
                 <thead className="bg-white/[0.055]">
@@ -341,7 +341,7 @@ export function TimelineExplorer({ rows }: { rows: TimelineRow[] }) {
                   const isCollapsed = collapsedYears.has(year);
 
                   return (
-                    <tbody key={year} className="bg-slate-950/20">
+                    <tbody key={year}>
                       <tr className="timeline-year-row">
                         <th colSpan={5} className="border-t border-white/10 bg-white/[0.035] p-0 text-left">
                           <button
@@ -434,7 +434,7 @@ function FilterSelect({
         id={id}
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        className="min-w-0 rounded-xl border border-white/10 bg-[#0a1727] px-3 py-2.5 text-sm font-normal normal-case tracking-normal text-slate-100 outline-none transition focus:border-sky-200/40 focus:ring-2 focus:ring-sky-200/15"
+        className="min-w-0 rounded-xl border border-white/10 bg-[var(--surface)] px-3 py-2.5 text-sm font-normal normal-case tracking-normal text-slate-100 outline-none transition focus:border-sky-200/40 focus:ring-2 focus:ring-sky-200/15 [&>option]:bg-[var(--background)]"
       >
         <option value="">All {label.toLowerCase()}s</option>
         {options.map((option) => (

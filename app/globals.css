@@ -52,6 +52,14 @@ body {
   }
 }
 
+/* Keep the palette consistent regardless of page length or filtered row count. */
+.site-shell-background {
+  background:
+    radial-gradient(circle at top left, rgba(91, 203, 235, 0.12), transparent 36rem),
+    radial-gradient(circle at top right, rgba(11, 31, 59, 0.22), transparent 44rem),
+    linear-gradient(180deg, #071120 0, #091521 70rem);
+}
+
 .site-shell-orb {
   pointer-events: none;
   position: absolute;
@@ -143,8 +151,8 @@ a {
     position: sticky;
     top: 0;
     z-index: 20;
-    background: rgba(19, 33, 50, 0.98);
-    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1);
+    background: var(--surface-strong);
+    box-shadow: 0 1px 0 var(--line);
     backdrop-filter: blur(12px);
   }
 }
