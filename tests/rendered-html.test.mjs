@@ -91,3 +91,13 @@ test("homepage keeps detailed hiring content on Career", async () => {
   assert.match(html, /href="\/career\/"/);
   assert.match(html, /Event producer specializing in talent buying &amp; marketing with hands-on experience in operations, staffing, and premium hospitality/);
 });
+
+test("Texas Formula 1 roles match the confirmed career history", async () => {
+  const html = await renderedPage("career/timeline/index.html");
+  const rows = html.match(/<tr\b[^>]*>[\s\S]*?<\/tr>/g) ?? [];
+  for (const [year, role] of [[2022, "Bartender"], [2024, "Zone Manager"], [2025, "Bartender"]]) {
+    const row = rows.find((row) => row.includes(`, ${year}`) && row.includes("Formula 1 United States Grand Prix") && row.includes("Austin, TX"));
+    assert.ok(row, `Missing Austin Formula 1 row for ${year}`);
+    assert.match(row, new RegExp(`>${role}</td>`));
+  }
+});

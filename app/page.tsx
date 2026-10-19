@@ -8,9 +8,9 @@ import { OpportunityCta } from "./opportunity-cta";
 import { contactHref } from "./contact";
 
 export const metadata: Metadata = buildPageMetadata({
-  title: "Lance Wolfe | Live Event Operations & Staffing",
+  title: "Lance Wolfe | Event Producer, Talent Buying & Marketing",
   description:
-    "Official website of Lance Wolfe, a Florida-based live-event operations, staffing, hospitality, and festival professional with nationwide experience.",
+    "Lance Wolfe is a Florida-based event producer specializing in talent buying & marketing, with 11+ years across operations, staffing, and premium hospitality.",
   path: "/",
 });
 

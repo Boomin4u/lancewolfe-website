@@ -27,9 +27,9 @@ const focusPoints = [
 ];
 
 export const metadata: Metadata = buildPageMetadata({
-  title: "About Lance Wolfe | Live Event Operations Professional",
+  title: "About Lance Wolfe | Event Producer",
   description:
-    "Meet Lance Wolfe, a Florida-based live-event operations, staffing, hospitality, and festival professional with 11+ years of nationwide experience.",
+    "Lance Wolfe is a Florida-based event producer specializing in talent buying & marketing, with 11+ years across operations, staffing, and premium hospitality.",
   path: "/about/",
 });
 
