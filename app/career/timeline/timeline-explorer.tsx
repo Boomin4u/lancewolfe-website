@@ -74,6 +74,16 @@ export function TimelineExplorer({ rows }: { rows: TimelineRow[] }) {
     }),
     [rows],
   );
+  const timelineYears = useMemo(
+    () => [...new Set(rows.map((row) => row.year))].sort((left, right) => right - left),
+    [rows],
+  );
+  const [collapsedYears, setCollapsedYears] = useState(
+    () => new Set(timelineYears.slice(1)),
+  );
+  const [filteredCollapsedYears, setFilteredCollapsedYears] = useState(
+    () => new Set<number>(),
+  );
 
   const filteredRows = useMemo(
     () =>
@@ -267,6 +277,16 @@ export function TimelineExplorer({ rows }: { rows: TimelineRow[] }) {
     window.localStorage.removeItem(columnStorageKey);
   }
 
+  function toggleYear(year: number) {
+    const setCollapsed = hasFilters ? setFilteredCollapsedYears : setCollapsedYears;
+    setCollapsed((current) => {
+      const next = new Set(current);
+      if (next.has(year)) next.delete(year);
+      else next.add(year);
+      return next;
+    });
+  }
+
   return (
     <div ref={explorerRef}>
       <div className="mt-5 rounded-[1.2rem] border border-white/10 bg-slate-950/24 p-3 sm:p-4">
@@ -369,85 +389,95 @@ export function TimelineExplorer({ rows }: { rows: TimelineRow[] }) {
         ) : null}
       </div>
 
-      <div className="mt-4 space-y-4">
-        {groupedByYear.map(([year, yearRows], groupIndex) => (
-          <details
-            key={year}
-            className="group rounded-[1.2rem] border border-white/10 bg-slate-950/18 open:bg-slate-950/22"
-            open={hasFilters || groupIndex === 0}
-          >
-            <summary className="flex cursor-pointer list-none items-center gap-3 px-4 py-3 outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-sky-200/60">
-              <div className="text-lg font-semibold text-white">{year}</div>
-              <div className="h-px flex-1 bg-gradient-to-r from-white/20 to-transparent" />
-              <div className="text-xs uppercase tracking-[0.24em] text-slate-400">
-                {yearRows.length} events
-              </div>
-              <div className="ml-1 text-slate-400 transition group-open:rotate-180" aria-hidden="true">⌄</div>
-            </summary>
+      <div className="mt-4">
+        {filteredRows.length > 0 ? (
+          <div className="overflow-hidden rounded-[1.2rem] border border-white/10 bg-slate-950/18">
+            <div className="overflow-x-auto">
+              <table className="timeline-table table-fixed border-separate border-spacing-0">
+                <colgroup>
+                  <col style={{ width: "var(--timeline-date-width, 192px)" }} />
+                  <col style={{ width: "var(--timeline-event-width, 384px)" }} />
+                  <col style={{ width: "var(--timeline-location-width, 160px)" }} />
+                  <col style={{ width: "var(--timeline-employer-width, 176px)" }} />
+                  <col style={{ width: "var(--timeline-role-width, 240px)" }} />
+                </colgroup>
+                <thead className="bg-white/[0.055]">
+                  <tr className="text-left text-[10px] font-semibold uppercase tracking-[0.22em] text-slate-400">
+                    {columnSettings.map((column, columnIndex) => (
+                      <th key={column.label} className="relative px-3 py-3">
+                        {column.label}
+                        <button
+                          type="button"
+                          aria-label={`Resize ${column.label} column`}
+                          title={`Drag to resize ${column.label}. Use left and right arrow keys for precise adjustment.`}
+                          onPointerDown={(event) => startColumnResize(columnIndex, event)}
+                          onKeyDown={(event) => resizeColumnWithKeyboard(columnIndex, event)}
+                          className="absolute inset-y-0 right-0 hidden w-3 cursor-col-resize touch-none items-center justify-center outline-none after:h-5 after:w-px after:bg-white/15 hover:after:bg-sky-200/70 focus-visible:after:bg-sky-200 md:flex"
+                        />
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                {groupedByYear.map(([year, yearRows]) => {
+                  const isCollapsed = hasFilters
+                    ? filteredCollapsedYears.has(year)
+                    : collapsedYears.has(year);
 
-            <div className="border-t border-white/10">
-              <div className="overflow-x-auto">
-                <table className="timeline-table table-fixed border-separate border-spacing-0">
-                  <colgroup>
-                    <col style={{ width: "var(--timeline-date-width, 192px)" }} />
-                    <col style={{ width: "var(--timeline-event-width, 384px)" }} />
-                    <col style={{ width: "var(--timeline-location-width, 160px)" }} />
-                    <col style={{ width: "var(--timeline-employer-width, 176px)" }} />
-                    <col style={{ width: "var(--timeline-role-width, 240px)" }} />
-                  </colgroup>
-                  <thead className="bg-white/[0.04]">
-                    <tr className="text-left text-[10px] font-semibold uppercase tracking-[0.22em] text-slate-400">
-                      {columnSettings.map((column, columnIndex) => (
-                        <th key={column.label} className="relative px-3 py-3">
-                          {column.label}
+                  return (
+                    <tbody key={year} className="bg-slate-950/20">
+                      <tr className="timeline-year-row">
+                        <th colSpan={5} className="border-t border-white/10 bg-white/[0.035] p-0 text-left">
                           <button
                             type="button"
-                            aria-label={`Resize ${column.label} column`}
-                            title={`Drag to resize ${column.label}. Use left and right arrow keys for precise adjustment.`}
-                            onPointerDown={(event) => startColumnResize(columnIndex, event)}
-                            onKeyDown={(event) => resizeColumnWithKeyboard(columnIndex, event)}
-                            className="absolute inset-y-0 right-0 hidden w-3 cursor-col-resize touch-none items-center justify-center outline-none after:h-5 after:w-px after:bg-white/15 hover:after:bg-sky-200/70 focus-visible:after:bg-sky-200 md:flex"
-                          />
-                        </th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody className="bg-slate-950/20">
-                    {yearRows.map((entry, index) => (
-                      <tr
-                        key={`${entry.year}-${entry.title}-${entry.dateLabel}-${index}`}
-                        className="timeline-row border-t border-white/6 text-sm text-slate-200/90 hover:bg-white/[0.03]"
-                      >
-                        <td className="timeline-date whitespace-nowrap px-3 py-2.5 align-top text-[12px] text-slate-400">
-                          {entry.dateLabel}
-                        </td>
-                        <td className="timeline-event px-3 py-2.5 align-top">
-                          {entry.href ? (
-                            <a
-                              href={entry.href}
-                              target="_blank"
-                              rel="noreferrer"
-                              className="font-medium text-white underline decoration-white/0 underline-offset-4 transition hover:text-sky-50 hover:decoration-white/30"
-                            >
-                              {entry.title}{entry.status === "Scheduled" ? " (Scheduled)" : ""}
-                            </a>
-                          ) : (
-                            <span className="font-medium text-white">
-                              {entry.title}{entry.status === "Scheduled" ? " (Scheduled)" : ""}
+                            onClick={() => toggleYear(year)}
+                            aria-expanded={!isCollapsed}
+                            className="flex w-full items-center gap-3 px-4 py-3 outline-none transition hover:bg-white/[0.025] focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-sky-200/60"
+                          >
+                            <span className="text-lg font-semibold text-white">{year}</span>
+                            <span className="h-px flex-1 bg-gradient-to-r from-white/20 to-transparent" />
+                            <span className="text-xs font-medium uppercase tracking-[0.2em] text-slate-400">
+                              {yearRows.length} events
                             </span>
-                          )}
-                        </td>
-                        <td className="timeline-location whitespace-nowrap px-3 py-2.5 align-top text-slate-300">{entry.location}</td>
-                        <td className="timeline-employer whitespace-nowrap px-3 py-2.5 align-top text-slate-300">{entry.employer}</td>
-                        <td className="timeline-role whitespace-nowrap px-3 py-2.5 align-top text-slate-300">{entry.role}</td>
+                            <span className={`text-slate-400 transition ${isCollapsed ? "" : "rotate-180"}`} aria-hidden="true">⌄</span>
+                          </button>
+                        </th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+                      {!isCollapsed ? yearRows.map((entry, index) => (
+                        <tr
+                          key={`${entry.year}-${entry.title}-${entry.dateLabel}-${index}`}
+                          className="timeline-row border-t border-white/6 text-sm text-slate-200/90 hover:bg-white/[0.03]"
+                        >
+                          <td className="timeline-date whitespace-nowrap px-3 py-2.5 align-top text-[12px] text-slate-400">
+                            {entry.dateLabel}
+                          </td>
+                          <td className="timeline-event px-3 py-2.5 align-top">
+                            {entry.href ? (
+                              <a
+                                href={entry.href}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="font-medium text-white underline decoration-white/0 underline-offset-4 transition hover:text-sky-50 hover:decoration-white/30"
+                              >
+                                {entry.title}{entry.status === "Scheduled" ? " (Scheduled)" : ""}
+                              </a>
+                            ) : (
+                              <span className="font-medium text-white">
+                                {entry.title}{entry.status === "Scheduled" ? " (Scheduled)" : ""}
+                              </span>
+                            )}
+                          </td>
+                          <td className="timeline-location whitespace-nowrap px-3 py-2.5 align-top text-slate-300">{entry.location}</td>
+                          <td className="timeline-employer whitespace-nowrap px-3 py-2.5 align-top text-slate-300">{entry.employer}</td>
+                          <td className="timeline-role whitespace-nowrap px-3 py-2.5 align-top text-slate-300">{entry.role}</td>
+                        </tr>
+                      )) : null}
+                    </tbody>
+                  );
+                })}
+              </table>
             </div>
-          </details>
-        ))}
+          </div>
+        ) : null}
 
         {filteredRows.length === 0 ? (
           <div className="rounded-[1.2rem] border border-dashed border-white/12 bg-white/[0.025] px-4 py-8 text-center">

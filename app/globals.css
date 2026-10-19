@@ -131,6 +131,12 @@ a {
     display: block;
   }
 
+  .timeline-year-row,
+  .timeline-year-row th {
+    display: block;
+    width: 100%;
+  }
+
   .timeline-row {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);

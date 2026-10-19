@@ -51,6 +51,7 @@ test("timeline renders completed events without scheduled labels", async () => {
   assert.match(html, /timeline-filter-state/);
   assert.match(html, /Resize Date column/);
   assert.match(html, /Reset column widths/);
+  assert.equal(html.match(/<thead/g)?.length, 1, "timeline should render one shared table header");
   assert.ok(html.length < 900_000, `timeline HTML is unexpectedly large: ${html.length} characters`);
 });
 
