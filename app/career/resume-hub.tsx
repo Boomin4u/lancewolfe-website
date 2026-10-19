@@ -92,26 +92,6 @@ export function ResumeHub() {
         </div>
       </section>
 
-      <InternalNav
-        href="/career/timeline/"
-        className="group mt-2 block w-full rounded-[1.35rem] border border-white/10 bg-white/[0.04] p-3 shadow-[0_18px_50px_rgba(4,11,26,0.14)] backdrop-blur-xl transition hover:border-white/15 hover:bg-white/[0.06] sm:p-4"
-      >
-        <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <p className="text-[10px] font-semibold uppercase tracking-[0.26em] text-sky-100/75">
-              Event history
-            </p>
-            <h2 className="mt-1.5 text-lg font-semibold text-white">Timeline</h2>
-            <p className="mt-1.5 max-w-2xl text-sm leading-6 text-slate-300/80">
-              Explore events by year, role, employer, and state.
-            </p>
-          </div>
-          <span className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.05] px-3.5 py-1.5 text-sm font-medium text-slate-100 transition group-hover:border-white/20 group-hover:bg-white/[0.09]">
-            Open timeline
-          </span>
-        </div>
-      </InternalNav>
-
       <section className="mt-2 rounded-[1.65rem] border border-white/10 bg-white/[0.04] p-4 shadow-[0_20px_60px_rgba(4,11,26,0.18)] backdrop-blur-xl sm:p-5">
         <div className="flex items-center gap-3">
           <div className="flex flex-col">
