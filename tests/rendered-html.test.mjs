@@ -29,7 +29,7 @@ test("career page renders positioning, resumes, and current proof total", async 
   assert.match(html, /349/);
   assert.match(html, /Connect on LinkedIn/);
   assert.match(html, /See staffing management credits/);
-  assert.match(html, /role=Staffing%20Manager/);
+  assert.match(html, /role=Staffing%20%2F%20Staffing%20Management/);
 });
 
 test("timeline renders completed events without scheduled labels", async () => {

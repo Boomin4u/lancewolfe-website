@@ -32,7 +32,7 @@ const bestFitLinks = [
   {
     label: "Workforce leadership",
     detail: "See staffing management credits",
-    href: "/career/timeline/?role=Staffing%20Manager",
+    href: "/career/timeline/?role=Staffing%20%2F%20Staffing%20Management",
   },
   {
     label: "Hospitality programs",
@@ -42,7 +42,7 @@ const bestFitLinks = [
   {
     label: "Talent buying & marketing",
     detail: "See venue and talent experience",
-    href: "/career/timeline/?role=Talent%20Buyer%20%2F%20Marketing%20Manager",
+    href: "/career/timeline/?role=Talent%20Buying%20%2F%20Marketing",
   },
 ] as const;
 

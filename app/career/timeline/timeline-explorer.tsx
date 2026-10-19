@@ -1,6 +1,7 @@
 "use client";
 
 import { useDeferredValue, useEffect, useMemo, useState } from "react";
+import { roleCategory } from "../role-categories";
 
 export type TimelineRow = {
   year: number;
@@ -46,7 +47,7 @@ export function TimelineExplorer({ rows }: { rows: TimelineRow[] }) {
   const options = useMemo(
     () => ({
       years: [...new Set(rows.map((row) => row.year))].sort((left, right) => right - left),
-      roles: uniqueSorted(rows.map((row) => row.role)),
+      roles: uniqueSorted(rows.map((row) => roleCategory(row.role))),
       employers: uniqueSorted(rows.map((row) => row.employer)),
       states: uniqueSorted(rows.map((row) => getState(row.location))),
     }),
@@ -57,7 +58,7 @@ export function TimelineExplorer({ rows }: { rows: TimelineRow[] }) {
     () =>
       rows.filter((row) => {
         if (deferredFilters.year && row.year !== Number(deferredFilters.year)) return false;
-        if (deferredFilters.role && row.role !== deferredFilters.role) return false;
+        if (deferredFilters.role && roleCategory(row.role) !== deferredFilters.role) return false;
         if (deferredFilters.employer && row.employer !== deferredFilters.employer) return false;
         if (deferredFilters.state && getState(row.location) !== deferredFilters.state) return false;
         return true;
@@ -82,7 +83,7 @@ export function TimelineExplorer({ rows }: { rows: TimelineRow[] }) {
       const params = new URLSearchParams(window.location.search);
       setFilters({
         year: params.get("year") ?? "",
-        role: params.get("role") ?? "",
+        role: roleCategory(params.get("role") ?? ""),
         employer: params.get("employer") ?? "",
         state: params.get("state") ?? "",
       });
