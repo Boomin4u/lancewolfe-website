@@ -3,9 +3,9 @@ import { buildPageMetadata } from "../seo";
 import { ResumeHub } from "./resume-hub";
 
 export const metadata: Metadata = buildPageMetadata({
-  title: "Lance Wolfe | Event Operations Career & Resumes",
+  title: "Lance Wolfe | Event Production Career & Resumes",
   description:
-    "Explore Lance Wolfe’s live-event operations, staffing, hospitality, and festival career with current resumes and nationwide event history.",
+    "Explore 11+ years of Lance Wolfe’s event production, talent buying & marketing, operations, staffing, and premium hospitality experience. View resumes and event history.",
   path: "/career/",
 });
 

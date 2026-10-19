@@ -208,13 +208,13 @@ export function TimelineExplorer({ rows }: { rows: TimelineRow[] }) {
 
   return (
     <div>
-      <div className="mt-5 rounded-[1.2rem] border border-white/10 bg-slate-950/22 p-3 sm:p-4">
+      <div className="sm:mt-5 rounded-[1.2rem] border border-white/10 bg-slate-950/22 p-3 sm:p-4">
         <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-sky-100/75">
               Explore the record
             </p>
-            <p className="mt-1 text-sm leading-6 text-slate-300/80">
+            <p className="mt-1 hidden text-sm leading-6 text-slate-300/80 sm:block">
               Filter the event history by the experience most relevant to you.
             </p>
           </div>
@@ -242,7 +242,7 @@ export function TimelineExplorer({ rows }: { rows: TimelineRow[] }) {
           />
         </label>
 
-        <div className="mt-2 grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-2 grid grid-cols-2 gap-2 lg:grid-cols-4">
           <FilterSelect
             label="Year"
             value={filters.year}

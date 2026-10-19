@@ -62,7 +62,7 @@ const timelineRows: TimelineRow[] = eventHistorySections
 export const metadata: Metadata = buildPageMetadata({
   title: "Lance Wolfe | Nationwide Live Event History",
   description:
-    "Explore Lance Wolfe’s nationwide live-event history across festivals, sporting events, hospitality programs, staffing, and event production.",
+    "Explore 11+ years of Lance Wolfe’s nationwide event production, talent buying & marketing, operations, staffing, and hospitality history.",
   path: "/career/timeline/",
 });
 
@@ -71,11 +71,11 @@ export default function CareerTimelinePage() {
     <SiteShell
       eyebrow="Event timeline"
       title="Event history"
-      body="Explore the events, roles, employers, and places that shaped 11+ years of live-event work."
+      body="11+ years of nationwide event experience."
       widthClassName="max-w-7xl"
     >
       <section className="rounded-[1.5rem] border border-white/10 bg-white/[0.04] p-4 shadow-[0_18px_50px_rgba(4,11,26,0.16)] backdrop-blur-xl sm:p-5">
-        <div className="flex flex-col gap-2">
+        <div className="hidden flex-col gap-2 sm:flex">
           <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-sky-100/75">
             Event history
           </p>
@@ -85,7 +85,7 @@ export default function CareerTimelinePage() {
           </p>
         </div>
 
-        <div className="mt-4">
+        <div className="mt-4 hidden sm:block">
           <ProofStrip stats={proofStats} />
         </div>
 

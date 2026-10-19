@@ -3,7 +3,7 @@ import "./globals.css";
 
 const siteTitle = "Lance Wolfe";
 const siteDescription =
-  "Official website of Lance Wolfe, a Florida-based live-event operations, staffing, hospitality, and festival professional with nationwide experience.";
+  "Lance Wolfe is a Florida-based event producer specializing in talent buying & marketing, with 11+ years across operations, staffing, and premium hospitality.";
 const siteImage = "/og.png";
 
 export const metadata: Metadata = {
