@@ -44,7 +44,7 @@ export function SiteShell({
   title: string;
   subtitle?: string;
   body: string;
-  primary?: { href: string; label: string };
+  primary?: { href: string; label: string; ariaLabel?: string };
   secondary?: { href: string; label: string };
   portrait?: ReactNode;
   children?: ReactNode;
@@ -103,6 +103,7 @@ export function SiteShell({
                   {primary ? (
                     <TrackedLink
                       href={primary.href}
+                      aria-label={primary.ariaLabel}
                       eventName="Primary CTA Click"
                       eventLocation={`hero-${eyebrow.toLowerCase().replaceAll(" ", "-")}`}
                       className="inline-flex min-h-11 items-center rounded-full border border-sky-200/25 bg-sky-200/14 px-4 py-2 text-sm font-medium text-white shadow-[0_10px_24px_rgba(91,203,235,0.12)] transition hover:border-sky-200/40 hover:bg-sky-200/18"
