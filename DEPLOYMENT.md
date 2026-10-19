@@ -11,12 +11,13 @@ This site is set up as a static build that is published to a separate `deploy` b
 
 ## Update Process
 
-1. Make changes in the source files on `main`.
+1. Make changes on a feature branch.
 2. Run the app locally and verify the pages you changed.
-3. Commit and push to `main`.
-4. GitHub Actions runs the static build and prerender steps.
-5. The workflow publishes the generated `dist/client` output to `deploy`.
-6. Porkbun serves the updated files from `deploy`.
+3. Open a pull request into `main` and confirm the quality workflow passes.
+4. Merge the pull request.
+5. GitHub Actions builds, tests, and prerenders the static site from `main`.
+6. The workflow publishes the generated `dist/client` output to `deploy`.
+7. Porkbun serves the updated files from `deploy`.
 
 ## What Gets Published
 

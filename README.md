@@ -42,6 +42,8 @@ Update flow:
 
 If Porkbun is still connected to `main`, switch it to `deploy` in GitHub Connect.
 
+Pull requests into `main` run lint, TypeScript, the production build, static prerendering, and rendered-page regression tests before merge.
+
 ## Content Updates
 
 - **Home / About / Career**: edit the relevant files under `app/`.

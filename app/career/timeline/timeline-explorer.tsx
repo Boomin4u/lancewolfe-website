@@ -89,6 +89,9 @@ export function TimelineExplorer({ rows }: { rows: TimelineRow[] }) {
     }
     return groups;
   }, []);
+  const visibleYears = groupedByYear.map(([year]) => year);
+  const allVisibleYearsCollapsed = visibleYears.length > 0
+    && visibleYears.every((year) => collapsedYears.has(year));
 
   const activeRoleBreakdown = useMemo(() => {
     if (!deferredFilters.role) return [];
@@ -191,6 +194,18 @@ export function TimelineExplorer({ rows }: { rows: TimelineRow[] }) {
     });
   }
 
+  function collapseAllYears() {
+    setCollapsedYears((current) => new Set([...current, ...visibleYears]));
+  }
+
+  function expandAllYears() {
+    setCollapsedYears((current) => {
+      const next = new Set(current);
+      visibleYears.forEach((year) => next.delete(year));
+      return next;
+    });
+  }
+
   return (
     <div>
       <div className="mt-5 rounded-[1.2rem] border border-white/10 bg-slate-950/24 p-3 sm:p-4">
@@ -288,7 +303,29 @@ export function TimelineExplorer({ rows }: { rows: TimelineRow[] }) {
 
       <div className="mt-4">
         {filteredRows.length > 0 ? (
-          <div className="overflow-hidden rounded-[1.2rem] border border-white/10 bg-slate-950/18">
+          <div>
+            <div className="mb-2 flex items-center justify-end gap-2 text-xs">
+              <span className="mr-auto text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500">
+                Year groups
+              </span>
+              <button
+                type="button"
+                onClick={expandAllYears}
+                disabled={!visibleYears.some((year) => collapsedYears.has(year))}
+                className="rounded-full border border-white/10 bg-white/[0.035] px-3 py-1.5 text-slate-300 transition hover:border-white/20 hover:bg-white/[0.07] hover:text-white disabled:cursor-default disabled:opacity-40"
+              >
+                Expand all
+              </button>
+              <button
+                type="button"
+                onClick={collapseAllYears}
+                disabled={allVisibleYearsCollapsed}
+                className="rounded-full border border-white/10 bg-white/[0.035] px-3 py-1.5 text-slate-300 transition hover:border-white/20 hover:bg-white/[0.07] hover:text-white disabled:cursor-default disabled:opacity-40"
+              >
+                Collapse all
+              </button>
+            </div>
+            <div className="timeline-table-shell overflow-hidden rounded-[1.2rem] border border-white/10 bg-slate-950/18">
             <div className="timeline-scroll overflow-x-auto">
               <table className="timeline-table table-fixed border-separate border-spacing-0">
                 <thead className="bg-white/[0.055]">
@@ -355,6 +392,7 @@ export function TimelineExplorer({ rows }: { rows: TimelineRow[] }) {
                   );
                 })}
               </table>
+            </div>
             </div>
           </div>
         ) : null}

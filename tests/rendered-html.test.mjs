@@ -49,6 +49,8 @@ test("timeline renders completed events without scheduled labels", async () => {
   assert.match(html, /timeline-filter-role/);
   assert.match(html, /timeline-filter-employer/);
   assert.match(html, /timeline-filter-state/);
+  assert.match(html, /Expand all/);
+  assert.match(html, /Collapse all/);
   assert.match(html, /timeline-column-date/);
   assert.doesNotMatch(html, /Reset column order/);
   assert.equal(html.match(/<thead/g)?.length, 1, "timeline should render one shared table header");
@@ -60,4 +62,13 @@ test("Chronicles index exposes publication dates", async () => {
 
   assert.match(html, /Published/);
   assert.match(html, /From Consumer to Producer/);
+});
+
+test("sitemap includes every public career route", async () => {
+  const sitemap = await renderedPage("sitemap.xml");
+
+  assert.match(sitemap, /https:\/\/lancewolfe\.com\/career\/events\//);
+  assert.match(sitemap, /https:\/\/lancewolfe\.com\/career\/operations\//);
+  assert.match(sitemap, /https:\/\/lancewolfe\.com\/career\/staffing\//);
+  assert.match(sitemap, /https:\/\/lancewolfe\.com\/career\/timeline\//);
 });
