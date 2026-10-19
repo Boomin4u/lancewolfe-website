@@ -3,8 +3,7 @@ import Image from "next/image";
 import { SiteShell } from "./site-shell";
 import { buildPageMetadata } from "./seo";
 import { InternalNav } from "./internal-nav";
-import { ProofStrip } from "./career/proof-strip";
-import { proofStats } from "./career/proof-data";
+import { ProofOverview } from "./career/proof-overview";
 import { ReviewSection } from "./review-section";
 
 export const metadata: Metadata = buildPageMetadata({
@@ -37,19 +36,7 @@ export default function Home() {
         </div>
       }
     >
-      <section className="rounded-[1.5rem] border border-white/10 bg-white/[0.04] p-3.5 shadow-[0_18px_48px_rgba(4,11,26,0.14)] backdrop-blur-xl sm:p-4">
-        <div className="flex items-center justify-between gap-3">
-          <div className="text-[10px] font-semibold uppercase tracking-[0.28em] text-sky-100/78">
-            At a glance
-          </div>
-          <div className="text-[10px] font-semibold uppercase tracking-[0.28em] text-slate-500">
-            Overview
-          </div>
-        </div>
-        <div className="mt-3">
-          <ProofStrip stats={proofStats} />
-        </div>
-      </section>
+      <ProofOverview />
 
       <ReviewSection />
 

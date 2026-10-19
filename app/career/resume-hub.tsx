@@ -1,7 +1,6 @@
 import Image from "next/image";
 import { SiteShell } from "../site-shell";
-import { ProofStrip } from "./proof-strip";
-import { proofStats } from "./proof-data";
+import { ProofOverview } from "./proof-overview";
 import { InternalNav } from "../internal-nav";
 
 const resumeCards = [
@@ -46,7 +45,7 @@ export function ResumeHub() {
         </div>
       }
       >
-      <ProofStrip stats={proofStats} />
+      <ProofOverview />
 
       <InternalNav
         href="/career/timeline/"
