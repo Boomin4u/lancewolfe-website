@@ -26,6 +26,8 @@ test("career page renders positioning, resumes, and current proof total", async 
 
   assert.match(html, /Best-fit work/);
   assert.match(html, /Talent buying &amp; marketing/);
+  assert.match(html, /Staffing \/ Staffing Management/);
+  assert.match(html, /Staffing \/ Staffing Management.{0,60}count\\\":23/);
   assert.match(html, /349/);
   assert.match(html, /Connect on LinkedIn/);
   assert.match(html, /See staffing management credits/);

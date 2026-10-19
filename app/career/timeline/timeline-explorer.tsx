@@ -76,6 +76,17 @@ export function TimelineExplorer({ rows }: { rows: TimelineRow[] }) {
     return groups;
   }, []);
 
+  const activeRoleBreakdown = useMemo(() => {
+    if (!deferredFilters.role) return [];
+
+    return [...filteredRows.reduce((counts, row) => {
+      counts.set(row.role, (counts.get(row.role) ?? 0) + 1);
+      return counts;
+    }, new Map<string, number>())]
+      .map(([role, count]) => ({ role, count }))
+      .sort((left, right) => right.count - left.count || left.role.localeCompare(right.role));
+  }, [deferredFilters.role, filteredRows]);
+
   const hasFilters = Object.values(filters).some(Boolean);
 
   useEffect(() => {
@@ -131,9 +142,16 @@ export function TimelineExplorer({ rows }: { rows: TimelineRow[] }) {
               Filter the event history by the experience most relevant to you.
             </p>
           </div>
-          <p className="text-xs font-medium text-slate-400" aria-live="polite">
-            Showing {filteredRows.length} of {rows.length} events
-          </p>
+          <div className="text-left sm:text-right" aria-live="polite">
+            <p className="text-xs font-medium text-slate-400">
+              Showing {filteredRows.length} of {rows.length} events
+            </p>
+            {activeRoleBreakdown.length > 1 ? (
+              <p className="mt-1 text-[11px] text-slate-500">
+                {activeRoleBreakdown.map(({ role, count }) => `${count} ${role}`).join(" + ")}
+              </p>
+            ) : null}
+          </div>
         </div>
 
         <div className="mt-3 grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
