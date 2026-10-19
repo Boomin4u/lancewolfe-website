@@ -1,4 +1,5 @@
 import { eventHistorySections } from "./event-history-data";
+import { roleCategory } from "./role-categories";
 
 const timelineRows = eventHistorySections.flatMap((section) =>
   section.years.flatMap((year) =>
@@ -28,18 +29,6 @@ const stateCodes = new Set(
     .map((row) => row.location.split(",").pop()?.trim())
     .filter((state): state is string => typeof state === "string" && /^[A-Z]{2}$|^DC$/.test(state)),
 );
-
-function roleCategory(role: string): string {
-  if (role === "Talent Buyer / Marketing Manager" || role === "Marketing Manager") {
-    return "Talent Buying / Marketing";
-  }
-
-  if (role === "Staffing" || role === "Staffing Manager") {
-    return "Staffing / Staffing Management";
-  }
-
-  return role;
-}
 
 const roleCounts = [...completedTimelineRows.reduce((counts, row) => {
   const category = roleCategory(row.role);

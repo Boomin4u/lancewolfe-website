@@ -182,19 +182,28 @@ export function ProofStrip({ stats }: { stats: readonly ProofStat[] }) {
     return window.matchMedia("(hover: none), (pointer: coarse)").matches;
   }
 
-  function toggleOnTouch(label: string) {
-    if (isTouchInteraction()) {
-      setOpenStat((current) => current === label ? null : label);
-    }
-  }
-
   return (
     <section className="relative z-30 rounded-[1.45rem] border border-white/10 bg-white/[0.04] shadow-[0_20px_60px_rgba(4,11,26,0.14)] backdrop-blur-xl">
       <div className="flex flex-col divide-y divide-white/10 md:flex-row md:divide-x md:divide-y-0">
         {stats.map((stat) => stat.mapStates || stat.roleCounts || stat.yearActivity ? (
+          // Hover and focus share one disclosure state across pointer and keyboard input.
+          // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
           <article
             key={stat.label}
             className="group relative flex-1 text-center md:text-left"
+            onMouseEnter={() => setOpenStat(stat.label)}
+            onMouseLeave={() => setOpenStat((current) => current === stat.label ? null : current)}
+            onFocus={() => setOpenStat(stat.label)}
+            onKeyDown={(event) => {
+              if (event.key === "Escape") {
+                setOpenStat(null);
+              }
+            }}
+            onBlur={(event) => {
+              if (!event.currentTarget.contains(event.relatedTarget)) {
+                setOpenStat((current) => current === stat.label ? null : current);
+              }
+            }}
           >
             {stat.roleCounts ? (
               <a
@@ -222,7 +231,7 @@ export function ProofStrip({ stats }: { stats: readonly ProofStat[] }) {
                 type="button"
                 aria-label={`${stat.value} ${stat.label}. Show ${stat.yearActivity ? "annual event activity" : "work footprint map"}.`}
                 aria-expanded={openStat === stat.label}
-                onClick={() => toggleOnTouch(stat.label)}
+                onClick={() => setOpenStat(stat.label)}
                 className="w-full cursor-pointer px-4 py-3 text-center outline-none sm:px-5 sm:py-4 md:text-left"
               >
                 <div className="flex items-center justify-center gap-2 md:justify-start">
@@ -235,23 +244,25 @@ export function ProofStrip({ stats }: { stats: readonly ProofStat[] }) {
               </button>
             )}
 
-            <div className={`absolute left-1/2 top-full z-50 mt-3 -translate-x-1/2 transition duration-200 md:group-hover:pointer-events-auto md:group-hover:translate-y-0 md:group-hover:opacity-100 md:group-focus-within:pointer-events-auto md:group-focus-within:translate-y-0 md:group-focus-within:opacity-100 ${openStat === stat.label ? "pointer-events-auto translate-y-0 opacity-100" : "pointer-events-none translate-y-1 opacity-0"}`}>
-              <button
-                type="button"
-                aria-label={`Close ${stat.label} details`}
-                onClick={() => setOpenStat(null)}
-                className="absolute right-2 top-2 z-10 flex h-8 w-8 items-center justify-center rounded-full border border-white/10 bg-slate-950/70 text-sm text-slate-300 backdrop-blur transition hover:border-white/20 hover:text-white md:hidden"
-              >
-                ×
-              </button>
-              {stat.mapStates ? (
-                <StatesMap activeStates={stat.mapStates} />
-              ) : stat.roleCounts ? (
-                <RoleBreakdown roles={stat.roleCounts} />
-              ) : stat.yearActivity ? (
-                <YearActivity years={stat.yearActivity} />
-              ) : null}
-            </div>
+            {openStat === stat.label ? (
+              <div className="pointer-events-auto absolute left-1/2 top-full z-50 mt-3 -translate-x-1/2 translate-y-0 opacity-100">
+                <button
+                  type="button"
+                  aria-label={`Close ${stat.label} details`}
+                  onClick={() => setOpenStat(null)}
+                  className="absolute right-2 top-2 z-10 flex h-8 w-8 items-center justify-center rounded-full border border-white/10 bg-slate-950/70 text-sm text-slate-300 backdrop-blur transition hover:border-white/20 hover:text-white md:hidden"
+                >
+                  ×
+                </button>
+                {stat.mapStates ? (
+                  <StatesMap activeStates={stat.mapStates} />
+                ) : stat.roleCounts ? (
+                  <RoleBreakdown roles={stat.roleCounts} />
+                ) : stat.yearActivity ? (
+                  <YearActivity years={stat.yearActivity} />
+                ) : null}
+              </div>
+            ) : null}
           </article>
         ) : (
           <article

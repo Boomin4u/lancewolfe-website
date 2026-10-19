@@ -2,6 +2,7 @@ import Image from "next/image";
 import { SiteShell } from "../site-shell";
 import { ProofOverview } from "./proof-overview";
 import { InternalNav } from "../internal-nav";
+import { OpportunityCta } from "../opportunity-cta";
 
 const resumeCards = [
   {
@@ -22,13 +23,36 @@ const primaryResume = {
   href: "/resumes/full-event-resume.pdf",
 };
 
+const bestFitLinks = [
+  {
+    label: "Event operations",
+    detail: "Explore the complete event record",
+    href: "/career/timeline/",
+  },
+  {
+    label: "Workforce leadership",
+    detail: "See staffing management credits",
+    href: "/career/timeline/?role=Staffing%20%2F%20Staffing%20Management",
+  },
+  {
+    label: "Hospitality programs",
+    detail: "See bartender and service experience",
+    href: "/career/timeline/?role=Bartender",
+  },
+  {
+    label: "Talent buying & marketing",
+    detail: "See venue and talent experience",
+    href: "/career/timeline/?role=Talent%20Buying%20%2F%20Marketing",
+  },
+] as const;
+
 export function ResumeHub() {
   return (
     <SiteShell
       eyebrow="Career"
       title="Lance Wolfe"
       subtitle="Florida-based. Nationwide experience."
-      body="Live-event operations professional with 10+ years in hospitality and nationwide experience across major music festivals, sporting events, and premium hospitality programs."
+      body="Live-event operations professional with 11+ years in hospitality and nationwide experience across major music festivals, sporting events, and premium hospitality programs."
       primary={{ href: "/resumes/full-event-resume.pdf", label: "View resume" }}
       secondary={{ href: "/career/timeline/", label: "Timeline" }}
       portrait={
@@ -47,25 +71,26 @@ export function ResumeHub() {
       >
       <ProofOverview />
 
-      <InternalNav
-        href="/career/timeline/"
-        className="group mt-2 block w-full rounded-[1.35rem] border border-white/10 bg-white/[0.04] p-3 shadow-[0_18px_50px_rgba(4,11,26,0.14)] backdrop-blur-xl transition hover:border-white/15 hover:bg-white/[0.06] sm:p-4"
-      >
-        <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <p className="text-[10px] font-semibold uppercase tracking-[0.26em] text-sky-100/75">
-              Event history
-            </p>
-            <h2 className="mt-1.5 text-lg font-semibold text-white">Timeline</h2>
-            <p className="mt-1.5 max-w-2xl text-sm leading-6 text-slate-300/80">
-              View the full event history in a cleaner timeline layout.
-            </p>
-          </div>
-          <span className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.05] px-3.5 py-1.5 text-sm font-medium text-slate-100 transition group-hover:border-white/20 group-hover:bg-white/[0.09]">
-            Open timeline
-          </span>
+      <section className="mt-2 rounded-[1.35rem] border border-white/10 bg-white/[0.035] p-3.5 sm:p-4">
+        <p className="text-[10px] font-semibold uppercase tracking-[0.26em] text-sky-100/75">
+          Best-fit work
+        </p>
+        <div className="mt-3 grid gap-2 sm:grid-cols-2">
+          {bestFitLinks.map((focus) => (
+            <InternalNav
+              key={focus.label}
+              href={focus.href}
+              className="group rounded-[1rem] border border-white/10 bg-slate-950/30 px-3 py-2.5 transition hover:border-sky-200/30 hover:bg-slate-950/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-200/60"
+            >
+              <span className="flex items-center justify-between gap-3 text-sm font-medium text-slate-100">
+                {focus.label}
+                <span className="text-sky-100/60 transition group-hover:translate-x-0.5 group-hover:text-sky-100" aria-hidden="true">→</span>
+              </span>
+              <span className="mt-1 block text-xs leading-5 text-slate-400">{focus.detail}</span>
+            </InternalNav>
+          ))}
         </div>
-      </InternalNav>
+      </section>
 
       <section className="mt-2 rounded-[1.65rem] border border-white/10 bg-white/[0.04] p-4 shadow-[0_20px_60px_rgba(4,11,26,0.18)] backdrop-blur-xl sm:p-5">
         <div className="flex items-center gap-3">
@@ -150,6 +175,10 @@ export function ResumeHub() {
           ))}
         </div>
       </section>
+
+      <div className="mt-3">
+        <OpportunityCta />
+      </div>
     </SiteShell>
   );
 }

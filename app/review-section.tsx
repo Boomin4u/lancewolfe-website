@@ -19,7 +19,7 @@ const reviews = [
     name: "Debbie C.",
     topic: "Guest experience",
     quote:
-      "Our waiter Lance described many menu items since it was our first time. You can tell he likes his job",
+      "Lance described many menu items since it was our first time. You can tell he likes his job.",
     context: "Guest feedback · Luke’s Kitchen and Bar",
     href: "https://maps.app.goo.gl/TMCKLj2YPFLDwS7DA",
   },
@@ -29,7 +29,7 @@ export function ReviewSection() {
   return (
     <section aria-labelledby="reviews-heading" className="my-8 sm:my-10">
       <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-sky-100/78">
-        Staff &amp; guest experiences
+        Selected Google reviews
       </p>
       <h2
         id="reviews-heading"
@@ -66,7 +66,7 @@ export function ReviewSection() {
                 aria-label={`Read ${review.name}’s original Google review (opens in a new tab)`}
                 className="mt-2 inline-flex min-h-11 items-center gap-2 rounded-sm text-xs text-sky-100 underline decoration-sky-200/35 underline-offset-4 transition hover:text-white hover:decoration-sky-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-200/60"
               >
-                Read Google review <span aria-hidden="true">↗</span>
+                Original review on Google <span aria-hidden="true">↗</span>
               </a>
             </figcaption>
           </figure>

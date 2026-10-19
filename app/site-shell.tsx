@@ -1,5 +1,7 @@
 import type { ReactNode } from "react";
 import { InternalNav } from "./internal-nav";
+import { contactHref } from "./contact";
+import { TrackedLink } from "./tracked-link";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -19,6 +21,11 @@ const socialLinks = [
     label: "Instagram",
     icon: "ig",
   },
+  {
+    href: contactHref,
+    label: "Email Lance",
+    icon: "email",
+  },
 ] as const;
 
 export function SiteShell({
@@ -31,6 +38,7 @@ export function SiteShell({
   portrait,
   children,
   childrenSpacingClassName = "mt-3",
+  widthClassName = "max-w-4xl",
 }: {
   eyebrow: string;
   title: string;
@@ -41,6 +49,7 @@ export function SiteShell({
   portrait?: ReactNode;
   children?: ReactNode;
   childrenSpacingClassName?: string;
+  widthClassName?: string;
 }) {
   return (
     <main className="relative min-h-screen overflow-hidden bg-[var(--background)] text-[var(--foreground)]">
@@ -48,7 +57,7 @@ export function SiteShell({
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.035)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.035)_1px,transparent_1px)] bg-[size:72px_72px] opacity-[0.12] [mask-image:radial-gradient(circle_at_center,black_42%,transparent_92%)]" />
       <div className="site-shell-orb site-shell-orb-a" />
       <div className="site-shell-orb site-shell-orb-b" />
-      <div className="relative mx-auto flex min-h-screen w-full max-w-4xl flex-col px-4 py-6 sm:px-6 lg:px-8 lg:py-10">
+      <div className={`relative mx-auto flex min-h-screen w-full ${widthClassName} flex-col px-4 py-6 sm:px-6 lg:px-8 lg:py-10`}>
         <header className="flex flex-wrap items-center justify-between gap-3">
           <div className="text-[11px] font-semibold uppercase tracking-[0.32em] text-sky-100/78">
             {eyebrow}
@@ -58,6 +67,8 @@ export function SiteShell({
               <InternalNav
                 key={item.href}
                 href={item.href}
+                markActive
+                activeClassName="border-sky-200/30 bg-sky-200/12 text-white"
                 className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 transition hover:border-white/20 hover:bg-white/[0.08] hover:text-white"
               >
                 {item.label}
@@ -90,20 +101,24 @@ export function SiteShell({
               {primary || secondary ? (
                 <div className="mt-5 flex flex-wrap gap-2.5">
                   {primary ? (
-                    <InternalNav
+                    <TrackedLink
                       href={primary.href}
+                      eventName="Primary CTA Click"
+                      eventLocation={`hero-${eyebrow.toLowerCase().replaceAll(" ", "-")}`}
                       className="rounded-full border border-sky-200/25 bg-sky-200/14 px-4 py-2 text-sm font-medium text-white shadow-[0_10px_24px_rgba(91,203,235,0.12)] transition hover:border-sky-200/40 hover:bg-sky-200/18"
                     >
                       {primary.label}
-                    </InternalNav>
+                    </TrackedLink>
                   ) : null}
                   {secondary ? (
-                    <InternalNav
+                    <TrackedLink
                       href={secondary.href}
+                      eventName={secondary.href.startsWith("mailto:") ? "Contact Click" : "Secondary CTA Click"}
+                      eventLocation={`hero-${eyebrow.toLowerCase().replaceAll(" ", "-")}`}
                       className="rounded-full border border-white/10 bg-white/[0.05] px-4 py-2 text-sm font-medium text-slate-100 transition hover:border-white/20 hover:bg-white/[0.09]"
                     >
                       {secondary.label}
-                    </InternalNav>
+                    </TrackedLink>
                   ) : null}
                 </div>
               ) : null}
@@ -123,25 +138,32 @@ export function SiteShell({
             </InternalNav>
             <div className="flex items-center gap-2.5">
               {socialLinks.map((item) => (
-                <a
+                <TrackedLink
                   key={item.href}
                   href={item.href}
-                  target="_blank"
-                  rel="noreferrer"
+                  target={item.icon === "email" ? undefined : "_blank"}
+                  rel={item.icon === "email" ? undefined : "noreferrer"}
+                  eventName={item.icon === "email" ? "Contact Click" : "Social Click"}
+                  eventLocation="footer"
                   aria-label={item.label}
                   className="group inline-flex items-center justify-center rounded-full border border-white/8 bg-white/[0.02] p-1.5 text-slate-300/85 transition hover:border-white/12 hover:bg-white/[0.05] hover:text-white"
                 >
                   <span className="social-badge" aria-hidden="true">
                     {item.icon === "f" ? (
                       <span className="social-facebook">f</span>
-                    ) : (
+                    ) : item.icon === "ig" ? (
                       <span className="social-instagram">
                         <span className="social-instagram-ring" />
                         <span className="social-instagram-dot" />
                       </span>
+                    ) : (
+                      <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.8">
+                        <path d="M4 6.75h16v10.5H4z" />
+                        <path d="m4.5 7.25 7.5 6 7.5-6" />
+                      </svg>
                     )}
                   </span>
-                </a>
+                </TrackedLink>
               ))}
             </div>
           </div>
