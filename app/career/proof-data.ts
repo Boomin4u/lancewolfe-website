@@ -26,7 +26,7 @@ const yearActivity = Array.from({ length: eventEndYear - eventStartYear + 1 }, (
 const stateCodes = new Set(
   completedTimelineRows
     .map((row) => row.location.split(",").pop()?.trim())
-    .filter((state): state is string => /^[A-Z]{2}$|^DC$/.test(state)),
+    .filter((state): state is string => typeof state === "string" && /^[A-Z]{2}$|^DC$/.test(state)),
 );
 
 function roleCategory(role: string): string {

@@ -32,7 +32,9 @@ const stateCodeByFips: Record<string, string> = {
 
 const mapWidth = 960;
 const mapHeight = 560;
-const topology = statesTopology as unknown as Topology<{ states: GeometryCollection }>;
+const topology = statesTopology as unknown as Topology<{
+  states: GeometryCollection<{ name: string }>;
+}>;
 const stateFeatures = feature(topology, topology.objects.states).features;
 const projection = geoAlbersUsa().fitExtent([[12, 12], [mapWidth - 12, mapHeight - 12]], {
   type: "FeatureCollection",

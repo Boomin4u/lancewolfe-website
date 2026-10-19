@@ -1,8 +1,8 @@
 import type { ChronicleEntry } from "./chronicle-types";
 
-const entryModules = import.meta.glob("./entries/*.ts", {
+const entryModules = import.meta.glob<{ default: ChronicleEntry }>("./entries/*.ts", {
   eager: true,
-}) as Record<string, { default: ChronicleEntry }>;
+});
 
 const chronicleEntries = Object.values(entryModules).map((module) => module.default);
 
