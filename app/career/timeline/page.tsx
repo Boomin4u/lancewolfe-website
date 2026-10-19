@@ -72,6 +72,7 @@ export default function CareerTimelinePage() {
       eyebrow="Event timeline"
       title="Event history"
       body="Explore the events, roles, employers, and places that shaped 11+ years of live-event work."
+      widthClassName="max-w-7xl"
     >
       <section className="rounded-[1.5rem] border border-white/10 bg-white/[0.04] p-4 shadow-[0_18px_50px_rgba(4,11,26,0.16)] backdrop-blur-xl sm:p-5">
         <div className="flex flex-col gap-2">

@@ -38,6 +38,7 @@ export function SiteShell({
   portrait,
   children,
   childrenSpacingClassName = "mt-3",
+  widthClassName = "max-w-4xl",
 }: {
   eyebrow: string;
   title: string;
@@ -48,6 +49,7 @@ export function SiteShell({
   portrait?: ReactNode;
   children?: ReactNode;
   childrenSpacingClassName?: string;
+  widthClassName?: string;
 }) {
   return (
     <main className="relative min-h-screen overflow-hidden bg-[var(--background)] text-[var(--foreground)]">
@@ -55,7 +57,7 @@ export function SiteShell({
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.035)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.035)_1px,transparent_1px)] bg-[size:72px_72px] opacity-[0.12] [mask-image:radial-gradient(circle_at_center,black_42%,transparent_92%)]" />
       <div className="site-shell-orb site-shell-orb-a" />
       <div className="site-shell-orb site-shell-orb-b" />
-      <div className="relative mx-auto flex min-h-screen w-full max-w-4xl flex-col px-4 py-6 sm:px-6 lg:px-8 lg:py-10">
+      <div className={`relative mx-auto flex min-h-screen w-full ${widthClassName} flex-col px-4 py-6 sm:px-6 lg:px-8 lg:py-10`}>
         <header className="flex flex-wrap items-center justify-between gap-3">
           <div className="text-[11px] font-semibold uppercase tracking-[0.32em] text-sky-100/78">
             {eyebrow}
