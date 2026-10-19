@@ -4,10 +4,8 @@ import {
   useDeferredValue,
   useEffect,
   useMemo,
-  useRef,
   useState,
-  type KeyboardEvent,
-  type PointerEvent as ReactPointerEvent,
+  type DragEvent,
 } from "react";
 import { roleCategory } from "../role-categories";
 
@@ -41,14 +39,18 @@ const emptyFilters: Filters = {
 };
 
 const columnSettings = [
-  { label: "Date", variable: "--timeline-date-width", defaultWidth: 192, minWidth: 128 },
-  { label: "Event", variable: "--timeline-event-width", defaultWidth: 384, minWidth: 224 },
-  { label: "Location", variable: "--timeline-location-width", defaultWidth: 160, minWidth: 136 },
-  { label: "Employer", variable: "--timeline-employer-width", defaultWidth: 176, minWidth: 144 },
-  { label: "Role", variable: "--timeline-role-width", defaultWidth: 240, minWidth: 168 },
+  { key: "date", label: "Date" },
+  { key: "event", label: "Event" },
+  { key: "location", label: "Location" },
+  { key: "employer", label: "Employer" },
+  { key: "role", label: "Role" },
 ] as const;
 
-const columnStorageKey = "lancewolfe:timeline-column-widths";
+type ColumnKey = (typeof columnSettings)[number]["key"];
+type SortDirection = "asc" | "desc";
+
+const defaultColumnOrder = columnSettings.map((column) => column.key);
+const columnOrderStorageKey = "lancewolfe:timeline-column-order";
 
 function getState(location: string) {
   const state = location.split(",").pop()?.trim() ?? "";
@@ -60,9 +62,14 @@ function uniqueSorted(values: string[]) {
 }
 
 export function TimelineExplorer({ rows }: { rows: TimelineRow[] }) {
-  const explorerRef = useRef<HTMLDivElement>(null);
   const [filters, setFilters] = useState<Filters>(emptyFilters);
   const [urlReady, setUrlReady] = useState(false);
+  const [columnOrder, setColumnOrder] = useState<ColumnKey[]>(defaultColumnOrder);
+  const [draggedColumn, setDraggedColumn] = useState<ColumnKey | null>(null);
+  const [sort, setSort] = useState<{ key: ColumnKey; direction: SortDirection }>({
+    key: "date",
+    direction: "desc",
+  });
   const deferredFilters = useDeferredValue(filters);
 
   const options = useMemo(
@@ -94,7 +101,29 @@ export function TimelineExplorer({ rows }: { rows: TimelineRow[] }) {
     [deferredFilters, rows],
   );
 
-  const groupedByYear = filteredRows.reduce<Array<[number, TimelineRow[]]>>((groups, row) => {
+  const sortedRows = useMemo(() => {
+    const direction = sort.direction === "asc" ? 1 : -1;
+    const getSortValue = (row: TimelineRow) => {
+      if (sort.key === "date") return row.sortDate;
+      if (sort.key === "event") return row.title;
+      return row[sort.key];
+    };
+
+    return [...filteredRows].sort((left, right) => {
+      if (left.year !== right.year) return right.year - left.year;
+      const leftValue = getSortValue(left);
+      const rightValue = getSortValue(right);
+      if (typeof leftValue === "number" && typeof rightValue === "number") {
+        return (leftValue - rightValue) * direction;
+      }
+      return String(leftValue).localeCompare(String(rightValue), undefined, {
+        numeric: true,
+        sensitivity: "base",
+      }) * direction;
+    });
+  }, [filteredRows, sort]);
+
+  const groupedByYear = sortedRows.reduce<Array<[number, TimelineRow[]]>>((groups, row) => {
     const lastGroup = groups[groups.length - 1];
     if (lastGroup?.[0] === row.year) {
       lastGroup[1].push(row);
@@ -136,20 +165,18 @@ export function TimelineExplorer({ rows }: { rows: TimelineRow[] }) {
   }, []);
 
   useEffect(() => {
-    const root = explorerRef.current;
-    if (!root) return;
+    const restoreOrder = window.setTimeout(() => {
+      try {
+        const storedOrder = JSON.parse(window.localStorage.getItem(columnOrderStorageKey) ?? "[]") as ColumnKey[];
+        const isValidOrder = storedOrder.length === defaultColumnOrder.length
+          && defaultColumnOrder.every((key) => storedOrder.includes(key));
+        if (isValidOrder) setColumnOrder(storedOrder);
+      } catch {
+        window.localStorage.removeItem(columnOrderStorageKey);
+      }
+    }, 0);
 
-    try {
-      const storedWidths = JSON.parse(window.localStorage.getItem(columnStorageKey) ?? "[]") as number[];
-      columnSettings.forEach((column, index) => {
-        const width = storedWidths[index];
-        if (Number.isFinite(width) && width >= column.minWidth) {
-          root.style.setProperty(column.variable, `${width}px`);
-        }
-      });
-    } catch {
-      window.localStorage.removeItem(columnStorageKey);
-    }
+    return () => window.clearTimeout(restoreOrder);
   }, []);
 
   useEffect(() => {
@@ -213,59 +240,29 @@ export function TimelineExplorer({ rows }: { rows: TimelineRow[] }) {
     window.plausible?.("Timeline Share", { props: { filters: String(activeFilters.length) } });
   }
 
-  function getColumnWidths() {
-    const root = explorerRef.current;
-    return columnSettings.map((column) => {
-      const value = root?.style.getPropertyValue(column.variable);
-      const parsed = value ? Number.parseFloat(value) : column.defaultWidth;
-      return Number.isFinite(parsed) ? parsed : column.defaultWidth;
-    });
+  function sortByColumn(key: ColumnKey) {
+    setSort((current) => ({
+      key,
+      direction: current.key === key && current.direction === "asc" ? "desc" : "asc",
+    }));
   }
 
-  function setColumnWidth(index: number, width: number) {
-    const root = explorerRef.current;
-    const column = columnSettings[index];
-    if (!root || !column) return;
-
-    const widths = getColumnWidths();
-    widths[index] = Math.max(column.minWidth, Math.round(width));
-    root.style.setProperty(column.variable, `${widths[index]}px`);
-    window.localStorage.setItem(columnStorageKey, JSON.stringify(widths));
-  }
-
-  function startColumnResize(index: number, event: ReactPointerEvent<HTMLButtonElement>) {
-    const startX = event.clientX;
-    const startWidth = getColumnWidths()[index];
-    event.currentTarget.setPointerCapture(event.pointerId);
-
-    function handlePointerMove(pointerEvent: PointerEvent) {
-      setColumnWidth(index, startWidth + pointerEvent.clientX - startX);
-    }
-
-    function stopResize() {
-      window.removeEventListener("pointermove", handlePointerMove);
-      window.removeEventListener("pointerup", stopResize);
-      window.removeEventListener("pointercancel", stopResize);
-    }
-
-    window.addEventListener("pointermove", handlePointerMove);
-    window.addEventListener("pointerup", stopResize);
-    window.addEventListener("pointercancel", stopResize);
-  }
-
-  function resizeColumnWithKeyboard(index: number, event: KeyboardEvent<HTMLButtonElement>) {
-    if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+  function dropColumn(target: ColumnKey, event: DragEvent<HTMLTableCellElement>) {
     event.preventDefault();
-    const direction = event.key === "ArrowRight" ? 16 : -16;
-    setColumnWidth(index, getColumnWidths()[index] + direction);
+    if (!draggedColumn || draggedColumn === target) return;
+
+    setColumnOrder((current) => {
+      const next = current.filter((key) => key !== draggedColumn);
+      next.splice(next.indexOf(target), 0, draggedColumn);
+      window.localStorage.setItem(columnOrderStorageKey, JSON.stringify(next));
+      return next;
+    });
+    setDraggedColumn(null);
   }
 
-  function resetColumnWidths() {
-    const root = explorerRef.current;
-    if (!root) return;
-
-    columnSettings.forEach((column) => root.style.removeProperty(column.variable));
-    window.localStorage.removeItem(columnStorageKey);
+  function resetColumnOrder() {
+    setColumnOrder(defaultColumnOrder);
+    window.localStorage.removeItem(columnOrderStorageKey);
   }
 
   function toggleYear(year: number) {
@@ -278,7 +275,7 @@ export function TimelineExplorer({ rows }: { rows: TimelineRow[] }) {
   }
 
   return (
-    <div ref={explorerRef}>
+    <div>
       <div className="mt-5 rounded-[1.2rem] border border-white/10 bg-slate-950/24 p-3 sm:p-4">
         <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
           <div>
@@ -298,12 +295,15 @@ export function TimelineExplorer({ rows }: { rows: TimelineRow[] }) {
                 {activeRoleBreakdown.map(({ role, count }) => `${count} ${role}`).join(" + ")}
               </p>
             ) : null}
+            <p className="mt-1 hidden text-[11px] text-slate-500 md:block">
+              Select a header to sort. Drag headers to reorder.
+            </p>
             <button
               type="button"
-              onClick={resetColumnWidths}
+              onClick={resetColumnOrder}
               className="mt-1 hidden text-[11px] text-slate-500 underline decoration-white/10 underline-offset-4 transition hover:text-slate-200 md:inline"
             >
-              Reset column widths
+              Reset column order
             </button>
           </div>
         </div>
@@ -384,28 +384,34 @@ export function TimelineExplorer({ rows }: { rows: TimelineRow[] }) {
           <div className="overflow-hidden rounded-[1.2rem] border border-white/10 bg-slate-950/18">
             <div className="timeline-scroll overflow-x-auto">
               <table className="timeline-table table-fixed border-separate border-spacing-0">
-                <colgroup>
-                  <col style={{ width: "var(--timeline-date-width, 192px)" }} />
-                  <col style={{ width: "var(--timeline-event-width, 384px)" }} />
-                  <col style={{ width: "var(--timeline-location-width, 160px)" }} />
-                  <col style={{ width: "var(--timeline-employer-width, 176px)" }} />
-                  <col style={{ width: "var(--timeline-role-width, 240px)" }} />
-                </colgroup>
                 <thead className="bg-white/[0.055]">
                   <tr className="text-left text-[10px] font-semibold uppercase tracking-[0.22em] text-slate-400">
-                    {columnSettings.map((column, columnIndex) => (
-                      <th key={column.label} className="relative px-3 py-3">
-                        {column.label}
+                    {columnOrder.map((columnKey) => {
+                      const column = columnSettings.find((item) => item.key === columnKey)!;
+                      const isSorted = sort.key === column.key;
+                      return (
+                      <th
+                        key={column.key}
+                        draggable
+                        onDragStart={() => setDraggedColumn(column.key)}
+                        onDragEnd={() => setDraggedColumn(null)}
+                        onDragOver={(event) => event.preventDefault()}
+                        onDrop={(event) => dropColumn(column.key, event)}
+                        className={`timeline-column-${column.key} px-3 py-1.5 ${draggedColumn === column.key ? "opacity-45" : ""}`}
+                      >
                         <button
                           type="button"
-                          aria-label={`Resize ${column.label} column`}
-                          title={`Drag to resize ${column.label}. Use left and right arrow keys for precise adjustment.`}
-                          onPointerDown={(event) => startColumnResize(columnIndex, event)}
-                          onKeyDown={(event) => resizeColumnWithKeyboard(columnIndex, event)}
-                          className="absolute inset-y-0 right-0 hidden w-3 cursor-col-resize touch-none items-center justify-center outline-none after:h-5 after:w-px after:bg-white/15 hover:after:bg-sky-200/70 focus-visible:after:bg-sky-200 md:flex"
-                        />
+                          onClick={() => sortByColumn(column.key)}
+                          aria-label={`Sort by ${column.label}${isSorted ? `, currently ${sort.direction === "asc" ? "ascending" : "descending"}` : ""}`}
+                          className="flex w-full items-center gap-2 py-1.5 text-left outline-none transition hover:text-white focus-visible:text-white"
+                        >
+                          <span>{column.label}</span>
+                          <span className={`text-[11px] transition ${isSorted ? "text-sky-200" : "text-slate-600"}`} aria-hidden="true">
+                            {isSorted ? (sort.direction === "asc" ? "↑" : "↓") : "↕"}
+                          </span>
+                        </button>
                       </th>
-                    ))}
+                    )})}
                   </tr>
                 </thead>
                 {groupedByYear.map(([year, yearRows]) => {
@@ -435,28 +441,9 @@ export function TimelineExplorer({ rows }: { rows: TimelineRow[] }) {
                           key={`${entry.year}-${entry.title}-${entry.dateLabel}-${index}`}
                           className="timeline-row border-t border-white/6 text-sm text-slate-200/90 hover:bg-white/[0.03]"
                         >
-                          <td className="timeline-date whitespace-nowrap px-3 py-2.5 align-top text-[12px] text-slate-400">
-                            {entry.dateLabel}
-                          </td>
-                          <td className="timeline-event px-3 py-2.5 align-top">
-                            {entry.href ? (
-                              <a
-                                href={entry.href}
-                                target="_blank"
-                                rel="noreferrer"
-                                className="font-medium text-white underline decoration-white/0 underline-offset-4 transition hover:text-sky-50 hover:decoration-white/30"
-                              >
-                                {entry.title}{entry.status === "Scheduled" ? " (Scheduled)" : ""}
-                              </a>
-                            ) : (
-                              <span className="font-medium text-white">
-                                {entry.title}{entry.status === "Scheduled" ? " (Scheduled)" : ""}
-                              </span>
-                            )}
-                          </td>
-                          <td className="timeline-location whitespace-nowrap px-3 py-2.5 align-top text-slate-300">{entry.location}</td>
-                          <td className="timeline-employer whitespace-nowrap px-3 py-2.5 align-top text-slate-300">{entry.employer}</td>
-                          <td className="timeline-role whitespace-nowrap px-3 py-2.5 align-top text-slate-300">{entry.role}</td>
+                          {columnOrder.map((columnKey) => (
+                            <TimelineCell key={columnKey} column={columnKey} entry={entry} />
+                          ))}
                         </tr>
                       )) : null}
                     </tbody>
@@ -481,6 +468,43 @@ export function TimelineExplorer({ rows }: { rows: TimelineRow[] }) {
         ) : null}
       </div>
     </div>
+  );
+}
+
+function TimelineCell({ column, entry }: { column: ColumnKey; entry: TimelineRow }) {
+  if (column === "date") {
+    return (
+      <td className="timeline-date whitespace-nowrap px-3 py-2.5 align-top text-[12px] text-slate-400">
+        {entry.dateLabel}
+      </td>
+    );
+  }
+
+  if (column === "event") {
+    return (
+      <td className="timeline-event px-3 py-2.5 align-top">
+        {entry.href ? (
+          <a
+            href={entry.href}
+            target="_blank"
+            rel="noreferrer"
+            className="font-medium text-white underline decoration-white/0 underline-offset-4 transition hover:text-sky-50 hover:decoration-white/30"
+          >
+            {entry.title}{entry.status === "Scheduled" ? " (Scheduled)" : ""}
+          </a>
+        ) : (
+          <span className="font-medium text-white">
+            {entry.title}{entry.status === "Scheduled" ? " (Scheduled)" : ""}
+          </span>
+        )}
+      </td>
+    );
+  }
+
+  return (
+    <td className={`timeline-${column} whitespace-nowrap px-3 py-2.5 align-top text-slate-300`}>
+      {entry[column]}
+    </td>
   );
 }
 

@@ -107,13 +107,25 @@ a {
 }
 
 .timeline-table {
-  width: calc(
-    var(--timeline-date-width, 192px) +
-    var(--timeline-event-width, 384px) +
-    var(--timeline-location-width, 160px) +
-    var(--timeline-employer-width, 176px) +
-    var(--timeline-role-width, 240px)
-  );
+  width: 100%;
+  min-width: 64rem;
+}
+
+.timeline-column-date {
+  width: 17%;
+}
+
+.timeline-column-event {
+  width: 31%;
+}
+
+.timeline-column-location {
+  width: 18%;
+}
+
+.timeline-column-employer,
+.timeline-column-role {
+  width: 17%;
 }
 
 .timeline-scroll {
@@ -176,6 +188,7 @@ a {
   }
 
   .timeline-date {
+    order: 1;
     font-size: 0.6875rem;
     font-weight: 600;
     letter-spacing: 0.12em;
@@ -183,11 +196,13 @@ a {
   }
 
   .timeline-event {
+    order: 2;
     font-size: 1rem;
     line-height: 1.5rem;
   }
 
   .timeline-location {
+    order: 3;
     color: rgba(148, 163, 184, 0.9);
     font-size: 0.8125rem;
   }
@@ -202,6 +217,14 @@ a {
     color: rgba(226, 232, 240, 0.92);
     font-size: 0.75rem;
     line-height: 1.25rem;
+  }
+
+  .timeline-employer {
+    order: 4;
+  }
+
+  .timeline-role {
+    order: 5;
   }
 
   .timeline-employer::before,
