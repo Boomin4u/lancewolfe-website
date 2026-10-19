@@ -1,0 +1,44 @@
+import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
+import test from "node:test";
+
+const outputRoot = new URL("../dist/client/", import.meta.url);
+
+async function renderedPage(path) {
+  return readFile(new URL(path, outputRoot), "utf8");
+}
+
+test("homepage renders current proof, reviews, and opportunity messaging", async () => {
+  const html = await renderedPage("index.html");
+
+  assert.match(html, /11\+ years across hospitality/);
+  assert.match(html, /349/);
+  assert.match(html, /Selected Google reviews/);
+  assert.match(html, /Planning an event or building a team\?/);
+});
+
+test("career page renders positioning, resumes, and current proof total", async () => {
+  const html = await renderedPage("career/index.html");
+
+  assert.match(html, /Best-fit work/);
+  assert.match(html, /Talent buying &amp; marketing/);
+  assert.match(html, /349/);
+  assert.match(html, /Connect on LinkedIn/);
+});
+
+test("timeline renders completed events without scheduled labels", async () => {
+  const html = await renderedPage("career/timeline/index.html");
+
+  assert.match(html, /Aftershock/);
+  assert.match(html, /Seven Stars/);
+  assert.doesNotMatch(html, /\(Scheduled\)/);
+  assert.match(html, /Employer/);
+  assert.match(html, /Role/);
+});
+
+test("Chronicles index exposes publication dates", async () => {
+  const html = await renderedPage("chronicles/index.html");
+
+  assert.match(html, /Published/);
+  assert.match(html, /From Consumer to Producer/);
+});
