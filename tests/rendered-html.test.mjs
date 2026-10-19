@@ -11,7 +11,7 @@ async function renderedPage(path) {
 test("homepage renders current proof, reviews, and opportunity messaging", async () => {
   const html = await renderedPage("index.html");
 
-  assert.match(html, /new opportunities in event production/);
+  assert.match(html, /Event producer with hands-on experience in operations, staffing, and hospitality/);
   assert.match(html, /349/);
   assert.match(html, /Selected Google reviews/);
   assert.match(html, /Let’s build the next event/);
@@ -89,5 +89,5 @@ test("homepage keeps detailed hiring content on Career", async () => {
   const html = await renderedPage("index.html");
   assert.doesNotMatch(html, /Where I can help|Staffing in practice|doubled from 40 to 80/);
   assert.match(html, /href="\/career\/"/);
-  assert.match(html, /new opportunities in event production/);
+  assert.match(html, /Event producer with hands-on experience in operations, staffing, and hospitality/);
 });

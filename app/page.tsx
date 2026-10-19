@@ -20,7 +20,7 @@ export default function Home() {
       eyebrow="Lance Wolfe"
       title="Lance Wolfe"
       subtitle="Florida-based. Nationwide experience."
-      body="Event operations, staffing, and hospitality experience. Now looking toward new opportunities in event production."
+      body="Event producer with hands-on experience in operations, staffing, and hospitality."
       childrenSpacingClassName="mt-6"
       primary={{ href: contactHref, label: "Contact Lance" }}
       secondary={{ href: "/career/", label: "Explore Career" }}
