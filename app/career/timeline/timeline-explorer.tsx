@@ -5,7 +5,6 @@ import {
   useEffect,
   useMemo,
   useState,
-  type DragEvent,
 } from "react";
 import { roleCategory } from "../role-categories";
 
@@ -38,20 +37,6 @@ const emptyFilters: Filters = {
   state: "",
 };
 
-const columnSettings = [
-  { key: "date", label: "Date" },
-  { key: "event", label: "Event" },
-  { key: "location", label: "Location" },
-  { key: "employer", label: "Employer" },
-  { key: "role", label: "Role" },
-] as const;
-
-type ColumnKey = (typeof columnSettings)[number]["key"];
-type SortDirection = "asc" | "desc";
-
-const defaultColumnOrder = columnSettings.map((column) => column.key);
-const columnOrderStorageKey = "lancewolfe:timeline-column-order";
-
 function getState(location: string) {
   const state = location.split(",").pop()?.trim() ?? "";
   return /^[A-Z]{2}$|^DC$/.test(state) ? state : "Other";
@@ -64,12 +49,6 @@ function uniqueSorted(values: string[]) {
 export function TimelineExplorer({ rows }: { rows: TimelineRow[] }) {
   const [filters, setFilters] = useState<Filters>(emptyFilters);
   const [urlReady, setUrlReady] = useState(false);
-  const [columnOrder, setColumnOrder] = useState<ColumnKey[]>(defaultColumnOrder);
-  const [draggedColumn, setDraggedColumn] = useState<ColumnKey | null>(null);
-  const [sort, setSort] = useState<{ key: ColumnKey; direction: SortDirection }>({
-    key: "date",
-    direction: "desc",
-  });
   const deferredFilters = useDeferredValue(filters);
 
   const options = useMemo(
@@ -101,29 +80,7 @@ export function TimelineExplorer({ rows }: { rows: TimelineRow[] }) {
     [deferredFilters, rows],
   );
 
-  const sortedRows = useMemo(() => {
-    const direction = sort.direction === "asc" ? 1 : -1;
-    const getSortValue = (row: TimelineRow) => {
-      if (sort.key === "date") return row.sortDate;
-      if (sort.key === "event") return row.title;
-      return row[sort.key];
-    };
-
-    return [...filteredRows].sort((left, right) => {
-      if (left.year !== right.year) return right.year - left.year;
-      const leftValue = getSortValue(left);
-      const rightValue = getSortValue(right);
-      if (typeof leftValue === "number" && typeof rightValue === "number") {
-        return (leftValue - rightValue) * direction;
-      }
-      return String(leftValue).localeCompare(String(rightValue), undefined, {
-        numeric: true,
-        sensitivity: "base",
-      }) * direction;
-    });
-  }, [filteredRows, sort]);
-
-  const groupedByYear = sortedRows.reduce<Array<[number, TimelineRow[]]>>((groups, row) => {
+  const groupedByYear = filteredRows.reduce<Array<[number, TimelineRow[]]>>((groups, row) => {
     const lastGroup = groups[groups.length - 1];
     if (lastGroup?.[0] === row.year) {
       lastGroup[1].push(row);
@@ -162,21 +119,6 @@ export function TimelineExplorer({ rows }: { rows: TimelineRow[] }) {
     readUrlFilters();
     window.addEventListener("popstate", readUrlFilters);
     return () => window.removeEventListener("popstate", readUrlFilters);
-  }, []);
-
-  useEffect(() => {
-    const restoreOrder = window.setTimeout(() => {
-      try {
-        const storedOrder = JSON.parse(window.localStorage.getItem(columnOrderStorageKey) ?? "[]") as ColumnKey[];
-        const isValidOrder = storedOrder.length === defaultColumnOrder.length
-          && defaultColumnOrder.every((key) => storedOrder.includes(key));
-        if (isValidOrder) setColumnOrder(storedOrder);
-      } catch {
-        window.localStorage.removeItem(columnOrderStorageKey);
-      }
-    }, 0);
-
-    return () => window.clearTimeout(restoreOrder);
   }, []);
 
   useEffect(() => {
@@ -240,31 +182,6 @@ export function TimelineExplorer({ rows }: { rows: TimelineRow[] }) {
     window.plausible?.("Timeline Share", { props: { filters: String(activeFilters.length) } });
   }
 
-  function sortByColumn(key: ColumnKey) {
-    setSort((current) => ({
-      key,
-      direction: current.key === key && current.direction === "asc" ? "desc" : "asc",
-    }));
-  }
-
-  function dropColumn(target: ColumnKey, event: DragEvent<HTMLTableCellElement>) {
-    event.preventDefault();
-    if (!draggedColumn || draggedColumn === target) return;
-
-    setColumnOrder((current) => {
-      const next = current.filter((key) => key !== draggedColumn);
-      next.splice(next.indexOf(target), 0, draggedColumn);
-      window.localStorage.setItem(columnOrderStorageKey, JSON.stringify(next));
-      return next;
-    });
-    setDraggedColumn(null);
-  }
-
-  function resetColumnOrder() {
-    setColumnOrder(defaultColumnOrder);
-    window.localStorage.removeItem(columnOrderStorageKey);
-  }
-
   function toggleYear(year: number) {
     setCollapsedYears((current) => {
       const next = new Set(current);
@@ -295,16 +212,6 @@ export function TimelineExplorer({ rows }: { rows: TimelineRow[] }) {
                 {activeRoleBreakdown.map(({ role, count }) => `${count} ${role}`).join(" + ")}
               </p>
             ) : null}
-            <p className="mt-1 hidden text-[11px] text-slate-500 md:block">
-              Select a header to sort. Drag headers to reorder.
-            </p>
-            <button
-              type="button"
-              onClick={resetColumnOrder}
-              className="mt-1 hidden text-[11px] text-slate-500 underline decoration-white/10 underline-offset-4 transition hover:text-slate-200 md:inline"
-            >
-              Reset column order
-            </button>
           </div>
         </div>
 
@@ -386,32 +293,11 @@ export function TimelineExplorer({ rows }: { rows: TimelineRow[] }) {
               <table className="timeline-table table-fixed border-separate border-spacing-0">
                 <thead className="bg-white/[0.055]">
                   <tr className="text-left text-[10px] font-semibold uppercase tracking-[0.22em] text-slate-400">
-                    {columnOrder.map((columnKey) => {
-                      const column = columnSettings.find((item) => item.key === columnKey)!;
-                      const isSorted = sort.key === column.key;
-                      return (
-                      <th
-                        key={column.key}
-                        draggable
-                        onDragStart={() => setDraggedColumn(column.key)}
-                        onDragEnd={() => setDraggedColumn(null)}
-                        onDragOver={(event) => event.preventDefault()}
-                        onDrop={(event) => dropColumn(column.key, event)}
-                        className={`timeline-column-${column.key} px-3 py-1.5 ${draggedColumn === column.key ? "opacity-45" : ""}`}
-                      >
-                        <button
-                          type="button"
-                          onClick={() => sortByColumn(column.key)}
-                          aria-label={`Sort by ${column.label}${isSorted ? `, currently ${sort.direction === "asc" ? "ascending" : "descending"}` : ""}`}
-                          className="flex w-full items-center gap-2 py-1.5 text-left outline-none transition hover:text-white focus-visible:text-white"
-                        >
-                          <span>{column.label}</span>
-                          <span className={`text-[11px] transition ${isSorted ? "text-sky-200" : "text-slate-600"}`} aria-hidden="true">
-                            {isSorted ? (sort.direction === "asc" ? "↑" : "↓") : "↕"}
-                          </span>
-                        </button>
-                      </th>
-                    )})}
+                    <th className="timeline-column-date px-3 py-3">Date</th>
+                    <th className="timeline-column-event px-3 py-3">Event</th>
+                    <th className="timeline-column-location px-3 py-3">Location</th>
+                    <th className="timeline-column-employer px-3 py-3">Employer</th>
+                    <th className="timeline-column-role px-3 py-3">Role</th>
                   </tr>
                 </thead>
                 {groupedByYear.map(([year, yearRows]) => {
@@ -441,9 +327,28 @@ export function TimelineExplorer({ rows }: { rows: TimelineRow[] }) {
                           key={`${entry.year}-${entry.title}-${entry.dateLabel}-${index}`}
                           className="timeline-row border-t border-white/6 text-sm text-slate-200/90 hover:bg-white/[0.03]"
                         >
-                          {columnOrder.map((columnKey) => (
-                            <TimelineCell key={columnKey} column={columnKey} entry={entry} />
-                          ))}
+                          <td className="timeline-date whitespace-nowrap px-3 py-2.5 align-top text-[12px] text-slate-400">
+                            {entry.dateLabel}
+                          </td>
+                          <td className="timeline-event px-3 py-2.5 align-top">
+                            {entry.href ? (
+                              <a
+                                href={entry.href}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="font-medium text-white underline decoration-white/0 underline-offset-4 transition hover:text-sky-50 hover:decoration-white/30"
+                              >
+                                {entry.title}{entry.status === "Scheduled" ? " (Scheduled)" : ""}
+                              </a>
+                            ) : (
+                              <span className="font-medium text-white">
+                                {entry.title}{entry.status === "Scheduled" ? " (Scheduled)" : ""}
+                              </span>
+                            )}
+                          </td>
+                          <td className="timeline-location whitespace-nowrap px-3 py-2.5 align-top text-slate-300">{entry.location}</td>
+                          <td className="timeline-employer whitespace-nowrap px-3 py-2.5 align-top text-slate-300">{entry.employer}</td>
+                          <td className="timeline-role whitespace-nowrap px-3 py-2.5 align-top text-slate-300">{entry.role}</td>
                         </tr>
                       )) : null}
                     </tbody>
@@ -468,43 +373,6 @@ export function TimelineExplorer({ rows }: { rows: TimelineRow[] }) {
         ) : null}
       </div>
     </div>
-  );
-}
-
-function TimelineCell({ column, entry }: { column: ColumnKey; entry: TimelineRow }) {
-  if (column === "date") {
-    return (
-      <td className="timeline-date whitespace-nowrap px-3 py-2.5 align-top text-[12px] text-slate-400">
-        {entry.dateLabel}
-      </td>
-    );
-  }
-
-  if (column === "event") {
-    return (
-      <td className="timeline-event px-3 py-2.5 align-top">
-        {entry.href ? (
-          <a
-            href={entry.href}
-            target="_blank"
-            rel="noreferrer"
-            className="font-medium text-white underline decoration-white/0 underline-offset-4 transition hover:text-sky-50 hover:decoration-white/30"
-          >
-            {entry.title}{entry.status === "Scheduled" ? " (Scheduled)" : ""}
-          </a>
-        ) : (
-          <span className="font-medium text-white">
-            {entry.title}{entry.status === "Scheduled" ? " (Scheduled)" : ""}
-          </span>
-        )}
-      </td>
-    );
-  }
-
-  return (
-    <td className={`timeline-${column} whitespace-nowrap px-3 py-2.5 align-top text-slate-300`}>
-      {entry[column]}
-    </td>
   );
 }
 
