@@ -106,6 +106,16 @@ a {
   color: rgba(226, 232, 240, 0.45);
 }
 
+.timeline-table {
+  width: calc(
+    var(--timeline-date-width, 192px) +
+    var(--timeline-event-width, 384px) +
+    var(--timeline-location-width, 160px) +
+    var(--timeline-employer-width, 176px) +
+    var(--timeline-role-width, 240px)
+  );
+}
+
 @media (max-width: 767px) {
   .timeline-table {
     display: block;

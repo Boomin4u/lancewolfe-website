@@ -49,6 +49,8 @@ test("timeline renders completed events without scheduled labels", async () => {
   assert.match(html, /timeline-filter-role/);
   assert.match(html, /timeline-filter-employer/);
   assert.match(html, /timeline-filter-state/);
+  assert.match(html, /Resize Date column/);
+  assert.match(html, /Reset column widths/);
   assert.ok(html.length < 900_000, `timeline HTML is unexpectedly large: ${html.length} characters`);
 });
 

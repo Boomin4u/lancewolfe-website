@@ -1,6 +1,14 @@
 "use client";
 
-import { useDeferredValue, useEffect, useMemo, useState } from "react";
+import {
+  useDeferredValue,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type KeyboardEvent,
+  type PointerEvent as ReactPointerEvent,
+} from "react";
 import { roleCategory } from "../role-categories";
 
 export type TimelineRow = {
@@ -32,6 +40,16 @@ const emptyFilters: Filters = {
   state: "",
 };
 
+const columnSettings = [
+  { label: "Date", variable: "--timeline-date-width", defaultWidth: 192, minWidth: 128 },
+  { label: "Event", variable: "--timeline-event-width", defaultWidth: 384, minWidth: 224 },
+  { label: "Location", variable: "--timeline-location-width", defaultWidth: 160, minWidth: 136 },
+  { label: "Employer", variable: "--timeline-employer-width", defaultWidth: 176, minWidth: 144 },
+  { label: "Role", variable: "--timeline-role-width", defaultWidth: 240, minWidth: 168 },
+] as const;
+
+const columnStorageKey = "lancewolfe:timeline-column-widths";
+
 function getState(location: string) {
   const state = location.split(",").pop()?.trim() ?? "";
   return /^[A-Z]{2}$|^DC$/.test(state) ? state : "Other";
@@ -42,6 +60,7 @@ function uniqueSorted(values: string[]) {
 }
 
 export function TimelineExplorer({ rows }: { rows: TimelineRow[] }) {
+  const explorerRef = useRef<HTMLDivElement>(null);
   const [filters, setFilters] = useState<Filters>(emptyFilters);
   const [urlReady, setUrlReady] = useState(false);
   const deferredFilters = useDeferredValue(filters);
@@ -116,6 +135,23 @@ export function TimelineExplorer({ rows }: { rows: TimelineRow[] }) {
   }, []);
 
   useEffect(() => {
+    const root = explorerRef.current;
+    if (!root) return;
+
+    try {
+      const storedWidths = JSON.parse(window.localStorage.getItem(columnStorageKey) ?? "[]") as number[];
+      columnSettings.forEach((column, index) => {
+        const width = storedWidths[index];
+        if (Number.isFinite(width) && width >= column.minWidth) {
+          root.style.setProperty(column.variable, `${width}px`);
+        }
+      });
+    } catch {
+      window.localStorage.removeItem(columnStorageKey);
+    }
+  }, []);
+
+  useEffect(() => {
     if (!urlReady) return;
 
     const url = new URL(window.location.href);
@@ -176,8 +212,63 @@ export function TimelineExplorer({ rows }: { rows: TimelineRow[] }) {
     window.plausible?.("Timeline Share", { props: { filters: String(activeFilters.length) } });
   }
 
+  function getColumnWidths() {
+    const root = explorerRef.current;
+    return columnSettings.map((column) => {
+      const value = root?.style.getPropertyValue(column.variable);
+      const parsed = value ? Number.parseFloat(value) : column.defaultWidth;
+      return Number.isFinite(parsed) ? parsed : column.defaultWidth;
+    });
+  }
+
+  function setColumnWidth(index: number, width: number) {
+    const root = explorerRef.current;
+    const column = columnSettings[index];
+    if (!root || !column) return;
+
+    const widths = getColumnWidths();
+    widths[index] = Math.max(column.minWidth, Math.round(width));
+    root.style.setProperty(column.variable, `${widths[index]}px`);
+    window.localStorage.setItem(columnStorageKey, JSON.stringify(widths));
+  }
+
+  function startColumnResize(index: number, event: ReactPointerEvent<HTMLButtonElement>) {
+    const startX = event.clientX;
+    const startWidth = getColumnWidths()[index];
+    event.currentTarget.setPointerCapture(event.pointerId);
+
+    function handlePointerMove(pointerEvent: PointerEvent) {
+      setColumnWidth(index, startWidth + pointerEvent.clientX - startX);
+    }
+
+    function stopResize() {
+      window.removeEventListener("pointermove", handlePointerMove);
+      window.removeEventListener("pointerup", stopResize);
+      window.removeEventListener("pointercancel", stopResize);
+    }
+
+    window.addEventListener("pointermove", handlePointerMove);
+    window.addEventListener("pointerup", stopResize);
+    window.addEventListener("pointercancel", stopResize);
+  }
+
+  function resizeColumnWithKeyboard(index: number, event: KeyboardEvent<HTMLButtonElement>) {
+    if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+    event.preventDefault();
+    const direction = event.key === "ArrowRight" ? 16 : -16;
+    setColumnWidth(index, getColumnWidths()[index] + direction);
+  }
+
+  function resetColumnWidths() {
+    const root = explorerRef.current;
+    if (!root) return;
+
+    columnSettings.forEach((column) => root.style.removeProperty(column.variable));
+    window.localStorage.removeItem(columnStorageKey);
+  }
+
   return (
-    <>
+    <div ref={explorerRef}>
       <div className="mt-5 rounded-[1.2rem] border border-white/10 bg-slate-950/24 p-3 sm:p-4">
         <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
           <div>
@@ -197,6 +288,13 @@ export function TimelineExplorer({ rows }: { rows: TimelineRow[] }) {
                 {activeRoleBreakdown.map(({ role, count }) => `${count} ${role}`).join(" + ")}
               </p>
             ) : null}
+            <button
+              type="button"
+              onClick={resetColumnWidths}
+              className="mt-1 hidden text-[11px] text-slate-500 underline decoration-white/10 underline-offset-4 transition hover:text-slate-200 md:inline"
+            >
+              Reset column widths
+            </button>
           </div>
         </div>
 
@@ -289,21 +387,29 @@ export function TimelineExplorer({ rows }: { rows: TimelineRow[] }) {
 
             <div className="border-t border-white/10">
               <div className="overflow-x-auto">
-                <table className="timeline-table min-w-[72rem] table-fixed border-separate border-spacing-0">
+                <table className="timeline-table table-fixed border-separate border-spacing-0">
                   <colgroup>
-                    <col className="w-[12rem]" />
-                    <col className="w-[24rem]" />
-                    <col className="w-[10rem]" />
-                    <col className="w-[11rem]" />
-                    <col className="w-[15rem]" />
+                    <col style={{ width: "var(--timeline-date-width, 192px)" }} />
+                    <col style={{ width: "var(--timeline-event-width, 384px)" }} />
+                    <col style={{ width: "var(--timeline-location-width, 160px)" }} />
+                    <col style={{ width: "var(--timeline-employer-width, 176px)" }} />
+                    <col style={{ width: "var(--timeline-role-width, 240px)" }} />
                   </colgroup>
                   <thead className="bg-white/[0.04]">
                     <tr className="text-left text-[10px] font-semibold uppercase tracking-[0.22em] text-slate-400">
-                      <th className="px-3 py-3">Date</th>
-                      <th className="px-3 py-3">Event</th>
-                      <th className="px-3 py-3">Location</th>
-                      <th className="px-3 py-3">Employer</th>
-                      <th className="px-3 py-3">Role</th>
+                      {columnSettings.map((column, columnIndex) => (
+                        <th key={column.label} className="relative px-3 py-3">
+                          {column.label}
+                          <button
+                            type="button"
+                            aria-label={`Resize ${column.label} column`}
+                            title={`Drag to resize ${column.label}. Use left and right arrow keys for precise adjustment.`}
+                            onPointerDown={(event) => startColumnResize(columnIndex, event)}
+                            onKeyDown={(event) => resizeColumnWithKeyboard(columnIndex, event)}
+                            className="absolute inset-y-0 right-0 hidden w-3 cursor-col-resize touch-none items-center justify-center outline-none after:h-5 after:w-px after:bg-white/15 hover:after:bg-sky-200/70 focus-visible:after:bg-sky-200 md:flex"
+                          />
+                        </th>
+                      ))}
                     </tr>
                   </thead>
                   <tbody className="bg-slate-950/20">
@@ -356,7 +462,7 @@ export function TimelineExplorer({ rows }: { rows: TimelineRow[] }) {
           </div>
         ) : null}
       </div>
-    </>
+    </div>
   );
 }
 
