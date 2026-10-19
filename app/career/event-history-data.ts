@@ -213,8 +213,8 @@ const rawEventHistorySections: CareerTimelineSection[] = [
           { name: "Velocity at Field of Dreams", location: "Dyersville, IA", dateLabel: "September 4-6, 2026", monthLabel: "September", employer: "SoHo", role: "Bartender", url: "https://velocityatfieldofdreams.com/" },
           { name: "Louder Than Life", location: "Louisville, KY", dateLabel: "September 17-20, 2026", monthLabel: "September", employer: "SoHo", role: "Bartender", url: "https://louderthanlifefestival.com/" },
           { name: "Bourbon & Beyond", location: "Louisville, KY", dateLabel: "September 24-27, 2026", monthLabel: "September", employer: "SoHo", role: "Bartender", url: "https://bourbonandbeyond.com/" },
-          { name: "Aftershock", location: "Sacramento, CA", dateLabel: "October 1-4, 2026", monthLabel: "October", employer: "SoHo", role: "Bartender", status: "Scheduled", url: "https://aftershockfestival.com/" },
-          { name: "Seven Stars", location: "Arrington, VA", dateLabel: "October 9-11, 2026", monthLabel: "October", employer: "SoHo", role: "Bartender", status: "Scheduled", url: "https://www.sevenstarsfest.com/festival-info" },
+          { name: "Aftershock", location: "Sacramento, CA", dateLabel: "October 1-4, 2026", monthLabel: "October", employer: "SoHo", role: "Bartender", url: "https://aftershockfestival.com/" },
+          { name: "Seven Stars", location: "Arrington, VA", dateLabel: "October 9-11, 2026", monthLabel: "October", employer: "SoHo", role: "Bartender", url: "https://www.sevenstarsfest.com/festival-info" },
         ],
       },
       {
