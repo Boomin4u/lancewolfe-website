@@ -5,6 +5,7 @@ import { buildPageMetadata } from "./seo";
 import { InternalNav } from "./internal-nav";
 import { ProofStrip } from "./career/proof-strip";
 import { proofStats } from "./career/proof-data";
+import { ReviewSection } from "./review-section";
 
 export const metadata: Metadata = buildPageMetadata({
   title: "Lance Wolfe | Live Event Operations & Staffing",
@@ -49,6 +50,8 @@ export default function Home() {
           <ProofStrip stats={proofStats} />
         </div>
       </section>
+
+      <ReviewSection />
 
       <section className="mt-4 grid gap-4 md:grid-cols-3 sm:mt-5">
         <InfoCard
