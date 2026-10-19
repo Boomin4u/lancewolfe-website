@@ -382,7 +382,7 @@ export function TimelineExplorer({ rows }: { rows: TimelineRow[] }) {
       <div className="mt-4">
         {filteredRows.length > 0 ? (
           <div className="overflow-hidden rounded-[1.2rem] border border-white/10 bg-slate-950/18">
-            <div className="overflow-x-auto">
+            <div className="timeline-scroll overflow-x-auto">
               <table className="timeline-table table-fixed border-separate border-spacing-0">
                 <colgroup>
                   <col style={{ width: "var(--timeline-date-width, 192px)" }} />
@@ -419,7 +419,7 @@ export function TimelineExplorer({ rows }: { rows: TimelineRow[] }) {
                             type="button"
                             onClick={() => toggleYear(year)}
                             aria-expanded={!isCollapsed}
-                            className="flex w-full items-center gap-3 px-4 py-3 outline-none transition hover:bg-white/[0.025] focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-sky-200/60"
+                            className="timeline-year-toggle flex items-center gap-3 px-4 py-3 outline-none transition hover:bg-white/[0.025] focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-sky-200/60"
                           >
                             <span className="text-lg font-semibold text-white">{year}</span>
                             <span className="h-px flex-1 bg-gradient-to-r from-white/20 to-transparent" />

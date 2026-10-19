@@ -116,6 +116,16 @@ a {
   );
 }
 
+.timeline-scroll {
+  container-type: inline-size;
+}
+
+.timeline-year-toggle {
+  position: sticky;
+  left: 0;
+  width: 100cqw;
+}
+
 @media (max-width: 767px) {
   .timeline-table {
     display: block;
@@ -134,6 +144,11 @@ a {
   .timeline-year-row,
   .timeline-year-row th {
     display: block;
+    width: 100%;
+  }
+
+  .timeline-year-toggle {
+    position: static;
     width: 100%;
   }
 
