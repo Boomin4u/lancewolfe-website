@@ -14,15 +14,15 @@ const profileLinks = [
 const focusPoints = [
   {
     title: "Core capabilities",
-    text: "Event operations, workforce leadership, hospitality, talent buying, venue marketing, and independent production.",
+    text: "Recruiting, screening, scheduling, onboarding, payroll readiness, and final event rosters, supported by Google Forms, Sheets, and Excel.",
   },
   {
     title: "Working style",
-    text: "Calm under pressure, practical in the moment, and focused on systems that help teams execute consistently.",
+    text: "Track hiring status, call times, and check-ins in one place. Give staff clear maps, arrival instructions, and schedule updates before they reach the event.",
   },
   {
     title: "Current direction",
-    text: "Building dependable teams and repeatable operating systems for festivals, venues, hospitality programs, and large-scale live events.",
+    text: "Returning to event production opportunities, drawing on independently organized events, venue operations, talent buying, and the systems that help live-event teams execute.",
   },
 ];
 
@@ -135,7 +135,7 @@ export default function AboutPage() {
                 href={link.href}
                 target="_blank"
                 rel="noreferrer"
-                className="rounded-full border border-white/10 bg-slate-950/30 px-3 py-1.5 text-sm text-slate-200 transition hover:border-sky-200/30 hover:text-white"
+                className="inline-flex min-h-11 items-center rounded-full border border-white/10 bg-slate-950/30 px-3 py-1.5 text-sm text-slate-200 transition hover:border-sky-200/30 hover:text-white"
               >
                 Lance Wolfe on {link.label}
               </a>

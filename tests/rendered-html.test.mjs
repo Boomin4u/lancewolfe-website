@@ -72,3 +72,15 @@ test("sitemap includes every public career route", async () => {
   assert.match(sitemap, /https:\/\/lancewolfe\.com\/career\/staffing\//);
   assert.match(sitemap, /https:\/\/lancewolfe\.com\/career\/timeline\//);
 });
+
+// Guard the hiring routes and the distinction between leading and supporting teams.
+test("homepage connects supported staffing proof to role-specific resumes", async () => {
+  const html = await renderedPage("index.html");
+  assert.match(html, /Independently leads 100\+ staff and supports deployments of 200–800 workers/);
+  assert.match(html, /40 to 80 staff. One day to adapt/);
+  assert.match(html, /href="\/resumes\/staffing-resume.pdf"/);
+  assert.match(html, /href="\/resumes\/bar-ops-resume.pdf"/);
+  assert.match(html, /Staffing%20%2F%20Staffing%20Management/);
+  assert.match(html, /aria-controls=/);
+  assert.match(html, /lancemtwolfe@gmail.com<\/p>/);
+});

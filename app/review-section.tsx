@@ -1,3 +1,4 @@
+import { ArrowIcon } from "./arrow-icon";
 const reviews = [
   {
     name: "Amber H.",
@@ -66,7 +67,7 @@ export function ReviewSection() {
                 aria-label={`Read ${review.name}’s original Google review (opens in a new tab)`}
                 className="mt-2 inline-flex min-h-11 items-center gap-2 rounded-sm text-xs text-sky-100 underline decoration-sky-200/35 underline-offset-4 transition hover:text-white hover:decoration-sky-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-200/60"
               >
-                Original review on Google <span aria-hidden="true">↗</span>
+                Original review on Google <ArrowIcon external />
               </a>
             </figcaption>
           </figure>

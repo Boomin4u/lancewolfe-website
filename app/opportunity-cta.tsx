@@ -1,5 +1,6 @@
 import { TrackedLink } from "./tracked-link";
-import { contactHref } from "./contact";
+import { ArrowIcon } from "./arrow-icon";
+import { contactEmail, contactHref } from "./contact";
 
 const linkedInUrl = "https://www.linkedin.com/in/lance-wolfe-53765154";
 
@@ -24,8 +25,9 @@ export function OpportunityCta({ compact = false }: { compact?: boolean }) {
           <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-300/85">
             I’m Florida-based and available for nationwide event operations, staffing, hospitality, and production opportunities.
           </p>
+          <p className="mt-2 select-text break-all text-sm text-sky-100">{contactEmail}</p>
         </div>
-        <div className="flex shrink-0 flex-wrap gap-2">
+        <div className="flex shrink-0 flex-wrap gap-2 sm:max-w-xs">
           <TrackedLink
             href={contactHref}
             eventName="Contact Click"
@@ -42,7 +44,7 @@ export function OpportunityCta({ compact = false }: { compact?: boolean }) {
             eventLocation="opportunity-cta-linkedin"
             className="inline-flex min-h-11 items-center rounded-full border border-white/10 bg-white/[0.05] px-4 py-2 text-sm font-medium text-slate-100 transition hover:border-white/20 hover:bg-white/[0.09] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-200/60"
           >
-            Connect on LinkedIn ↗
+            Connect on LinkedIn <ArrowIcon external />
           </TrackedLink>
           <TrackedLink
             href="/resumes/full-event-resume.pdf"
@@ -52,7 +54,7 @@ export function OpportunityCta({ compact = false }: { compact?: boolean }) {
             eventLocation="opportunity-cta"
             className="inline-flex min-h-11 items-center rounded-full border border-white/10 bg-white/[0.05] px-4 py-2 text-sm font-medium text-slate-100 transition hover:border-white/20 hover:bg-white/[0.09] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-200/60"
           >
-            View resume
+            Full event resume (PDF)
           </TrackedLink>
         </div>
       </div>

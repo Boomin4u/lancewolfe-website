@@ -293,3 +293,9 @@ a {
   border-radius: 999px;
   background: currentColor;
 }
+
+/* Keep keyboard navigation visible across shared links and controls. */
+a:focus-visible, button:focus-visible {
+  outline: 2px solid #bae6fd;
+  outline-offset: 4px;
+}
