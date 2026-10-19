@@ -16,11 +16,12 @@ const reviews = [
     href: "https://maps.app.goo.gl/BD9fGoZEuUffg6DS8",
   },
   {
-    name: "Lauren F.",
+    name: "Debbie C.",
     topic: "Guest experience",
-    quote: "My dad and I were thrilled with our server Lance!",
+    quote:
+      "Our waiter Lance described many menu items since it was our first time. You can tell he likes his job",
     context: "Guest feedback · Luke’s Kitchen and Bar",
-    href: "https://maps.app.goo.gl/JZcbGZaQBdceNUSR9",
+    href: "https://maps.app.goo.gl/TMCKLj2YPFLDwS7DA",
   },
 ] as const;
 
