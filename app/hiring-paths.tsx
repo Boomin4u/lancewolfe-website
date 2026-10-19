@@ -5,7 +5,6 @@ const paths = [
   {
     title: "Event production",
     description: "Looking toward new event production opportunities, drawing on independently organized events, venue operations, talent buying, and hands-on staffing experience.",
-    recentWork: "Freelance signage support — Louder Than Life, two days.",
     resume: "/resumes/full-event-resume.pdf",
     resumeLabel: "Full event resume (PDF)",
     history: "/career/timeline/?role=Producer",
@@ -38,7 +37,6 @@ export function HiringPaths() {
           <article key={path.title} className="flex flex-col rounded-[1.45rem] border border-white/10 bg-white/[0.04] p-4 sm:p-5">
             <h3 className="text-lg font-semibold text-white">{path.title}</h3>
             <p className="mt-2 flex-1 text-sm leading-7 text-slate-300/85">{path.description}</p>
-            {path.recentWork ? <p className="mt-3 text-sm font-medium leading-6 text-sky-100">{path.recentWork}</p> : null}
             <a href={path.resume} target="_blank" rel="noreferrer" aria-label={`${path.resumeLabel}, opens in a new tab`} className="mt-3 inline-flex min-h-11 items-center self-start rounded-full border border-sky-200/20 bg-sky-200/10 px-3 text-sm font-medium text-sky-100">
               {path.resumeLabel}<ArrowIcon external />
             </a>
