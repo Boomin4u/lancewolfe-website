@@ -59,7 +59,7 @@ export function ResumeHub() {
       title="Lance Wolfe"
       subtitle="Florida-based. Nationwide experience."
       body="Live-event operations professional with 11+ years in hospitality and nationwide experience across major music festivals, sporting events, and premium hospitality programs."
-      primary={{ href: "/resumes/full-event-resume.pdf", label: "View résumé", ariaLabel: "View full event résumé (PDF)" }}
+      primary={{ href: "/resumes/full-event-resume.pdf", label: "View resume", ariaLabel: "View full event resume (PDF)" }}
       secondary={{ href: "/career/timeline/", label: "Timeline" }}
       portrait={
         <div className="relative h-28 w-28 overflow-hidden rounded-full border border-white/12 bg-slate-900 shadow-[0_0_0_6px_rgba(255,255,255,0.03)] sm:h-32 sm:w-32 md:h-36 md:w-36">
@@ -137,7 +137,7 @@ export function ResumeHub() {
               rel="noreferrer"
               className="inline-flex min-h-11 items-center rounded-full border border-white/12 bg-white/[0.06] px-3.5 py-1.5 text-sm font-medium text-white transition hover:border-white/20 hover:bg-white/[0.1]"
             >
-              View résumé
+              View
             </a>
             <a
               href={primaryResume.href}
@@ -177,7 +177,7 @@ export function ResumeHub() {
                   rel="noreferrer"
                   className="inline-flex min-h-11 items-center rounded-full border border-white/12 bg-white/[0.06] px-3.5 py-1.5 text-sm font-medium text-white transition hover:border-white/20 hover:bg-white/[0.1]"
                 >
-                  View résumé
+                  View
                 </a>
                 <a
                   href={card.href}
