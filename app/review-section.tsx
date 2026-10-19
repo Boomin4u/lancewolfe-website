@@ -19,7 +19,7 @@ const reviews = [
     name: "Debbie C.",
     topic: "Guest experience",
     quote:
-      "Our waiter Lance described many menu items since it was our first time. You can tell he likes his job",
+      "Lance described many menu items since it was our first time. You can tell he likes his job.",
     context: "Guest feedback · Luke’s Kitchen and Bar",
     href: "https://maps.app.goo.gl/TMCKLj2YPFLDwS7DA",
   },
@@ -39,7 +39,7 @@ export function ReviewSection() {
       </h2>
       <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-300">
         From clear communication behind the scenes to attentive service in the
-        moment. Each excerpt links to its original review on Google.
+        moment.
       </p>
 
       <div className="mt-5 grid gap-4 md:grid-cols-3">
