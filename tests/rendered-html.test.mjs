@@ -11,11 +11,11 @@ async function renderedPage(path) {
 test("homepage renders current proof, reviews, and opportunity messaging", async () => {
   const html = await renderedPage("index.html");
 
-  assert.match(html, /11\+ years across hospitality/);
+  assert.match(html, /new opportunities in event production/);
   assert.match(html, /349/);
   assert.match(html, /Selected Google reviews/);
-  assert.match(html, /Planning an event or building a team\?/);
-  assert.match(html, /Email Lance/);
+  assert.match(html, /Let’s build the next event/);
+  assert.match(html, /lancemtwolfe@gmail.com/);
   assert.match(html, /mailto:lancemtwolfe@gmail\.com/);
   assert.match(html, /Contact Lance/);
   assert.match(html, /Explore Career/);
@@ -74,13 +74,20 @@ test("sitemap includes every public career route", async () => {
 });
 
 // Guard the hiring routes and the distinction between leading and supporting teams.
-test("homepage connects supported staffing proof to role-specific resumes", async () => {
-  const html = await renderedPage("index.html");
+test("career connects supported staffing proof to role-specific resumes", async () => {
+  const html = await renderedPage("career/index.html");
   assert.match(html, /Independently leads 100\+ staff and supports deployments of 200–800 workers/);
-  assert.match(html, /40 to 80 staff. One day to adapt/);
+  assert.match(html, /doubled from 40 to 80/);
   assert.match(html, /href="\/resumes\/staffing-resume.pdf"/);
   assert.match(html, /href="\/resumes\/bar-ops-resume.pdf"/);
   assert.match(html, /Staffing%20%2F%20Staffing%20Management/);
   assert.match(html, /aria-controls=/);
   assert.match(html, /lancemtwolfe@gmail.com<\/p>/);
+});
+
+test("homepage keeps detailed hiring content on Career", async () => {
+  const html = await renderedPage("index.html");
+  assert.doesNotMatch(html, /Where I can help|Staffing in practice|doubled from 40 to 80/);
+  assert.match(html, /href="\/career\/"/);
+  assert.match(html, /new opportunities in event production/);
 });

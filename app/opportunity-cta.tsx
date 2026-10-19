@@ -5,6 +5,19 @@ import { contactEmail, contactHref } from "./contact";
 const linkedInUrl = "https://www.linkedin.com/in/lance-wolfe-53765154";
 
 export function OpportunityCta({ compact = false }: { compact?: boolean }) {
+  if (compact) {
+    return (
+      <section aria-labelledby="opportunity-heading" className="border-t border-white/10 py-6 sm:flex sm:items-center sm:justify-between sm:gap-6">
+        <div>
+          <h2 id="opportunity-heading" className="text-xl font-semibold text-white">Let’s build the next event.</h2>
+          <p className="mt-2 text-sm text-slate-400">Open to nationwide opportunities.</p>
+        </div>
+        <TrackedLink href={contactHref} eventName="Contact Click" eventLocation="opportunity-cta-email" className="mt-3 inline-flex min-h-11 select-text items-center text-sm text-sky-100 underline underline-offset-4 sm:mt-0">
+          {contactEmail}
+        </TrackedLink>
+      </section>
+    );
+  }
   return (
     <section
       aria-labelledby="opportunity-heading"

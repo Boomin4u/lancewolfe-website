@@ -47,7 +47,7 @@ function StatesMap({ activeStates }: { activeStates: readonly string[] }) {
   const active = new Set(activeStates);
 
   return (
-    <div className="w-full rounded-[1.25rem] border border-sky-200/20 bg-[#07111f]/95 p-4 shadow-[0_24px_70px_rgba(0,0,0,0.48)] backdrop-blur-xl">
+    <div className="mx-auto w-full max-w-lg rounded-[1.25rem] border border-sky-200/20 bg-[#07111f]/95 p-4 shadow-[0_24px_70px_rgba(0,0,0,0.48)] backdrop-blur-xl">
       <div className="flex items-end justify-between gap-4">
         <div>
           <p className="text-[9px] font-semibold uppercase tracking-[0.28em] text-sky-100/65">Work footprint</p>
@@ -100,7 +100,7 @@ function StatesMap({ activeStates }: { activeStates: readonly string[] }) {
 
 function RoleBreakdown({ roles }: { roles: readonly { name: string; count: number }[] }) {
   return (
-    <div className="w-full rounded-[1.25rem] border border-sky-200/20 bg-[#07111f]/95 p-4 shadow-[0_24px_70px_rgba(0,0,0,0.48)] backdrop-blur-xl">
+    <div className="mx-auto w-full max-w-lg rounded-[1.25rem] border border-sky-200/20 bg-[#07111f]/95 p-4 shadow-[0_24px_70px_rgba(0,0,0,0.48)] backdrop-blur-xl">
       <div className="flex items-end justify-between gap-4">
         <div>
           <p className="text-[9px] font-semibold uppercase tracking-[0.28em] text-sky-100/65">Career range</p>
@@ -143,7 +143,7 @@ function YearActivity({ years }: { years: readonly { year: number; count: number
   const maximum = Math.max(...years.map((year) => year.count), 1);
 
   return (
-    <div className="w-full rounded-[1.25rem] border border-sky-200/20 bg-[#07111f]/95 p-4 shadow-[0_24px_70px_rgba(0,0,0,0.48)] backdrop-blur-xl">
+    <div className="mx-auto w-full max-w-lg rounded-[1.25rem] border border-sky-200/20 bg-[#07111f]/95 p-4 shadow-[0_24px_70px_rgba(0,0,0,0.48)] backdrop-blur-xl">
       <div className="flex items-end justify-between gap-4">
         <div>
           <p className="text-[9px] font-semibold uppercase tracking-[0.28em] text-sky-100/65">Career momentum</p>

@@ -36,12 +36,8 @@ export function ReviewSection() {
         id="reviews-heading"
         className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-3xl"
       >
-        What people say about working with me
+        What people say
       </h2>
-      <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-300">
-        From clear communication behind the scenes to attentive service in the
-        moment.
-      </p>
 
       <div className="mt-5 grid gap-4 md:grid-cols-3">
         {reviews.map((review) => (

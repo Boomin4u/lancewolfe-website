@@ -26,6 +26,11 @@ const primaryResume = {
 
 const bestFitLinks = [
   {
+    label: "Event production",
+    detail: "See independently produced events",
+    href: "/career/timeline/?role=Producer",
+  },
+  {
     label: "Event operations",
     detail: "Explore the complete event record",
     href: "/career/timeline/",
@@ -91,6 +96,13 @@ export function ResumeHub() {
             </InternalNav>
           ))}
         </div>
+      </section>
+
+      <section aria-labelledby="operational-proof-heading" className="my-6 border-y border-white/10 py-5">
+        <h2 id="operational-proof-heading" className="text-lg font-semibold text-white">Staffing in practice</h2>
+        <p className="mt-2 text-sm leading-7 text-slate-300/85">Independently leads 100+ staff and supports deployments of 200–800 workers.</p>
+        <p className="mt-2 text-sm leading-7 text-slate-300/85">At Forbidden Kingdom, a staffing request doubled from 40 to 80 the day before the event. Applicant tracking, clear staff communications, and organized check-ins helped deliver all 80.</p>
+        <InternalNav href="/chronicles/this-one-was-mine/" className="mt-2 inline-flex min-h-11 items-center text-sm text-sky-100">Read the staffing story<ArrowIcon /></InternalNav>
       </section>
 
       <section className="mt-2 rounded-[1.65rem] border border-white/10 bg-white/[0.04] p-4 shadow-[0_20px_60px_rgba(4,11,26,0.18)] backdrop-blur-xl sm:p-5">
