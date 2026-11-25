@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { access, readFile } from "node:fs/promises";
+import { readFile } from "node:fs/promises";
 import test from "node:test";
 
 const outputRoot = new URL("../dist/client/", import.meta.url);
@@ -123,5 +123,7 @@ test("retired Chronicle is unavailable and no longer linked", async () => {
   assert.match(retired, /name="robots" content="noindex"/);
   assert.match(retired, /This story has been removed/);
   assert.doesNotMatch(retired, /The Power of Restraint|Iowa cornfield/);
-  await assert.rejects(access(new URL("chronicles-power-of-restraint.jpg", outputRoot)), { code: "ENOENT" });
+  // The host can retain deleted assets, so overwrite the former cover with a blank tile.
+  const retiredCover = await readFile(new URL("chronicles-power-of-restraint.jpg", outputRoot));
+  assert.ok(retiredCover.length < 300, "former cover should be the blank replacement");
 });
