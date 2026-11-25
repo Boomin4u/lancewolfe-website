@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { readFile } from "node:fs/promises";
+import { access, readFile } from "node:fs/promises";
 import test from "node:test";
 
 const outputRoot = new URL("../dist/client/", import.meta.url);
@@ -111,4 +111,17 @@ test("Las Vegas F1 chronicle is linked, rendered, and indexed", async () => {
   assert.match(article, /Behind the Bar at F1 Las Vegas/);
   assert.match(article, /quizzing myself on glassware/);
   assert.ok(sitemap.includes("https://lancewolfe.com/chronicles/behind-the-bar-at-f1-las-vegas/"));
+});
+
+test("retired Chronicle is unavailable and no longer linked", async () => {
+  const index = await renderedPage("chronicles/index.html");
+  const sitemap = await renderedPage("sitemap.xml");
+  const retired = await renderedPage("chronicles/the-power-of-restraint/index.html");
+
+  assert.doesNotMatch(index, /the-power-of-restraint|The Power of Restraint/);
+  assert.doesNotMatch(sitemap, /the-power-of-restraint/);
+  assert.match(retired, /name="robots" content="noindex"/);
+  assert.match(retired, /This story has been removed/);
+  assert.doesNotMatch(retired, /The Power of Restraint|Iowa cornfield/);
+  await assert.rejects(access(new URL("chronicles-power-of-restraint.jpg", outputRoot)), { code: "ENOENT" });
 });
