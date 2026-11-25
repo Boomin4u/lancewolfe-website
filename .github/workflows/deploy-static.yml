@@ -53,7 +53,9 @@ jobs:
           test -f dist/client/chronicles/this-one-was-mine/index.html
           test -f dist/client/chronicles/check-the-batteries/index.html
           test -f dist/client/chronicles/from-consumer-to-producer/index.html
-          test -f dist/client/chronicles-power-of-restraint.jpg
+          test ! -e dist/client/chronicles-power-of-restraint.jpg
+          test -f dist/client/chronicles/behind-the-bar-at-f1-las-vegas/index.html
+          grep -q 'name="robots" content="noindex"' dist/client/chronicles/the-power-of-restraint/index.html
 
       - name: Mark export as static
         run: touch dist/client/.nojekyll

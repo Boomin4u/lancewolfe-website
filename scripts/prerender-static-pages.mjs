@@ -15,12 +15,12 @@ const routes = [
   "/chronicles/from-consumer-to-producer/",
   "/chronicles/check-the-batteries/",
   "/chronicles/this-one-was-mine/",
-  "/chronicles/the-power-of-restraint/",
   "/chronicles/behind-the-bar-at-f1-las-vegas/",
 ];
 
 // Replace retired pages explicitly because the host can retain deleted files.
 const retiredChronicleRoutes = [
+  "/chronicles/the-power-of-restraint/",
   "/chronicles/busy-vs-useful/",
   "/chronicles/early-event-production/",
   "/chronicles/why-operations-is-judgment/",
