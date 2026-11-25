@@ -16,6 +16,7 @@ const routes = [
   "/chronicles/check-the-batteries/",
   "/chronicles/this-one-was-mine/",
   "/chronicles/the-power-of-restraint/",
+  "/chronicles/behind-the-bar-at-f1-las-vegas/",
 ];
 
 // Replace retired pages explicitly because the host can retain deleted files.

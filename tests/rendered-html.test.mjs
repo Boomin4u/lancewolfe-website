@@ -101,3 +101,14 @@ test("Texas Formula 1 roles match the confirmed career history", async () => {
     assert.match(row, new RegExp(`>${role}</td>`));
   }
 });
+
+test("Las Vegas F1 chronicle is linked, rendered, and indexed", async () => {
+  const index = await renderedPage("chronicles/index.html");
+  const article = await renderedPage("chronicles/behind-the-bar-at-f1-las-vegas/index.html");
+  const sitemap = await renderedPage("sitemap.xml");
+
+  assert.ok(index.includes('href="/chronicles/behind-the-bar-at-f1-las-vegas/"'));
+  assert.match(article, /Behind the Bar at F1 Las Vegas/);
+  assert.match(article, /quizzing myself on glassware/);
+  assert.ok(sitemap.includes("https://lancewolfe.com/chronicles/behind-the-bar-at-f1-las-vegas/"));
+});
